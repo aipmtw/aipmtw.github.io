@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AI Innovator - 會員作品集</title>
+  <meta name="description" content="AI Innovator 進階分會 - 會員用 AI 協作建立的個人網站作品集" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['"Noto Sans TC"', 'Inter', 'system-ui', 'sans-serif'],
+          },
+        },
+      },
+    }
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Noto+Sans+TC:wght@400;500;600;700;900&display=swap" rel="stylesheet" />
+  <style>
+    .card-hover { transition: transform 0.3s ease, box-shadow 0.3s ease; }
+    .card-hover:hover { transform: translateY(-6px); box-shadow: 0 25px 50px -12px rgba(99, 102, 241, 0.15); }
+    .gradient-text { background: linear-gradient(135deg, #818cf8, #22d3ee); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+    .glow { box-shadow: 0 0 60px rgba(99, 102, 241, 0.12); }
+    @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
+    .float-animation { animation: float 6s ease-in-out infinite; }
+    .float-delay-1 { animation-delay: 1s; }
+    .float-delay-2 { animation-delay: 2s; }
+    .float-delay-3 { animation-delay: 3s; }
+  </style>
+</head>
+<body class="min-h-screen bg-gradient-to-br from-slate-900 via-indigo-950 to-slate-900 text-white font-sans">
+
+  <!-- Background decoration -->
+  <div class="fixed inset-0 pointer-events-none overflow-hidden">
+    <div class="absolute -top-40 -right-40 w-96 h-96 bg-indigo-500/10 rounded-full blur-3xl"></div>
+    <div class="absolute top-1/2 -left-40 w-96 h-96 bg-cyan-500/10 rounded-full blur-3xl"></div>
+    <div class="absolute -bottom-40 right-1/3 w-96 h-96 bg-purple-500/10 rounded-full blur-3xl"></div>
+  </div>
+
+  <!-- Header / Nav -->
+  <nav class="relative z-10 max-w-6xl mx-auto px-6 py-6 flex items-center justify-between">
+    <a href="/" class="text-xl font-bold tracking-tight">
+      <span class="text-indigo-400">AI</span> Innovator
+    </a>
+    <div class="flex items-center gap-4">
+      <a href="https://discord.gg/3rydDZaY" target="_blank" rel="noopener noreferrer" class="text-slate-400 hover:text-white transition text-sm hidden sm:inline-block">Discord</a>
+      <a href="https://github.com/aipmtw" target="_blank" rel="noopener noreferrer" class="text-slate-400 hover:text-white transition text-sm hidden sm:inline-block">GitHub</a>
+      <a href="https://aipmtw.github.io/ai-innovator/" class="bg-indigo-600 hover:bg-indigo-500 transition px-5 py-2 rounded-lg text-sm font-medium">活動首頁</a>
+    </div>
+  </nav>
+
+  <!-- Hero -->
+  <header class="relative z-10 max-w-4xl mx-auto px-6 pt-16 pb-24 text-center">
+    <div class="inline-block mb-6 px-4 py-1.5 bg-indigo-500/10 border border-indigo-500/20 rounded-full text-indigo-300 text-sm font-medium">
+      進階分會 - 中部
+    </div>
+    <h1 class="text-4xl md:text-6xl font-extrabold leading-tight mb-6">
+      <span class="gradient-text">會員作品集</span>
+    </h1>
+    <p class="text-lg md:text-xl text-slate-300 max-w-2xl mx-auto leading-relaxed">
+      每一位會員都透過 AI 協作，從零開始打造屬於自己的網站。<br />
+      點擊下方卡片，瀏覽他們的作品。
+    </p>
+  </header>
+
+  <!-- Member Sites Grid -->
+  <section class="relative z-10 max-w-6xl mx-auto px-6 pb-24">
+    <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+
+      <!-- Sherry -->
+      <div class="card-hover float-animation group relative bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl overflow-hidden hover:border-pink-500/30">
+        <div class="h-1.5 bg-gradient-to-r from-pink-500 to-rose-500"></div>
+        <div class="p-6">
+          <div class="flex justify-center mb-5">
+            <div class="w-16 h-16 rounded-full bg-gradient-to-br from-pink-500 to-rose-500 flex items-center justify-center text-2xl font-bold shadow-lg shadow-pink-500/20">S</div>
+          </div>
+          <h3 class="text-xl font-bold text-center mb-1 group-hover:text-pink-300 transition">Sherry</h3>
+          <p class="text-slate-500 text-xs text-center mb-6 font-mono">aipmtw.github.io/sherry</p>
+          <div class="flex flex-col gap-2.5">
+            <a href="https://aipmtw.github.io/sherry/" target="_blank" rel="noopener noreferrer" class="flex items-center justify-center gap-2 bg-gradient-to-r from-pink-500 to-rose-500 hover:opacity-90 transition px-4 py-2.5 rounded-xl text-sm font-semibold shadow-lg">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" /></svg>
+              瀏覽網站
+            </a>
+            <a href="https://github.com/aipmtw/sherry" target="_blank" rel="noopener noreferrer" class="flex items-center justify-center gap-2 bg-white/5 hover:bg-white/10 border border-white/10 hover:border-white/20 transition px-4 py-2.5 rounded-xl text-sm font-medium text-slate-300">
+              <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+              查看原始碼
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Mark -->
+      <div class="card-hover float-animation float-delay-1 group relative bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl overflow-hidden hover:border-indigo-500/30">
+        <div class="h-1.5 bg-gradient-to-r from-indigo-500 to-blue-500"></div>
+        <div class="p-6">
+          <div class="flex justify-center mb-5">
+            <div class="w-16 h-16 rounded-full bg-gradient-to-br from-indigo-500 to-blue-500 flex items-center justify-center text-2xl font-bold shadow-lg shadow-indigo-500/20">M</div>
+          </div>
+          <h3 class="text-xl font-bold text-center mb-1 group-hover:text-indigo-300 transition">Mark</h3>
+          <p class="text-slate-500 text-xs text-center mb-6 font-mono">aipmtw.github.io/mark</p>
+          <div class="flex flex-col gap-2.5">
+            <a href="https://aipmtw.github.io/mark/" target="_blank" rel="noopener noreferrer" class="flex items-center justify-center gap-2 bg-gradient-to-r from-indigo-500 to-blue-500 hover:opacity-90 transition px-4 py-2.5 rounded-xl text-sm font-semibold shadow-lg">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" /></svg>
+              瀏覽網站
+            </a>
+            <a href="https://github.com/aipmtw/mark" target="_blank" rel="noopener noreferrer" class="flex items-center justify-center gap-2 bg-white/5 hover:bg-white/10 border border-white/10 hover:border-white/20 transition px-4 py-2.5 rounded-xl text-sm font-medium text-slate-300">
+              <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+              查看原始碼
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Felix -->
+      <div class="card-hover float-animation float-delay-2 group relative bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl overflow-hidden hover:border-emerald-500/30">
+        <div class="h-1.5 bg-gradient-to-r from-emerald-500 to-teal-500"></div>
+        <div class="p-6">
+          <div class="flex justify-center mb-5">
+            <div class="w-16 h-16 rounded-full bg-gradient-to-br from-emerald-500 to-teal-500 flex items-center justify-center text-2xl font-bold shadow-lg shadow-emerald-500/20">F</div>
+          </div>
+          <h3 class="text-xl font-bold text-center mb-1 group-hover:text-emerald-300 transition">Felix</h3>
+          <p class="text-slate-500 text-xs text-center mb-6 font-mono">aipmtw.github.io/felix</p>
+          <div class="flex flex-col gap-2.5">
+            <a href="https://aipmtw.github.io/felix/" target="_blank" rel="noopener noreferrer" class="flex items-center justify-center gap-2 bg-gradient-to-r from-emerald-500 to-teal-500 hover:opacity-90 transition px-4 py-2.5 rounded-xl text-sm font-semibold shadow-lg">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" /></svg>
+              瀏覽網站
+            </a>
+            <a href="https://github.com/aipmtw/felix" target="_blank" rel="noopener noreferrer" class="flex items-center justify-center gap-2 bg-white/5 hover:bg-white/10 border border-white/10 hover:border-white/20 transition px-4 py-2.5 rounded-xl text-sm font-medium text-slate-300">
+              <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+              查看原始碼
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- AI Innovator -->
+      <div class="card-hover float-animation float-delay-3 group relative bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl overflow-hidden hover:border-amber-500/30">
+        <div class="h-1.5 bg-gradient-to-r from-amber-500 to-orange-500"></div>
+        <div class="p-6">
+          <div class="flex justify-center mb-5">
+            <div class="w-16 h-16 rounded-full bg-gradient-to-br from-amber-500 to-orange-500 flex items-center justify-center text-2xl font-bold shadow-lg shadow-amber-500/20">A</div>
+          </div>
+          <h3 class="text-xl font-bold text-center mb-1 group-hover:text-amber-300 transition">AI Innovator</h3>
+          <p class="text-slate-500 text-xs text-center mb-6 font-mono">aipmtw.github.io/ai-innovator</p>
+          <div class="flex flex-col gap-2.5">
+            <a href="https://aipmtw.github.io/ai-innovator/" target="_blank" rel="noopener noreferrer" class="flex items-center justify-center gap-2 bg-gradient-to-r from-amber-500 to-orange-500 hover:opacity-90 transition px-4 py-2.5 rounded-xl text-sm font-semibold shadow-lg">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" /></svg>
+              瀏覽網站
+            </a>
+            <a href="https://github.com/aipmtw/ai-innovator" target="_blank" rel="noopener noreferrer" class="flex items-center justify-center gap-2 bg-white/5 hover:bg-white/10 border border-white/10 hover:border-white/20 transition px-4 py-2.5 rounded-xl text-sm font-medium text-slate-300">
+              <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+              查看原始碼
+            </a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- About Section -->
+  <section class="relative z-10 max-w-4xl mx-auto px-6 pb-24">
+    <div class="bg-white/5 backdrop-blur border border-white/10 rounded-2xl p-10 glow">
+      <h2 class="text-2xl font-bold mb-6 text-center gradient-text">關於 AI Innovator</h2>
+      <div class="text-slate-300 leading-relaxed space-y-4 max-w-2xl mx-auto text-center">
+        <p>
+          我們是 AI Innovator 進階分會（中部），致力於透過實作體驗，讓每位會員都能親手用 AI 建立自己的網站。
+        </p>
+        <p class="text-slate-400 text-sm">
+          不只是聽概念，而是一步一步互動式推進，從描述需求到產出成果。
+        </p>
+      </div>
+      <div class="flex justify-center gap-4 mt-8">
+        <a href="https://aipmtw.github.io/ai-innovator/" class="bg-indigo-600 hover:bg-indigo-500 transition px-6 py-2.5 rounded-xl text-sm font-semibold">了解更多</a>
+        <a href="https://discord.gg/3rydDZaY" target="_blank" rel="noopener noreferrer" class="bg-[#5865F2] hover:bg-[#4752c4] transition px-6 py-2.5 rounded-xl text-sm font-semibold">加入 Discord</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="relative z-10 border-t border-white/10 py-8 text-center text-slate-500 text-sm">
+    &copy; 2026 AI Innovator 進階分會 - 中部. All rights reserved.
+  </footer>
+
+</body>
+</html>
