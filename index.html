@@ -362,12 +362,6 @@
           <p id="github-msg" class="text-xs mt-1 h-4"></p>
         </div>
 
-        <!-- GitHub Token (for direct issue creation) -->
-        <div>
-          <label class="block text-sm font-medium text-slate-300 mb-1.5">GitHub Token <span class="text-slate-500 text-xs">（<a href="https://github.com/settings/tokens/new?scopes=public_repo&description=aipm-apply" target="_blank" class="text-indigo-400 hover:underline">取得 Token</a>，僅需 public_repo，儲存於瀏覽器）</span></label>
-          <input id="gh-token" type="password" placeholder="ghp_..." class="w-full bg-white/5 border border-white/20 rounded-lg px-3 py-2.5 text-white placeholder-slate-600 text-sm focus:outline-none focus:border-indigo-500 transition" />
-        </div>
-
         <!-- Submit -->
         <button id="apply-btn" disabled class="w-full bg-indigo-600/50 text-white/50 font-semibold py-3 rounded-xl text-sm cursor-not-allowed transition">
           提交申請
@@ -714,67 +708,18 @@
       }, 500);
     });
 
-    // Load saved token
-    const ghTokenInput = document.getElementById('gh-token');
-    ghTokenInput.value = localStorage.getItem('aipm_gh_token') || '';
-    ghTokenInput.addEventListener('change', function() {
-      localStorage.setItem('aipm_gh_token', this.value.trim());
-    });
-
-    applyBtn.addEventListener('click', async function() {
+    applyBtn.addEventListener('click', function() {
       if (!spaceValid || !ghValid) return;
       const name = spaceInput.value.trim();
       const account = ghInput.value.trim();
-      const token = ghTokenInput.value.trim();
-      const issueTitle = '[申請空間] ' + name + ' - ' + account;
-      const issueBody = '空間名稱：' + name + '\nGitHub：' + account + '\n驗證狀態：✅ 名稱可用 ✅ 帳號存在\n\n---\n管理員請留言 `/approve` 核准建立。';
-
-      if (token) {
-        // Direct API creation
-        applyBtn.textContent = '提交中...';
-        applyBtn.disabled = true;
-        try {
-          const r = await fetch('https://api.github.com/repos/aipmtw/aipmtw.github.io/issues', {
-            method: 'POST',
-            headers: {
-              'Authorization': 'Bearer ' + token,
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ title: issueTitle, body: issueBody, labels: ['申請空間'] }),
-          });
-          if (r.ok) {
-            const data = await r.json();
-            applyStatusEl.textContent = '✅ 申請已送出（Issue #' + data.number + '），等待管理員審批';
-            applyStatusEl.className = 'text-xs text-center mt-2 h-4 text-emerald-400';
-            pendingApps.push({ name, account, url: data.html_url });
-            renderPending();
-            spaceInput.value = ''; ghInput.value = '';
-            spaceValid = false; ghValid = false;
-            ghAvatar.classList.add('hidden');
-            spaceStatus.textContent = ''; ghStatus.textContent = '';
-            spaceMsg.textContent = ''; ghMsg.textContent = '';
-          } else {
-            const err = await r.json();
-            applyStatusEl.textContent = '❌ 提交失敗：' + (err.message || 'Token 無效或權限不足');
-            applyStatusEl.className = 'text-xs text-center mt-2 h-4 text-red-400';
-          }
-        } catch(e) {
-          applyStatusEl.textContent = '❌ 網路錯誤，請稍後再試';
-          applyStatusEl.className = 'text-xs text-center mt-2 h-4 text-red-400';
-        }
-        applyBtn.textContent = '提交申請';
-        updateBtn();
-      } else {
-        // Fallback: redirect to GitHub
-        const title = encodeURIComponent(issueTitle);
-        const body = encodeURIComponent(issueBody);
-        window.open('https://github.com/aipmtw/aipmtw.github.io/issues/new?title=' + title + '&body=' + body + '&labels=申請空間', '_blank');
-        applyStatusEl.textContent = '已開啟 GitHub，請在該頁面確認送出';
-        applyStatusEl.className = 'text-xs text-center mt-2 h-4 text-indigo-300';
-        pendingApps.push({ name, account, url: '#' });
-        renderPending();
-        spaceValid = false; updateBtn();
-      }
+      const title = encodeURIComponent('[申請空間] ' + name + ' - ' + account);
+      const body = encodeURIComponent('空間名稱：' + name + '\nGitHub：' + account + '\n驗證狀態：✅ 名稱可用 ✅ 帳號存在\n\n---\n管理員請留言 `/approve` 核准建立。');
+      window.open('https://github.com/aipmtw/aipmtw.github.io/issues/new?title=' + title + '&body=' + body + '&labels=申請空間', '_blank');
+      applyStatusEl.textContent = '已開啟 GitHub Issue 頁面，請用你的 GitHub 帳號登入並確認送出';
+      applyStatusEl.className = 'text-xs text-center mt-2 h-4 text-indigo-300';
+      pendingApps.push({ name, account, url: '#' });
+      renderPending();
+      spaceValid = false; updateBtn();
     });
 
     loadPending();
