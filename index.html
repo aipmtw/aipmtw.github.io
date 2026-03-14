@@ -55,7 +55,7 @@
       設置每小時檢查一次 issues, 有新的要求即自動運行, 限定必需是 Collaborator 人員提交的才算數。
     </p>
     <p class="text-slate-400 text-sm mt-3">頁面最後更新：2026-03-14 13:17:19 (台北時間) | Commit: 2bdd33e</p>
-    <p class="text-slate-500 text-xs mt-1">最後巡檢時間：2026-03-14 16:06:20 (台北時間)</p>
+    <p class="text-center mt-1"><button id="check-time-btn" class="text-xs bg-emerald-500/20 hover:bg-emerald-500/30 text-emerald-300 border border-emerald-500/30 px-3 py-1 rounded-lg cursor-pointer transition">最後巡檢時間：2026-03-14 17:06:51 (台北時間)</button></p>
   </div>
 
   <!-- Hero -->
@@ -277,6 +277,15 @@
     &copy; 2026 aipm.com.tw. All rights reserved.
   </footer>
 
+  <!-- Check Result Modal -->
+  <div id="check-modal" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/60 backdrop-blur-sm">
+    <div class="bg-slate-800 border border-white/20 rounded-2xl shadow-2xl max-w-lg w-full mx-4 p-6 relative">
+      <button onclick="closeCheckModal()" class="absolute top-4 right-4 text-slate-400 hover:text-white text-xl">✕</button>
+      <h3 class="text-lg font-bold text-white mb-4">巡檢結果摘要</h3>
+      <div id="check-modal-content" class="space-y-2 text-sm"></div>
+    </div>
+  </div>
+
   <!-- Issue Records Modal -->
   <div id="issue-modal" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/60 backdrop-blur-sm">
     <div class="bg-slate-800 border border-white/20 rounded-2xl shadow-2xl max-w-md w-full mx-4 p-6 relative">
@@ -371,6 +380,55 @@
     document.querySelectorAll('.issue-count').forEach(el => {
       el.addEventListener('click', () => showModal(el.dataset.repo));
     });
+
+    // Check result modal
+    const checkResult = {
+      time: "2026-03-14 17:06:51",
+      summary: "8 個 repo，1 個 open issue，1 個已處理",
+      details: [
+        { repo: "2026biz", issues: 0, result: "無待處理" },
+        { repo: "swim-meet", issues: 0, result: "無待處理" },
+        { repo: "aipmtw.github.io", issues: 1, result: "✅ 已處理 — #17 巡檢時間加上彈出窗口" },
+        { repo: "mark", issues: 0, result: "無待處理" },
+        { repo: "felix", issues: 0, result: "無待處理" },
+        { repo: "amy", issues: 0, result: "無待處理" },
+        { repo: "sherry", issues: 0, result: "無待處理" },
+        { repo: "ai-innovator", issues: 0, result: "無待處理" }
+      ]
+    };
+
+    function showCheckModal() {
+      const modal = document.getElementById('check-modal');
+      const content = document.getElementById('check-modal-content');
+      content.innerHTML = `
+        <div class="bg-emerald-500/10 border border-emerald-500/20 rounded-xl p-3 mb-3">
+          <p class="text-emerald-300 font-medium">巡檢時間：${checkResult.time} (台北時間)</p>
+          <p class="text-slate-300 mt-1">${checkResult.summary}</p>
+        </div>
+        <div class="space-y-1.5">
+          ${checkResult.details.map(d => `
+            <div class="flex items-center justify-between bg-white/5 rounded-lg px-3 py-2 border border-white/10">
+              <span class="text-slate-300 font-mono text-xs">${d.repo}</span>
+              <span class="text-xs ${d.issues > 0 ? 'text-emerald-300' : 'text-slate-500'}">${d.result}</span>
+            </div>
+          `).join('')}
+        </div>
+      `;
+      modal.classList.remove('hidden');
+      modal.classList.add('flex');
+    }
+
+    function closeCheckModal() {
+      const modal = document.getElementById('check-modal');
+      modal.classList.add('hidden');
+      modal.classList.remove('flex');
+    }
+
+    document.getElementById('check-modal').addEventListener('click', function(e) {
+      if (e.target === this) closeCheckModal();
+    });
+
+    document.getElementById('check-time-btn').addEventListener('click', showCheckModal);
   </script>
 
 </body>
