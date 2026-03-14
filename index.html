@@ -55,7 +55,7 @@
       設置每小時檢查一次 issues, 有新的要求即自動運行, 限定必需是 Collaborator 人員提交的才算數。
     </p>
     <p class="text-slate-400 text-sm mt-3">頁面最後更新：2026-03-14 13:17:19 (台北時間) | Commit: 2bdd33e</p>
-    <p class="text-center mt-1"><button id="check-time-btn" class="text-xs bg-emerald-500/20 hover:bg-emerald-500/30 text-emerald-300 border border-emerald-500/30 px-3 py-1 rounded-lg cursor-pointer transition">最後巡檢時間：2026-03-14 19:52:10 (台北時間)</button></p>
+    <p class="text-center mt-1"><button id="check-time-btn" class="text-xs bg-emerald-500/20 hover:bg-emerald-500/30 text-emerald-300 border border-emerald-500/30 px-3 py-1 rounded-lg cursor-pointer transition">最後巡檢時間：2026-03-14 19:55:20 (台北時間)</button></p>
   </div>
 
   <!-- Hero -->
@@ -349,38 +349,38 @@
   <script>
     const issueData = {
       "sherry": [
-        { author: "aipmtw", completed: "2026-03-14T12:12:49+08:00", summary: "新增返回首頁的快捷連結" },
-        { author: "aipmtw", completed: "2026-03-14T12:10:25+08:00", summary: "更換網站圖示與標題" },
-        { author: "sherrylight", completed: "2026-03-13T20:17:56+08:00", summary: "建立首頁內容" }
+        { num: 3, author: "aipmtw", completed: "2026-03-14T12:12:49+08:00", summary: "新增返回首頁的快捷連結" },
+        { num: 2, author: "aipmtw", completed: "2026-03-14T12:10:25+08:00", summary: "更換網站圖示與標題" },
+        { num: 1, author: "sherrylight", completed: "2026-03-13T20:17:56+08:00", summary: "建立首頁內容" }
       ],
       "mark": [
-        { author: "aipmtw", completed: "2026-03-14T12:12:53+08:00", summary: "新增返回首頁的快捷連結" },
-        { author: "aipmtw", completed: "2026-03-14T12:07:21+08:00", summary: "更換瀏覽器標題與圖示" },
-        { author: "aipmtw", completed: "2026-03-13T22:47:55+08:00", summary: "新增變更紀錄頁面，可查看更新歷史" }
+        { num: 4, author: "aipmtw", completed: "2026-03-14T12:12:53+08:00", summary: "新增返回首頁的快捷連結" },
+        { num: 3, author: "aipmtw", completed: "2026-03-14T12:07:21+08:00", summary: "更換瀏覽器標題與圖示" },
+        { num: 2, author: "aipmtw", completed: "2026-03-13T22:47:55+08:00", summary: "新增變更紀錄頁面，可查看更新歷史" }
       ],
       "felix": [
-        { author: "aipmtw", completed: "2026-03-14T12:12:48+08:00", summary: "新增返回首頁的快捷連結" },
-        { author: "aipmtw", completed: "2026-03-14T12:10:23+08:00", summary: "更換網站圖示與標題" }
+        { num: 6, author: "aipmtw", completed: "2026-03-14T12:12:48+08:00", summary: "新增返回首頁的快捷連結" },
+        { num: 5, author: "aipmtw", completed: "2026-03-14T12:10:23+08:00", summary: "更換網站圖示與標題" }
       ],
       "amy": [
-        { author: "aipmtw", completed: "2026-03-14T12:12:51+08:00", summary: "新增返回首頁的快捷連結" },
-        { author: "aipmtw", completed: "2026-03-14T12:10:26+08:00", summary: "更換網站圖示" },
-        { author: "aipmtw", completed: "2026-03-13T22:01:15+08:00", summary: "簡化首頁設計，只保留核心內容" }
+        { num: 3, author: "aipmtw", completed: "2026-03-14T12:12:51+08:00", summary: "新增返回首頁的快捷連結" },
+        { num: 2, author: "aipmtw", completed: "2026-03-14T12:10:26+08:00", summary: "更換網站圖示" },
+        { num: 1, author: "aipmtw", completed: "2026-03-13T22:01:15+08:00", summary: "簡化首頁設計，只保留核心內容" }
       ],
       "swim-meet": [
-        { author: "RobCloud", completed: "2026-03-14T19:50:42+08:00", summary: "Final Results 每個 Event 獨立表格，Team 改為 School" },
-        { author: "RobCloud", completed: "2026-03-14T18:46:51+08:00", summary: "新增網頁列印功能" },
-        { author: "RobCloud", completed: "2026-03-14T18:46:30+08:00", summary: "Session 2 更新為 28 個比賽項目" }
+        { num: 9, author: "RobCloud", completed: "2026-03-14T19:50:42+08:00", summary: "Final Results 每個 Event 獨立表格，Team 改為 School" },
+        { num: 10, author: "RobCloud", completed: "2026-03-14T18:46:51+08:00", summary: "新增網頁列印功能" },
+        { num: 7, author: "RobCloud", completed: "2026-03-14T18:46:30+08:00", summary: "Session 2 更新為 28 個比賽項目" }
       ],
       "aipmtw.github.io": [
-        { author: "aipmtw", completed: "2026-03-14T19:03:56+08:00", summary: "新增模糊搜尋篩選功能" },
-        { author: "aipmtw", completed: "2026-03-14T18:08:22+08:00", summary: "建立自動空間規劃書" },
-        { author: "aipmtw", completed: "2026-03-14T18:08:20+08:00", summary: "卡片排列改為隨機順序" }
+        { num: 20, author: "aipmtw", completed: "2026-03-14T19:03:56+08:00", summary: "新增模糊搜尋篩選功能" },
+        { num: 19, author: "aipmtw", completed: "2026-03-14T18:08:22+08:00", summary: "建立自動空間規劃書" },
+        { num: 18, author: "aipmtw", completed: "2026-03-14T18:08:20+08:00", summary: "卡片排列改為隨機順序" }
       ],
       "ai-innovator": [
-        { author: "aipmtw", completed: "2026-03-14T13:13:02+08:00", summary: "確認頁面已正確部署" },
-        { author: "aipmtw", completed: "2026-03-14T13:09:07+08:00", summary: "移除所有內容，只顯示指定圖片" },
-        { author: "aipmtw", completed: "2026-03-14T12:12:57+08:00", summary: "新增返回首頁的快捷連結" }
+        { num: 4, author: "aipmtw", completed: "2026-03-14T13:13:02+08:00", summary: "確認頁面已正確部署" },
+        { num: 3, author: "aipmtw", completed: "2026-03-14T13:09:07+08:00", summary: "移除所有內容，只顯示指定圖片" },
+        { num: 2, author: "aipmtw", completed: "2026-03-14T12:12:57+08:00", summary: "新增返回首頁的快捷連結" }
       ]
     };
 
@@ -402,9 +402,9 @@
       const name = repoNames[repo] || repo;
 
       title.textContent = name + ' — 最近需求紀錄';
-      content.innerHTML = data.map((item, i) => `
+      content.innerHTML = data.map((item) => `
         <div class="flex items-start gap-3 bg-white/5 rounded-xl p-3 border border-white/10">
-          <span class="flex-shrink-0 w-7 h-7 rounded-full bg-indigo-500/20 text-indigo-300 flex items-center justify-center text-sm font-bold">${i + 1}</span>
+          <span class="flex-shrink-0 w-7 h-7 rounded-full bg-indigo-500/20 text-indigo-300 flex items-center justify-center text-xs font-bold">#${item.num}</span>
           <div class="flex-1">
             <p class="text-white text-sm font-medium">${item.summary}</p>
             <div class="flex items-center gap-3 mt-1.5">
@@ -435,12 +435,12 @@
 
     // Check result modal
     const checkResult = {
-      time: "2026-03-14 19:52:10",
-      summary: "swim-meet #9 已處理、#8 待確認。twoutlook/twoutlook-take2 已刪除，卡片已移除",
+      time: "2026-03-14 19:55:20",
+      summary: "aipmtw.github.io #23 已處理、swim-meet #8 待確認",
       details: [
         { repo: "2026biz", issues: 0, result: "無待處理" },
-        { repo: "swim-meet", issues: 2, result: "✅ #9 已處理、📋 #8 待確認" },
-        { repo: "aipmtw.github.io", issues: 0, result: "🗑️ twoutlook, twoutlook-take2 已刪除，卡片已移除" },
+        { repo: "swim-meet", issues: 1, result: "📋 #8 待確認" },
+        { repo: "aipmtw.github.io", issues: 1, result: "✅ #23 需求紀錄加上 issue 編號" },
         { repo: "mark", issues: 0, result: "無待處理" },
         { repo: "felix", issues: 0, result: "無待處理" },
         { repo: "amy", issues: 0, result: "無待處理" },
