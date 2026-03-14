@@ -172,6 +172,13 @@ jobs:
           export default App
           AEOF
 
+          # .gitignore
+          cat > .gitignore << 'GIEOF'
+          node_modules
+          dist
+          .DS_Store
+          GIEOF
+
           # .github/workflows/deploy.yml
           cat > .github/workflows/deploy.yml << 'DEOF'
           name: Deploy to GitHub Pages
