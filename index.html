@@ -302,6 +302,34 @@
         </div>
       </div>
 
+      <!-- twoutlook-take2 -->
+      <div class="card-hover float-animation float-delay-1 group relative bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl overflow-hidden hover:border-lime-500/30" data-search="twoutlook-take2 aipmtw.github.io/twoutlook-take2">
+        <div class="h-1.5 bg-gradient-to-r from-lime-500 to-emerald-500"></div>
+        <div class="p-6">
+          <div class="flex justify-center mb-5">
+            <div class="w-16 h-16 rounded-full bg-gradient-to-br from-lime-500 to-emerald-500 flex items-center justify-center text-2xl font-bold shadow-lg shadow-lime-500/20">T2</div>
+          </div>
+          <h3 class="text-xl font-bold text-center mb-1 group-hover:text-lime-300 transition">twoutlook-take2</h3>
+          <p class="text-slate-500 text-xs text-center mb-2 font-mono">aipmtw.github.io/twoutlook-take2</p>
+          <p class="text-slate-500 text-xs text-center mb-4">更新：2026-03-14 19:37:43 | <code class="text-slate-400">新建立</code></p>
+          <p class="text-center mb-4"><button class="issue-count text-xs bg-indigo-500/20 hover:bg-indigo-500/30 text-indigo-300 border border-indigo-500/30 px-3 py-1 rounded-lg cursor-pointer transition" data-repo="twoutlook-take2">有效提交數：0</button></p>
+          <div class="flex flex-col gap-2.5">
+            <a href="https://aipmtw.github.io/twoutlook-take2/" target="_blank" rel="noopener noreferrer" class="flex items-center justify-center gap-2 bg-gradient-to-r from-lime-500 to-emerald-500 hover:opacity-90 transition px-4 py-2.5 rounded-xl text-sm font-semibold shadow-lg">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" /></svg>
+              瀏覽網站
+            </a>
+            <a href="https://github.com/aipmtw/twoutlook-take2" target="_blank" rel="noopener noreferrer" class="flex items-center justify-center gap-2 bg-white/5 hover:bg-white/10 border border-white/10 hover:border-white/20 transition px-4 py-2.5 rounded-xl text-sm font-medium text-slate-300">
+              <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+              查看原始碼
+            </a>
+            <a href="https://github.com/aipmtw/twoutlook-take2/issues" target="_blank" rel="noopener noreferrer" class="flex items-center justify-center gap-2 bg-white/5 hover:bg-white/10 border border-white/10 hover:border-white/20 transition px-4 py-2.5 rounded-xl text-sm font-medium text-slate-300">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+              提交需求
+            </a>
+          </div>
+        </div>
+      </div>
+
     </div>
   </section>
 
@@ -332,6 +360,12 @@
             <img id="github-avatar" class="w-8 h-8 rounded-full hidden" alt="" />
           </div>
           <p id="github-msg" class="text-xs mt-1 h-4"></p>
+        </div>
+
+        <!-- GitHub Token (for direct issue creation) -->
+        <div>
+          <label class="block text-sm font-medium text-slate-300 mb-1.5">GitHub Token <span class="text-slate-500 text-xs">（<a href="https://github.com/settings/tokens/new?scopes=public_repo&description=aipm-apply" target="_blank" class="text-indigo-400 hover:underline">取得 Token</a>，僅需 public_repo，儲存於瀏覽器）</span></label>
+          <input id="gh-token" type="password" placeholder="ghp_..." class="w-full bg-white/5 border border-white/20 rounded-lg px-3 py-2.5 text-white placeholder-slate-600 text-sm focus:outline-none focus:border-indigo-500 transition" />
         </div>
 
         <!-- Submit -->
@@ -680,19 +714,67 @@
       }, 500);
     });
 
-    applyBtn.addEventListener('click', function() {
+    // Load saved token
+    const ghTokenInput = document.getElementById('gh-token');
+    ghTokenInput.value = localStorage.getItem('aipm_gh_token') || '';
+    ghTokenInput.addEventListener('change', function() {
+      localStorage.setItem('aipm_gh_token', this.value.trim());
+    });
+
+    applyBtn.addEventListener('click', async function() {
       if (!spaceValid || !ghValid) return;
       const name = spaceInput.value.trim();
       const account = ghInput.value.trim();
-      const title = encodeURIComponent('[申請空間] ' + name + ' - ' + account);
-      const body = encodeURIComponent('空間名稱：' + name + '\nGitHub：' + account + '\n驗證狀態：✅ 名稱可用 ✅ 帳號存在\n\n---\n管理員請留言 `/approve` 核准建立。');
-      window.open('https://github.com/aipmtw/aipmtw.github.io/issues/new?title=' + title + '&body=' + body + '&labels=申請空間', '_blank');
-      applyStatusEl.textContent = '已開啟申請頁面，請在 GitHub 上確認送出';
-      applyStatusEl.className = 'text-xs text-center mt-2 h-4 text-indigo-300';
-      // Add to local pending list immediately
-      pendingApps.push({ name, account, url: '#' });
-      renderPending();
-      spaceValid = false; updateBtn();
+      const token = ghTokenInput.value.trim();
+      const issueTitle = '[申請空間] ' + name + ' - ' + account;
+      const issueBody = '空間名稱：' + name + '\nGitHub：' + account + '\n驗證狀態：✅ 名稱可用 ✅ 帳號存在\n\n---\n管理員請留言 `/approve` 核准建立。';
+
+      if (token) {
+        // Direct API creation
+        applyBtn.textContent = '提交中...';
+        applyBtn.disabled = true;
+        try {
+          const r = await fetch('https://api.github.com/repos/aipmtw/aipmtw.github.io/issues', {
+            method: 'POST',
+            headers: {
+              'Authorization': 'Bearer ' + token,
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ title: issueTitle, body: issueBody, labels: ['申請空間'] }),
+          });
+          if (r.ok) {
+            const data = await r.json();
+            applyStatusEl.textContent = '✅ 申請已送出（Issue #' + data.number + '），等待管理員審批';
+            applyStatusEl.className = 'text-xs text-center mt-2 h-4 text-emerald-400';
+            pendingApps.push({ name, account, url: data.html_url });
+            renderPending();
+            spaceInput.value = ''; ghInput.value = '';
+            spaceValid = false; ghValid = false;
+            ghAvatar.classList.add('hidden');
+            spaceStatus.textContent = ''; ghStatus.textContent = '';
+            spaceMsg.textContent = ''; ghMsg.textContent = '';
+          } else {
+            const err = await r.json();
+            applyStatusEl.textContent = '❌ 提交失敗：' + (err.message || 'Token 無效或權限不足');
+            applyStatusEl.className = 'text-xs text-center mt-2 h-4 text-red-400';
+          }
+        } catch(e) {
+          applyStatusEl.textContent = '❌ 網路錯誤，請稍後再試';
+          applyStatusEl.className = 'text-xs text-center mt-2 h-4 text-red-400';
+        }
+        applyBtn.textContent = '提交申請';
+        updateBtn();
+      } else {
+        // Fallback: redirect to GitHub
+        const title = encodeURIComponent(issueTitle);
+        const body = encodeURIComponent(issueBody);
+        window.open('https://github.com/aipmtw/aipmtw.github.io/issues/new?title=' + title + '&body=' + body + '&labels=申請空間', '_blank');
+        applyStatusEl.textContent = '已開啟 GitHub，請在該頁面確認送出';
+        applyStatusEl.className = 'text-xs text-center mt-2 h-4 text-indigo-300';
+        pendingApps.push({ name, account, url: '#' });
+        renderPending();
+        spaceValid = false; updateBtn();
+      }
     });
 
     loadPending();
