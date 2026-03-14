@@ -281,7 +281,8 @@
   <section class="relative z-10 max-w-lg mx-auto px-6 pb-24">
     <div class="bg-white/5 backdrop-blur border border-white/10 rounded-2xl p-8">
       <h2 class="text-2xl font-bold mb-2 text-center gradient-text">申請你的個人空間</h2>
-      <p class="text-slate-400 text-sm text-center mb-8">填寫以下資料，經審批後自動建立你的網站</p>
+      <p class="text-slate-400 text-sm text-center mb-2">填寫以下資料，經審批後自動建立你的網站</p>
+      <p class="text-amber-400/80 text-xs text-center mb-8">每位 GitHub 用戶最多可申請 2 個個人空間</p>
 
       <div class="space-y-5">
         <!-- Space Name -->
@@ -579,6 +580,16 @@
       }, 500);
     });
 
+    const MAX_SPACES = 2;
+    // Cards on the page that belong to each user (data-search contains the repo names)
+    function countExistingSpaces(username) {
+      // Count pending applications by this user
+      const pendingCount = pendingApps.filter(app => app.account.toLowerCase() === username.toLowerCase()).length;
+      // Count existing cards (check collaborator via repo descriptions - approximate by checking card links)
+      // For accuracy, we check repos where this user is a collaborator
+      return pendingCount; // existing repos checked via API below
+    }
+
     ghInput.addEventListener('input', function() {
       clearTimeout(ghTimer);
       ghValid = false; updateBtn();
@@ -590,19 +601,47 @@
       ghTimer = setTimeout(async () => {
         try {
           const r = await fetch('https://api.github.com/users/' + username);
-          if (r.ok) {
-            const data = await r.json();
-            ghValid = true; updateBtn();
-            ghStatus.textContent = '\u2705';
-            ghMsg.textContent = data.name || username;
-            ghMsg.className = 'text-xs mt-1 h-4 text-emerald-400';
-            ghAvatar.src = data.avatar_url;
-            ghAvatar.classList.remove('hidden');
-          } else {
+          if (!r.ok) {
             ghStatus.textContent = '\u274c';
             ghMsg.textContent = '帳號不存在';
             ghMsg.className = 'text-xs mt-1 h-4 text-red-400';
+            return;
           }
+          const data = await r.json();
+          ghAvatar.src = data.avatar_url;
+          ghAvatar.classList.remove('hidden');
+
+          // Check how many spaces this user already has
+          const pendingCount = pendingApps.filter(app => app.account.toLowerCase() === username.toLowerCase()).length;
+          // Check existing repos where user is collaborator
+          let existingCount = 0;
+          try {
+            const reposR = await fetch('https://api.github.com/orgs/aipmtw/repos?per_page=50');
+            if (reposR.ok) {
+              const repos = await reposR.json();
+              const memberRepos = ['sherry','mark','felix','amy','swim-meet','ai-innovator','twoutlook'];
+              for (const repo of repos) {
+                if (!memberRepos.includes(repo.name)) continue;
+                try {
+                  const collabR = await fetch('https://api.github.com/repos/aipmtw/' + repo.name + '/collaborators/' + username);
+                  if (collabR.status === 204) existingCount++;
+                } catch(e) {}
+              }
+            }
+          } catch(e) {}
+
+          const totalSpaces = pendingCount + existingCount;
+          if (totalSpaces >= MAX_SPACES) {
+            ghStatus.textContent = '\u274c';
+            ghMsg.textContent = '已達上限（每人最多 ' + MAX_SPACES + ' 個空間，目前 ' + totalSpaces + ' 個）';
+            ghMsg.className = 'text-xs mt-1 h-4 text-amber-400';
+            return;
+          }
+
+          ghValid = true; updateBtn();
+          ghStatus.textContent = '\u2705';
+          ghMsg.textContent = (data.name || username) + (totalSpaces > 0 ? '（已有 ' + totalSpaces + '/' + MAX_SPACES + ' 個空間）' : '');
+          ghMsg.className = 'text-xs mt-1 h-4 text-emerald-400';
         } catch(e) {
           ghStatus.textContent = '\u26a0\ufe0f';
           ghMsg.textContent = '網路錯誤';
