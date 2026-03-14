@@ -309,6 +309,15 @@
         <button id="apply-btn" disabled class="w-full bg-indigo-600/50 text-white/50 font-semibold py-3 rounded-xl text-sm cursor-not-allowed transition">
           提交申請
         </button>
+        <p id="apply-status" class="text-xs text-center mt-2 h-4"></p>
+      </div>
+
+      <!-- Pending Applications -->
+      <div id="pending-section" class="mt-6 hidden">
+        <div class="border-t border-white/10 pt-4">
+          <h3 class="text-sm font-medium text-slate-400 mb-3">等待審批中</h3>
+          <div id="pending-list" class="space-y-2"></div>
+        </div>
       </div>
     </div>
   </section>
@@ -481,8 +490,10 @@
     const ghMsg = document.getElementById('github-msg');
     const ghAvatar = document.getElementById('github-avatar');
     const applyBtn = document.getElementById('apply-btn');
+    const applyStatusEl = document.getElementById('apply-status');
 
     let spaceValid = false, ghValid = false, spaceTimer, ghTimer;
+    let pendingApps = []; // { name, account, url }
 
     function updateBtn() {
       if (spaceValid && ghValid) {
@@ -492,6 +503,40 @@
         applyBtn.disabled = true;
         applyBtn.className = 'w-full bg-indigo-600/50 text-white/50 font-semibold py-3 rounded-xl text-sm cursor-not-allowed transition';
       }
+    }
+
+    // Load pending applications on page load
+    async function loadPending() {
+      try {
+        const r = await fetch('https://api.github.com/repos/aipmtw/aipmtw.github.io/issues?state=open&labels=申請空間&per_page=20');
+        if (!r.ok) return;
+        const issues = await r.json();
+        pendingApps = issues.map(issue => {
+          const match = issue.title.match(/\[申請空間\]\s*(.+?)\s*-\s*(.+)/);
+          return match ? { name: match[1], account: match[2], url: issue.html_url } : null;
+        }).filter(Boolean);
+        renderPending();
+      } catch(e) {}
+    }
+
+    function renderPending() {
+      const section = document.getElementById('pending-section');
+      const list = document.getElementById('pending-list');
+      if (pendingApps.length === 0) { section.classList.add('hidden'); return; }
+      section.classList.remove('hidden');
+      list.innerHTML = pendingApps.map(app => `
+        <a href="${app.url}" target="_blank" rel="noopener noreferrer" class="flex items-center justify-between bg-amber-500/10 border border-amber-500/20 rounded-lg px-3 py-2 hover:bg-amber-500/20 transition">
+          <div>
+            <span class="text-amber-300 text-sm font-medium">${app.name}</span>
+            <span class="text-slate-500 text-xs ml-2">by ${app.account}</span>
+          </div>
+          <span class="text-amber-400 text-xs">等待審批</span>
+        </a>
+      `).join('');
+    }
+
+    function isReserved(name) {
+      return pendingApps.some(app => app.name.toLowerCase() === name.toLowerCase());
     }
 
     spaceInput.addEventListener('input', function() {
@@ -504,8 +549,14 @@
       spaceTimer = setTimeout(async () => {
         if (!/^[a-z0-9][a-z0-9-]{0,28}[a-z0-9]$/.test(name) && !/^[a-z0-9]{1,2}$/.test(name)) {
           spaceStatus.textContent = '\u274c';
-          spaceMsg.textContent = '\u683c\u5f0f\u4e0d\u7b26\uff1a\u5c0f\u5beb\u82f1\u6587\u3001\u6578\u5b57\u3001\u9023\u5b57\u865f\uff0c2-30 \u5b57\u5143';
+          spaceMsg.textContent = '格式不符：小寫英文、數字、連字號，2-30 字元';
           spaceMsg.className = 'text-xs mt-1 h-4 text-red-400';
+          return;
+        }
+        if (isReserved(name)) {
+          spaceStatus.textContent = '\u274c';
+          spaceMsg.textContent = '名稱已有人申請中，等待審批';
+          spaceMsg.className = 'text-xs mt-1 h-4 text-amber-400';
           return;
         }
         try {
@@ -513,16 +564,16 @@
           if (r.status === 404) {
             spaceValid = true; updateBtn();
             spaceStatus.textContent = '\u2705';
-            spaceMsg.textContent = '\u540d\u7a31\u53ef\u7528';
+            spaceMsg.textContent = '名稱可用';
             spaceMsg.className = 'text-xs mt-1 h-4 text-emerald-400';
           } else {
             spaceStatus.textContent = '\u274c';
-            spaceMsg.textContent = '\u540d\u7a31\u5df2\u88ab\u4f7f\u7528';
+            spaceMsg.textContent = '名稱已被使用';
             spaceMsg.className = 'text-xs mt-1 h-4 text-red-400';
           }
         } catch(e) {
           spaceStatus.textContent = '\u26a0\ufe0f';
-          spaceMsg.textContent = '\u7db2\u8def\u932f\u8aa4\uff0c\u8acb\u7a0d\u5f8c\u518d\u8a66';
+          spaceMsg.textContent = '網路錯誤，請稍後再試';
           spaceMsg.className = 'text-xs mt-1 h-4 text-yellow-400';
         }
       }, 500);
@@ -549,12 +600,12 @@
             ghAvatar.classList.remove('hidden');
           } else {
             ghStatus.textContent = '\u274c';
-            ghMsg.textContent = '\u5e33\u865f\u4e0d\u5b58\u5728';
+            ghMsg.textContent = '帳號不存在';
             ghMsg.className = 'text-xs mt-1 h-4 text-red-400';
           }
         } catch(e) {
           ghStatus.textContent = '\u26a0\ufe0f';
-          ghMsg.textContent = '\u7db2\u8def\u932f\u8aa4';
+          ghMsg.textContent = '網路錯誤';
           ghMsg.className = 'text-xs mt-1 h-4 text-yellow-400';
         }
       }, 500);
@@ -567,7 +618,15 @@
       const title = encodeURIComponent('[申請空間] ' + name + ' - ' + account);
       const body = encodeURIComponent('空間名稱：' + name + '\nGitHub：' + account + '\n驗證狀態：✅ 名稱可用 ✅ 帳號存在\n\n---\n管理員請留言 `/approve` 核准建立。');
       window.open('https://github.com/aipmtw/aipmtw.github.io/issues/new?title=' + title + '&body=' + body + '&labels=申請空間', '_blank');
+      applyStatusEl.textContent = '已開啟申請頁面，請在 GitHub 上確認送出';
+      applyStatusEl.className = 'text-xs text-center mt-2 h-4 text-indigo-300';
+      // Add to local pending list immediately
+      pendingApps.push({ name, account, url: '#' });
+      renderPending();
+      spaceValid = false; updateBtn();
     });
+
+    loadPending();
 
     // Fuzzy search filter
     document.getElementById('card-filter').addEventListener('input', function(e) {
