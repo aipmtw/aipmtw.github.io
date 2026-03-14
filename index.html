@@ -55,7 +55,7 @@
       設置每小時檢查一次 issues, 有新的要求即自動運行, 限定必需是 Collaborator 人員提交的才算數。
     </p>
     <p class="text-slate-400 text-sm mt-3">頁面最後更新：2026-03-14 13:17:19 (台北時間) | Commit: 2bdd33e</p>
-    <p class="text-center mt-1"><button id="check-time-btn" class="text-xs bg-emerald-500/20 hover:bg-emerald-500/30 text-emerald-300 border border-emerald-500/30 px-3 py-1 rounded-lg cursor-pointer transition">最後巡檢時間：2026-03-14 17:06:51 (台北時間)</button></p>
+    <p class="text-center mt-1"><button id="check-time-btn" class="text-xs bg-emerald-500/20 hover:bg-emerald-500/30 text-emerald-300 border border-emerald-500/30 px-3 py-1 rounded-lg cursor-pointer transition">最後巡檢時間：2026-03-14 18:07:37 (台北時間)</button></p>
   </div>
 
   <!-- Hero -->
@@ -71,7 +71,7 @@
 
   <!-- Member Sites Grid -->
   <section class="relative z-10 max-w-6xl mx-auto px-6 pb-24">
-    <div class="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-8">
+    <div id="cards-grid" class="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-8">
 
       <!-- Sherry -->
       <div class="card-hover float-animation group relative bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl overflow-hidden hover:border-pink-500/30">
@@ -383,12 +383,12 @@
 
     // Check result modal
     const checkResult = {
-      time: "2026-03-14 17:06:51",
-      summary: "8 個 repo，1 個 open issue，1 個已處理",
+      time: "2026-03-14 18:07:37",
+      summary: "8 個 repo，6 個 open issue，6 個已處理",
       details: [
         { repo: "2026biz", issues: 0, result: "無待處理" },
-        { repo: "swim-meet", issues: 0, result: "無待處理" },
-        { repo: "aipmtw.github.io", issues: 1, result: "✅ 已處理 — #17 巡檢時間加上彈出窗口" },
+        { repo: "swim-meet", issues: 4, result: "🚫 非授權用戶 #7#8#9#10，已關閉" },
+        { repo: "aipmtw.github.io", issues: 2, result: "✅ 已處理 — #18 隱藏2026biz+隨機排序、#19 建立規劃書" },
         { repo: "mark", issues: 0, result: "無待處理" },
         { repo: "felix", issues: 0, result: "無待處理" },
         { repo: "amy", issues: 0, result: "無待處理" },
@@ -429,6 +429,17 @@
     });
 
     document.getElementById('check-time-btn').addEventListener('click', showCheckModal);
+
+    // Shuffle cards on page load
+    (function() {
+      const grid = document.getElementById('cards-grid');
+      const cards = Array.from(grid.children).filter(el => el.nodeType === 1);
+      for (let i = cards.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        grid.appendChild(cards[j]);
+        cards.splice(j, 1, cards[i]);
+      }
+    })();
   </script>
 
 </body>
