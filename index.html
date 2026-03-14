@@ -548,9 +548,9 @@
       spaceStatus.textContent = '...';
       spaceMsg.textContent = '';
       spaceTimer = setTimeout(async () => {
-        if (!/^[a-z0-9][a-z0-9-]{0,28}[a-z0-9]$/.test(name) && !/^[a-z0-9]{1,2}$/.test(name)) {
+        if (!/^[a-z0-9][a-z0-9-]{0,30}[a-z0-9]$/.test(name) && !/^[a-z0-9]{1,2}$/.test(name)) {
           spaceStatus.textContent = '\u274c';
-          spaceMsg.textContent = '格式不符：小寫英文、數字、連字號，2-30 字元';
+          spaceMsg.textContent = '格式不符：小寫英文、數字、連字號，2-32 字元';
           spaceMsg.className = 'text-xs mt-1 h-4 text-red-400';
           return;
         }
