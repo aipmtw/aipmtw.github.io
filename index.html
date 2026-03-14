@@ -650,14 +650,32 @@
       }, 500);
     });
 
-    applyBtn.addEventListener('click', function() {
+    const SIGN_SALT = 'aipmtw-2026';
+
+    async function generateSign(name, account) {
+      const msg = SIGN_SALT + '|' + name + '|' + account;
+      const data = new TextEncoder().encode(msg);
+      const hash = await crypto.subtle.digest('SHA-256', data);
+      return Array.from(new Uint8Array(hash)).map(b => b.toString(16).padStart(2, '0')).join('').slice(0, 16);
+    }
+
+    applyBtn.addEventListener('click', async function() {
       if (!spaceValid || !ghValid) return;
       const name = spaceInput.value.trim();
       const account = ghInput.value.trim();
+      const sign = await generateSign(name, account);
       const title = encodeURIComponent('[申請空間] ' + name + ' - ' + account);
-      const body = encodeURIComponent('空間名稱：' + name + '\nGitHub：' + account + '\n驗證狀態：✅ 名稱可用 ✅ 帳號存在\n\n---\n管理員請留言 `/approve` 核准建立。');
+      const body = encodeURIComponent(
+        '空間名稱：' + name + '\n' +
+        'GitHub：' + account + '\n' +
+        '驗證狀態：✅ 名稱可用 ✅ 帳號存在\n' +
+        'Sign：' + sign + '\n\n' +
+        '---\n' +
+        '⚠️ 請勿修改以上內容，修改後簽章將失效，申請會被拒絕。\n' +
+        '管理員請留言 `/approve` 核准建立。'
+      );
       window.open('https://github.com/aipmtw/aipmtw.github.io/issues/new?title=' + title + '&body=' + body + '&labels=申請空間', '_blank');
-      applyStatusEl.textContent = '已開啟 GitHub Issue 頁面，請用你的 GitHub 帳號登入並確認送出';
+      applyStatusEl.textContent = '已開啟 GitHub Issue 頁面，請用你的 GitHub 帳號登入並確認送出（請勿修改內容）';
       applyStatusEl.className = 'text-xs text-center mt-2 h-4 text-indigo-300';
       pendingApps.push({ name, account, url: '#' });
       renderPending();

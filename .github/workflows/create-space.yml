@@ -14,16 +14,53 @@ jobs:
     permissions:
       issues: write
     steps:
-      - name: Parse issue title
+      - name: Parse and verify signature
         id: parse
+        env:
+          ISSUE_BODY: ${{ github.event.issue.body }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           TITLE="${{ github.event.issue.title }}"
-          # Extract: [申請空間] space-name - github-account
+          # Extract from title: [申請空間] space-name - github-account
           SPACE_NAME=$(echo "$TITLE" | sed 's/\[申請空間\] //' | sed 's/ - .*//')
           GH_ACCOUNT=$(echo "$TITLE" | sed 's/.* - //')
+
+          # Extract Sign from issue body
+          BODY_SIGN=$(echo "$ISSUE_BODY" | grep -oP 'Sign：\K[a-f0-9]+' || echo "")
+
+          # Extract space name and account from body to verify consistency
+          BODY_SPACE=$(echo "$ISSUE_BODY" | grep -oP '空間名稱：\K\S+' || echo "")
+          BODY_ACCOUNT=$(echo "$ISSUE_BODY" | grep -oP 'GitHub：\K\S+' || echo "")
+
+          # Verify title matches body
+          if [ "$SPACE_NAME" != "$BODY_SPACE" ] || [ "$GH_ACCOUNT" != "$BODY_ACCOUNT" ]; then
+            echo "❌ 標題與內文不一致！標題: $SPACE_NAME/$GH_ACCOUNT, 內文: $BODY_SPACE/$BODY_ACCOUNT"
+            gh issue comment ${{ github.event.issue.number }} -R aipmtw/aipmtw.github.io \
+              --body "❌ **申請被拒絕**：Issue 標題與內文的空間名稱或帳號不一致，疑似被竄改。請重新透過首頁表單提交申請。"
+            exit 1
+          fi
+
+          # Verify signature
+          SIGN_SALT="aipmtw-2026"
+          EXPECTED_SIGN=$(echo -n "${SIGN_SALT}|${SPACE_NAME}|${GH_ACCOUNT}" | sha256sum | cut -c1-16)
+
+          if [ -z "$BODY_SIGN" ]; then
+            echo "❌ 缺少簽章！"
+            gh issue comment ${{ github.event.issue.number }} -R aipmtw/aipmtw.github.io \
+              --body "❌ **申請被拒絕**：Issue 缺少簽章（Sign），請透過首頁表單重新提交申請，不要手動建立 Issue。"
+            exit 1
+          fi
+
+          if [ "$BODY_SIGN" != "$EXPECTED_SIGN" ]; then
+            echo "❌ 簽章不符！expected=$EXPECTED_SIGN, got=$BODY_SIGN"
+            gh issue comment ${{ github.event.issue.number }} -R aipmtw/aipmtw.github.io \
+              --body "❌ **申請被拒絕**：簽章驗證失敗，Issue 內容可能被修改過。請勿修改表單生成的內容，重新透過首頁表單提交申請。"
+            exit 1
+          fi
+
+          echo "✅ 簽章驗證通過: $EXPECTED_SIGN"
           echo "space_name=$SPACE_NAME" >> $GITHUB_OUTPUT
           echo "gh_account=$GH_ACCOUNT" >> $GITHUB_OUTPUT
-          echo "Space: $SPACE_NAME, Account: $GH_ACCOUNT"
 
       - name: Create repo
         env:
