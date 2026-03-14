@@ -92,14 +92,12 @@ jobs:
         run: |
           SPACE="${{ steps.parse.outputs.space_name }}"
           cd workspace
-          git init
           git config user.name "aipmtw-bot"
           git config user.email "noreply@aipm.com.tw"
           git add -A
-          git commit -m "初始建立 $SPACE 個人空間"
-          git branch -M main
-          git remote add origin "https://x-access-token:${GH_TOKEN}@github.com/aipmtw/$SPACE.git"
-          git push -u origin main
+          git commit -m "初始建立 $SPACE 個人空間" || echo "No changes to commit"
+          git remote set-url origin "https://x-access-token:${GH_TOKEN}@github.com/aipmtw/$SPACE.git"
+          git push origin main --force
 
       - name: Add collaborator
         env:
