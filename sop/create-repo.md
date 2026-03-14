@@ -5,7 +5,7 @@
 ### 方式一：透過首頁申請表單（自助）
 
 1. 申請人在 https://aipm.com.tw/ 底部填寫：
-   - **空間名稱**（小寫英文+數字+連字號，2-30 字元）
+   - **空間名稱**（小寫英文+數字+連字號，2-32 字元）
    - **GitHub Account**
 2. 系統即時驗證：
    - 空間名稱是否可用（不重複、不在待審批中）
@@ -26,39 +26,45 @@
 - **Issue 必須由申請人本人建立**，不可由系統代建，以確保能追溯實際申請者身份
 - Issue 作者 = 實際申請人，這是授權驗證的基礎
 
+## 模板 Repo
+
+所有新空間基於 `aipmtw/space-template` 模板建立：
+- **Repo**: https://github.com/aipmtw/space-template
+- **內容**: Vite + React 19 + Tailwind CSS 4 + deploy.yml + .gitignore + README.md
+- **佔位符**: 所有 `SPACE_NAME` 會在建立時自動替換為實際空間名稱
+- **Favicon**: `S` 字母會替換為空間名稱首字母大寫
+- **README.md**: H1 標題為空間名稱
+
 ## 建立流程
 
 ### 自動化（GitHub Actions `create-space.yml`）
 
 管理員留言 `/approve` → Actions 自動執行：
 
-1. 解析 Issue 標題取得空間名稱和 GitHub Account
-2. `gh repo create aipmtw/{name} --public`
-3. 初始化 Vite + React + Tailwind CSS 專案
-   - `vite.config.js` 設定 `base: '/{name}/'`
-   - 首頁顯示空間名稱 + 返回 aipm.com.tw 連結
-   - SVG favicon（首字母）
-   - `.github/workflows/deploy.yml`
-4. `npm install` 生成 `package-lock.json`
-5. `git push` 到新 repo
-6. 加入協作者：`gh api repos/aipmtw/{name}/collaborators/{account} -X PUT`
-7. 設定 GitHub Pages：`gh api repos/aipmtw/{name}/pages -X POST -f build_type=workflow`
-8. 關閉 Issue，留言通知申請人
+1. 驗證 SHA-256 簽章
+2. `gh repo create aipmtw/{name} --template aipmtw/space-template`（從模板建立）
+3. Clone 新 repo，將所有 `SPACE_NAME` 替換為實際名稱
+4. 替換 favicon 首字母
+5. `npm install` 生成 `package-lock.json`
+6. `git push` 到新 repo
+7. 加入協作者：`gh api repos/aipmtw/{name}/collaborators/{account} -X PUT`
+8. 設定 GitHub Pages：`gh api repos/aipmtw/{name}/pages -X POST -f build_type=workflow`
+9. 關閉 Issue，留言通知申請人
 
 ### 手動建立
 
 ```bash
-# 1. 建立 repo
-gh repo create aipmtw/{name} --public
+# 1. 從模板建立 repo
+gh repo create aipmtw/{name} --public --template aipmtw/space-template
 
-# 2. 複製模板、修改名稱
-cp -r template/ {name}/
+# 2. Clone 並替換名稱
+git clone https://github.com/aipmtw/{name}.git
 cd {name}
-# 修改 package.json, vite.config.js, index.html, App.jsx 中的名稱
+find . -type f -not -path './.git/*' | xargs sed -i 's/SPACE_NAME/{name}/g'
 
 # 3. npm install 並 push
 npm install
-git init && git add -A && git commit -m "初始建立" && git push
+git add -A && git commit -m "初始建立" && git push
 
 # 4. 加入協作者
 gh api repos/aipmtw/{name}/collaborators/{account} -X PUT -f permission=push
