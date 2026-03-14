@@ -1,0 +1,223 @@
+name: Create Member Space
+
+on:
+  issue_comment:
+    types: [created]
+
+jobs:
+  create-space:
+    if: |
+      github.event.comment.body == '/approve' &&
+      github.event.comment.user.login == 'aipmtw' &&
+      startsWith(github.event.issue.title, '[申請空間]')
+    runs-on: ubuntu-latest
+    permissions:
+      issues: write
+    steps:
+      - name: Parse issue title
+        id: parse
+        run: |
+          TITLE="${{ github.event.issue.title }}"
+          # Extract: [申請空間] space-name - github-account
+          SPACE_NAME=$(echo "$TITLE" | sed 's/\[申請空間\] //' | sed 's/ - .*//')
+          GH_ACCOUNT=$(echo "$TITLE" | sed 's/.* - //')
+          echo "space_name=$SPACE_NAME" >> $GITHUB_OUTPUT
+          echo "gh_account=$GH_ACCOUNT" >> $GITHUB_OUTPUT
+          echo "Space: $SPACE_NAME, Account: $GH_ACCOUNT"
+
+      - name: Create repo
+        env:
+          GH_TOKEN: ${{ secrets.ORG_ADMIN_TOKEN }}
+        run: |
+          gh repo create aipmtw/${{ steps.parse.outputs.space_name }} --public \
+            --description "Member space for ${{ steps.parse.outputs.gh_account }}"
+
+      - name: Setup project files
+        run: |
+          SPACE="${{ steps.parse.outputs.space_name }}"
+          ACCOUNT="${{ steps.parse.outputs.gh_account }}"
+          INITIAL=$(echo "$SPACE" | head -c 1 | tr '[:lower:]' '[:upper:]')
+
+          mkdir -p workspace/.github/workflows workspace/src
+          cd workspace
+
+          # package.json
+          cat > package.json << 'PKGEOF'
+          {
+            "name": "SPACE_PLACEHOLDER",
+            "private": true,
+            "version": "0.0.0",
+            "type": "module",
+            "scripts": {
+              "dev": "vite",
+              "build": "vite build",
+              "preview": "vite preview"
+            },
+            "dependencies": {
+              "react": "^19.0.0",
+              "react-dom": "^19.0.0"
+            },
+            "devDependencies": {
+              "@tailwindcss/vite": "^4.0.0",
+              "@vitejs/plugin-react": "^4.0.0",
+              "tailwindcss": "^4.0.0",
+              "vite": "^6.0.0"
+            }
+          }
+          PKGEOF
+          sed -i "s/SPACE_PLACEHOLDER/$SPACE/" package.json
+
+          # vite.config.js
+          cat > vite.config.js << VEOF
+          import { defineConfig } from 'vite'
+          import react from '@vitejs/plugin-react'
+          import tailwindcss from '@tailwindcss/vite'
+
+          export default defineConfig({
+            base: '/$SPACE/',
+            plugins: [react(), tailwindcss()],
+          })
+          VEOF
+
+          # index.html
+          cat > index.html << IEOF
+          <!doctype html>
+          <html lang="en">
+            <head>
+              <meta charset="UTF-8" />
+              <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><rect width='64' height='64' rx='12' fill='%234F46E5'/><text x='32' y='45' font-family='Arial,sans-serif' font-size='36' font-weight='bold' fill='white' text-anchor='middle'>$INITIAL</text></svg>" />
+              <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+              <title>$SPACE</title>
+            </head>
+            <body>
+              <div id="root"></div>
+              <script type="module" src="/src/main.jsx"></script>
+            </body>
+          </html>
+          IEOF
+
+          # src/main.jsx
+          cat > src/main.jsx << MEOF
+          import { StrictMode } from 'react'
+          import { createRoot } from 'react-dom/client'
+          import './index.css'
+          import App from './App.jsx'
+
+          createRoot(document.getElementById('root')).render(
+            <StrictMode>
+              <App />
+            </StrictMode>,
+          )
+          MEOF
+
+          # src/index.css
+          echo '@import "tailwindcss";' > src/index.css
+
+          # src/App.jsx
+          cat > src/App.jsx << AEOF
+          function App() {
+            return (
+              <div className="min-h-screen bg-gradient-to-br from-slate-900 via-indigo-950 to-slate-900 text-white flex flex-col">
+                <nav className="max-w-6xl mx-auto px-6 py-6 w-full">
+                  <a href="https://aipm.com.tw/" className="text-sm font-semibold text-white bg-indigo-600 hover:bg-indigo-500 px-3 py-1.5 rounded-lg transition inline-block">← aipm.com.tw</a>
+                </nav>
+                <main className="flex-1 flex flex-col items-center justify-center text-center px-6 pb-12">
+                  <h1 className="text-5xl font-extrabold tracking-tight bg-gradient-to-r from-indigo-400 to-cyan-400 bg-clip-text text-transparent">
+                    $SPACE
+                  </h1>
+                  <p className="mt-4 text-slate-400">Welcome to my space</p>
+                </main>
+              </div>
+            )
+          }
+
+          export default App
+          AEOF
+
+          # .github/workflows/deploy.yml
+          cat > .github/workflows/deploy.yml << 'DEOF'
+          name: Deploy to GitHub Pages
+
+          on:
+            push:
+              branches: [main]
+
+          permissions:
+            contents: read
+            pages: write
+            id-token: write
+
+          concurrency:
+            group: pages
+            cancel-in-progress: true
+
+          jobs:
+            build-and-deploy:
+              runs-on: ubuntu-latest
+              environment:
+                name: github-pages
+                url: ${{ steps.deployment.outputs.page_url }}
+              steps:
+                - uses: actions/checkout@v4
+                - uses: actions/setup-node@v4
+                  with:
+                    node-version: 20
+                    cache: npm
+                - run: npm ci
+                - run: npm run build
+                - uses: actions/configure-pages@v4
+                - uses: actions/upload-pages-artifact@v3
+                  with:
+                    path: dist
+                - id: deployment
+                  uses: actions/deploy-pages@v4
+          DEOF
+
+      - name: Push to repo
+        env:
+          GH_TOKEN: ${{ secrets.ORG_ADMIN_TOKEN }}
+        run: |
+          SPACE="${{ steps.parse.outputs.space_name }}"
+          cd workspace
+          git init
+          git config user.name "aipmtw-bot"
+          git config user.email "noreply@aipm.com.tw"
+          git add -A
+          git commit -m "初始建立 $SPACE 個人空間"
+          git branch -M main
+          git remote add origin "https://x-access-token:${GH_TOKEN}@github.com/aipmtw/$SPACE.git"
+          git push -u origin main
+
+      - name: Add collaborator
+        env:
+          GH_TOKEN: ${{ secrets.ORG_ADMIN_TOKEN }}
+        run: |
+          SPACE="${{ steps.parse.outputs.space_name }}"
+          ACCOUNT="${{ steps.parse.outputs.gh_account }}"
+          gh api "repos/aipmtw/$SPACE/collaborators/$ACCOUNT" -X PUT -f permission=push
+
+      - name: Configure GitHub Pages
+        env:
+          GH_TOKEN: ${{ secrets.ORG_ADMIN_TOKEN }}
+        run: |
+          SPACE="${{ steps.parse.outputs.space_name }}"
+          # Wait for the first push to be processed
+          sleep 5
+          gh api "repos/aipmtw/$SPACE/pages" -X POST -f build_type=workflow 2>/dev/null || \
+          gh api "repos/aipmtw/$SPACE/pages" -X PUT -f build_type=workflow 2>/dev/null || true
+
+      - name: Close issue with success message
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          SPACE="${{ steps.parse.outputs.space_name }}"
+          ACCOUNT="${{ steps.parse.outputs.gh_account }}"
+          gh issue comment ${{ github.event.issue.number }} -R aipmtw/aipmtw.github.io \
+            --body "✅ 空間已建立完成！
+
+          - 網站：https://aipm.com.tw/$SPACE/（部署中，約 2 分鐘後可瀏覽）
+          - 原始碼：https://github.com/aipmtw/$SPACE
+          - 協作者：$ACCOUNT 已加入
+
+          歡迎開始透過 GitHub Issues 提交需求，系統會自動處理！"
+          gh issue close ${{ github.event.issue.number }} -R aipmtw/aipmtw.github.io

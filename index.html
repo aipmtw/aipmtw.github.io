@@ -277,6 +277,42 @@
     </div>
   </section>
 
+  <!-- Apply for Space -->
+  <section class="relative z-10 max-w-lg mx-auto px-6 pb-24">
+    <div class="bg-white/5 backdrop-blur border border-white/10 rounded-2xl p-8">
+      <h2 class="text-2xl font-bold mb-2 text-center gradient-text">申請你的個人空間</h2>
+      <p class="text-slate-400 text-sm text-center mb-8">填寫以下資料，經審批後自動建立你的網站</p>
+
+      <div class="space-y-5">
+        <!-- Space Name -->
+        <div>
+          <label class="block text-sm font-medium text-slate-300 mb-1.5">空間名稱 <span class="text-slate-500 text-xs">（小寫英文、數字、連字號）</span></label>
+          <div class="flex items-center gap-2">
+            <input id="space-name" type="text" placeholder="my-space" class="flex-1 bg-white/5 border border-white/20 rounded-lg px-3 py-2.5 text-white placeholder-slate-600 text-sm focus:outline-none focus:border-indigo-500 transition" />
+            <span id="space-status" class="text-lg w-8 text-center"></span>
+          </div>
+          <p id="space-msg" class="text-xs mt-1 h-4"></p>
+        </div>
+
+        <!-- GitHub Account -->
+        <div>
+          <label class="block text-sm font-medium text-slate-300 mb-1.5">GitHub Account</label>
+          <div class="flex items-center gap-2">
+            <input id="github-account" type="text" placeholder="username" class="flex-1 bg-white/5 border border-white/20 rounded-lg px-3 py-2.5 text-white placeholder-slate-600 text-sm focus:outline-none focus:border-indigo-500 transition" />
+            <span id="github-status" class="text-lg w-8 text-center"></span>
+            <img id="github-avatar" class="w-8 h-8 rounded-full hidden" alt="" />
+          </div>
+          <p id="github-msg" class="text-xs mt-1 h-4"></p>
+        </div>
+
+        <!-- Submit -->
+        <button id="apply-btn" disabled class="w-full bg-indigo-600/50 text-white/50 font-semibold py-3 rounded-xl text-sm cursor-not-allowed transition">
+          提交申請
+        </button>
+      </div>
+    </div>
+  </section>
+
   <!-- Footer -->
   <footer class="relative z-10 border-t border-white/10 py-8 text-center text-slate-500 text-sm">
     &copy; 2026 aipm.com.tw. All rights reserved.
@@ -435,6 +471,103 @@
     });
 
     document.getElementById('check-time-btn').addEventListener('click', showCheckModal);
+
+    // ===== Apply for Space =====
+    const spaceInput = document.getElementById('space-name');
+    const spaceStatus = document.getElementById('space-status');
+    const spaceMsg = document.getElementById('space-msg');
+    const ghInput = document.getElementById('github-account');
+    const ghStatus = document.getElementById('github-status');
+    const ghMsg = document.getElementById('github-msg');
+    const ghAvatar = document.getElementById('github-avatar');
+    const applyBtn = document.getElementById('apply-btn');
+
+    let spaceValid = false, ghValid = false, spaceTimer, ghTimer;
+
+    function updateBtn() {
+      if (spaceValid && ghValid) {
+        applyBtn.disabled = false;
+        applyBtn.className = 'w-full bg-indigo-600 hover:bg-indigo-500 text-white font-semibold py-3 rounded-xl text-sm cursor-pointer transition';
+      } else {
+        applyBtn.disabled = true;
+        applyBtn.className = 'w-full bg-indigo-600/50 text-white/50 font-semibold py-3 rounded-xl text-sm cursor-not-allowed transition';
+      }
+    }
+
+    spaceInput.addEventListener('input', function() {
+      clearTimeout(spaceTimer);
+      spaceValid = false; updateBtn();
+      const name = this.value.trim();
+      if (!name) { spaceStatus.textContent = ''; spaceMsg.textContent = ''; return; }
+      spaceStatus.textContent = '...';
+      spaceMsg.textContent = '';
+      spaceTimer = setTimeout(async () => {
+        if (!/^[a-z0-9][a-z0-9-]{0,28}[a-z0-9]$/.test(name) && !/^[a-z0-9]{1,2}$/.test(name)) {
+          spaceStatus.textContent = '\u274c';
+          spaceMsg.textContent = '\u683c\u5f0f\u4e0d\u7b26\uff1a\u5c0f\u5beb\u82f1\u6587\u3001\u6578\u5b57\u3001\u9023\u5b57\u865f\uff0c2-30 \u5b57\u5143';
+          spaceMsg.className = 'text-xs mt-1 h-4 text-red-400';
+          return;
+        }
+        try {
+          const r = await fetch('https://api.github.com/repos/aipmtw/' + name);
+          if (r.status === 404) {
+            spaceValid = true; updateBtn();
+            spaceStatus.textContent = '\u2705';
+            spaceMsg.textContent = '\u540d\u7a31\u53ef\u7528';
+            spaceMsg.className = 'text-xs mt-1 h-4 text-emerald-400';
+          } else {
+            spaceStatus.textContent = '\u274c';
+            spaceMsg.textContent = '\u540d\u7a31\u5df2\u88ab\u4f7f\u7528';
+            spaceMsg.className = 'text-xs mt-1 h-4 text-red-400';
+          }
+        } catch(e) {
+          spaceStatus.textContent = '\u26a0\ufe0f';
+          spaceMsg.textContent = '\u7db2\u8def\u932f\u8aa4\uff0c\u8acb\u7a0d\u5f8c\u518d\u8a66';
+          spaceMsg.className = 'text-xs mt-1 h-4 text-yellow-400';
+        }
+      }, 500);
+    });
+
+    ghInput.addEventListener('input', function() {
+      clearTimeout(ghTimer);
+      ghValid = false; updateBtn();
+      ghAvatar.classList.add('hidden');
+      const username = this.value.trim();
+      if (!username) { ghStatus.textContent = ''; ghMsg.textContent = ''; return; }
+      ghStatus.textContent = '...';
+      ghMsg.textContent = '';
+      ghTimer = setTimeout(async () => {
+        try {
+          const r = await fetch('https://api.github.com/users/' + username);
+          if (r.ok) {
+            const data = await r.json();
+            ghValid = true; updateBtn();
+            ghStatus.textContent = '\u2705';
+            ghMsg.textContent = data.name || username;
+            ghMsg.className = 'text-xs mt-1 h-4 text-emerald-400';
+            ghAvatar.src = data.avatar_url;
+            ghAvatar.classList.remove('hidden');
+          } else {
+            ghStatus.textContent = '\u274c';
+            ghMsg.textContent = '\u5e33\u865f\u4e0d\u5b58\u5728';
+            ghMsg.className = 'text-xs mt-1 h-4 text-red-400';
+          }
+        } catch(e) {
+          ghStatus.textContent = '\u26a0\ufe0f';
+          ghMsg.textContent = '\u7db2\u8def\u932f\u8aa4';
+          ghMsg.className = 'text-xs mt-1 h-4 text-yellow-400';
+        }
+      }, 500);
+    });
+
+    applyBtn.addEventListener('click', function() {
+      if (!spaceValid || !ghValid) return;
+      const name = spaceInput.value.trim();
+      const account = ghInput.value.trim();
+      const title = encodeURIComponent('[申請空間] ' + name + ' - ' + account);
+      const body = encodeURIComponent('空間名稱：' + name + '\nGitHub：' + account + '\n驗證狀態：✅ 名稱可用 ✅ 帳號存在\n\n---\n管理員請留言 `/approve` 核准建立。');
+      window.open('https://github.com/aipmtw/aipmtw.github.io/issues/new?title=' + title + '&body=' + body + '&labels=申請空間', '_blank');
+    });
 
     // Fuzzy search filter
     document.getElementById('card-filter').addEventListener('input', function(e) {
