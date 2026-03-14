@@ -7,9 +7,10 @@ on:
 jobs:
   create-space:
     if: |
-      github.event.comment.body == '/approve' &&
+      contains(github.event.comment.body, '/approve') &&
       github.event.comment.user.login == 'aipmtw' &&
-      startsWith(github.event.issue.title, '[申請空間]')
+      startsWith(github.event.issue.title, '[申請空間]') &&
+      github.event.issue.state == 'open'
     runs-on: ubuntu-latest
     permissions:
       issues: write

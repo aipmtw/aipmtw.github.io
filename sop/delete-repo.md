@@ -3,17 +3,25 @@
 ## 權限說明
 
 - **只有組織管理員（aipmtw）可以刪除 repo**
-- 一般 Collaborator（push 權限）無法刪除 repo
-- 刪除需透過管理員操作或提交 Issue 申請
+- 一般 Collaborator（push 權限）無法直接刪除 repo
+- 刪除必須透過 Issue 申請 + 管理員 `/approve`
 
 ## 刪除方式
 
-### 方式一：成員提交 Issue 申請刪除
+### 方式一：成員透過 Issue 申請刪除（標準流程）
 
-成員在 aipmtw.github.io repo 建立 Issue，標題格式：`[刪除空間] {空間名稱}`
-管理員確認後執行刪除。
+1. 成員在 aipmtw.github.io repo 建立 Issue
+   - 標題格式：`[刪除空間] {空間名稱} - {GitHub Account}`
+   - 內文需包含簽章（Sign），由系統或手動計算
+   - Sign = SHA-256(`aipmtw-2026-delete|{name}|{account}`) 前 16 碼
+2. 管理員確認後在 Issue 留言 `/approve`
+3. GitHub Actions `delete-space.yml` 自動執行：
+   - 驗證簽章（防竄改）
+   - 驗證標題與內文一致性
+   - 刪除 repo
+   - 留言通知並關閉 Issue
 
-### 方式二：管理員直接刪除
+### 方式二：管理員直接刪除（手動）
 
 ```bash
 # 1. 刪除 repo
@@ -35,17 +43,19 @@ rm -rf C:/2026aipm-projects/{name}
 ### /check-issues 自動清理
 
 每次巡檢卡片同步時：
-- 若 repo 已不存在（API 回傳 404）→ 自動執行：
-  1. 移除 index.html 中對應的卡片區塊
-  2. 移除 `issueData` / `repoNames` 中該 repo 的資料
-  3. 移除 `checkResult.details` 中該 repo
-  4. Commit push 更新首頁
-  5. 巡檢報告中記錄「🗑️ {name} repo 已刪除，卡片已移除」
+- 若 repo 已不存在（API 回傳 404）→ 自動移除卡片、issueData、repoNames 等
+- 巡檢報告記錄「🗑️ {name} repo 已刪除，卡片已移除」
 
 ## 刪除後效果
 
 - 該用戶的空間數 -1，可再次申請新空間
-- 該空間名稱重新開放，其他人可申請
+- 該空間名稱重新開放
 - GitHub Pages 自動停止
-- aipm.com.tw/{name}/ 將返回 404
-- repo 刪除後無法恢復，所有 commit 歷史消失
+- repo 刪除後無法恢復
+
+## 簽章驗證
+
+刪除申請同樣採用 SHA-256 簽章驗證：
+- Salt: `aipmtw-2026-delete`
+- 格式: `SHA-256(aipmtw-2026-delete|{name}|{account})` 取前 16 碼
+- 簽章不符或缺失 → 拒絕刪除並留言說明

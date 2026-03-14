@@ -1,0 +1,65 @@
+name: Delete Member Space
+
+on:
+  issue_comment:
+    types: [created]
+
+jobs:
+  delete-space:
+    if: |
+      contains(github.event.comment.body, '/approve') &&
+      github.event.comment.user.login == 'aipmtw' &&
+      startsWith(github.event.issue.title, '[刪除空間]') &&
+      github.event.issue.state == 'open'
+    runs-on: ubuntu-latest
+    permissions:
+      issues: write
+    steps:
+      - name: Parse and verify
+        id: parse
+        env:
+          ISSUE_BODY: ${{ github.event.issue.body }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          TITLE="${{ github.event.issue.title }}"
+          SPACE_NAME=$(echo "$TITLE" | sed 's/\[刪除空間\] //' | sed 's/ - .*//')
+          GH_ACCOUNT=$(echo "$TITLE" | sed 's/.* - //')
+
+          # Extract Sign from body
+          BODY_SIGN=$(echo "$ISSUE_BODY" | grep -oP 'Sign：\K[a-f0-9]+' || echo "")
+          BODY_SPACE=$(echo "$ISSUE_BODY" | grep -oP '空間名稱：\K\S+' || echo "")
+
+          # Verify consistency
+          if [ "$SPACE_NAME" != "$BODY_SPACE" ]; then
+            gh issue comment ${{ github.event.issue.number }} -R aipmtw/aipmtw.github.io \
+              --body "❌ **刪除被拒絕**：標題與內文不一致。"
+            exit 1
+          fi
+
+          # Verify signature
+          EXPECTED_SIGN=$(echo -n "aipmtw-2026-delete|${SPACE_NAME}|${GH_ACCOUNT}" | sha256sum | cut -c1-16)
+          if [ "$BODY_SIGN" != "$EXPECTED_SIGN" ]; then
+            gh issue comment ${{ github.event.issue.number }} -R aipmtw/aipmtw.github.io \
+              --body "❌ **刪除被拒絕**：簽章驗證失敗，請透過正式流程提交刪除申請。"
+            exit 1
+          fi
+
+          echo "✅ 簽章驗證通過"
+          echo "space_name=$SPACE_NAME" >> $GITHUB_OUTPUT
+          echo "gh_account=$GH_ACCOUNT" >> $GITHUB_OUTPUT
+
+      - name: Delete repo
+        env:
+          GH_TOKEN: ${{ secrets.ORG_ADMIN_TOKEN }}
+        run: |
+          SPACE="${{ steps.parse.outputs.space_name }}"
+          gh repo delete "aipmtw/$SPACE" --yes
+
+      - name: Close issue
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          SPACE="${{ steps.parse.outputs.space_name }}"
+          gh issue comment ${{ github.event.issue.number }} -R aipmtw/aipmtw.github.io \
+            --body "✅ 空間 **${SPACE}** 已刪除。首頁卡片將在下次巡檢時自動移除。"
+          gh issue close ${{ github.event.issue.number }} -R aipmtw/aipmtw.github.io

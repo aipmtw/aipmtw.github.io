@@ -74,8 +74,20 @@ gh api repos/aipmtw/{name}/pages -X POST -f build_type=workflow
 - 將 repo 納入 check-issues / check-actions 巡檢範圍
 - 同步卡片資訊（commit 時間、有效提交數）
 
+## 簽章驗證（防竄改）
+
+Issue 內文包含 SHA-256 簽章，防止用戶在提交後修改內容：
+- Salt: `aipmtw-2026`
+- 格式: `SHA-256(aipmtw-2026|{name}|{account})` 取前 16 碼
+- `/approve` 執行前驗證：
+  - 簽章存在且正確
+  - Issue 標題與內文的名稱/帳號一致
+- 驗證失敗 → 拒絕建立，留言說明原因
+
 ## 限制
 
 - 每位 GitHub 用戶最多 2 個個人空間
 - 空間名稱格式：`[a-z0-9][a-z0-9-]{0,28}[a-z0-9]`
 - 不可與現有 repo 或待審批申請重名
+- Issue 必須由申請人本人建立（追溯身份）
+- Issue 內容不可修改（簽章驗證）
