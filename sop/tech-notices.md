@@ -21,6 +21,13 @@
 5. 前往 https://github.com/aipmtw/aipmtw.github.io/settings/secrets/actions
 6. 更新 `ORG_ADMIN_TOKEN` 的值
 
+## Git Clone 後不可再 git init + remote add
+
+- `git clone` 後 origin remote 已存在
+- **錯誤**：`git init` + `git remote add origin` → `error: remote origin already exists`
+- **正確**：clone 後直接 `git add` → `git commit` → `git push`
+- 若需更換 URL：用 `git remote set-url origin <url>`
+
 ## GitHub Template Repo 注意事項
 
 - `gh repo create --template` 有時不會立即複製檔案（repo 顯示 size=0）
