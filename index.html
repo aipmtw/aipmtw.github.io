@@ -1057,18 +1057,6 @@
       });
     });
 
-    // Add floating "我要下達需求" button to each card
-    document.querySelectorAll('#cards-grid [data-search]').forEach(card => {
-      const issueLink = card.querySelector('a[href$="/issues"]');
-      if (!issueLink) return;
-      const btn = document.createElement('a');
-      btn.href = issueLink.href;
-      btn.target = '_blank';
-      btn.rel = 'noopener noreferrer';
-      btn.className = 'absolute top-3 right-3 text-xs bg-amber-500/80 hover:bg-amber-500 text-white px-2 py-1 rounded-lg font-medium transition z-10 no-underline';
-      btn.textContent = '我要下達需求';
-      card.appendChild(btn);
-    });
 
     // Shuffle cards on page load
     (function() {
