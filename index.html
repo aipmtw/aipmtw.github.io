@@ -1092,18 +1092,30 @@
         try {
           const r = await fetch('https://api.github.com/repos/aipmtw/' + name);
           if (r.ok) {
-            // Check if user is collaborator
+            const repoData = await r.json();
+            // Check if user is repo owner or collaborator
             const account = window._dnGithubAccount;
             if (account) {
-              const cr = await fetch('https://api.github.com/repos/aipmtw/' + name + '/collaborators/' + account);
-              if (cr.status === 204) {
+              let authorized = false;
+              let role = '';
+              // 1. Check if user is the repo owner
+              if (repoData.owner && repoData.owner.login.toLowerCase() === account.toLowerCase()) {
+                authorized = true;
+                role = 'Owner';
+              }
+              // 2. Check direct collaborator
+              if (!authorized) {
+                const cr = await fetch('https://api.github.com/repos/aipmtw/' + name + '/collaborators/' + account);
+                if (cr.status === 204) { authorized = true; role = 'Collaborator'; }
+              }
+              if (authorized) {
                 dnSpaceValid = true; updateDnBtn();
                 dnSpaceStatus.textContent = '\u2705';
-                dnSpaceMsg.textContent = '空間存在，你是 Collaborator';
+                dnSpaceMsg.textContent = '空間存在，身分：' + role;
                 dnSpaceMsg.className = 'text-xs mt-1 h-4 text-emerald-400';
               } else {
                 dnSpaceStatus.textContent = '\u274c';
-                dnSpaceMsg.textContent = '你不是此空間的 Collaborator';
+                dnSpaceMsg.textContent = '你不是此空間的 Owner 或 Collaborator';
                 dnSpaceMsg.className = 'text-xs mt-1 h-4 text-red-400';
               }
             } else {
