@@ -76,7 +76,7 @@ gh api repos/aipmtw/{name}/pages -X POST -f build_type=workflow
 ## 建立後自動處理
 
 下次 `/do-issues` 巡檢時會自動：
-- 在 aipm.com.tw 首頁新增該成員的卡片
+- 偵測新 repo 並 `upsert-repo` 寫入 Supabase，首頁自動顯示新卡片
 - 將 repo 納入 do-issues / check-actions 巡檢範圍
 - 同步卡片資訊（commit 時間、有效提交數）
 

@@ -42,9 +42,9 @@ rm -rf C:/2026aipm-projects/{name}
 
 ### /do-issues 自動清理
 
-每次巡檢卡片同步時：
-- 若 repo 已不存在（API 回傳 404）→ 自動移除卡片、issueData、repoNames 等
-- 巡檢報告記錄「🗑️ {name} repo 已刪除，卡片已移除」
+每次巡檢時：
+- 若 repo 已不存在（API 回傳 404）→ 執行 `supabase-helper.js deactivate-repo` 標記停用，首頁自動不顯示
+- 巡檢報告記錄「🗑️ {name} repo 已刪除，已標記停用」
 
 ## 刪除後效果
 

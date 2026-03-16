@@ -53,13 +53,14 @@
 ### 5. 報告與同步
 
 1. 寫入巡檢報告（logs/ 和 aitech/）
-2. 更新首頁（aipmtw.github.io/index.html）：
-   - 巡檢時間
-   - 各 repo 卡片資訊（commit hash、時間、有效提交數）
-   - checkResult 彈窗資料
-   - issueData 需求紀錄
-   - 新增/刪除 repo 偵測
-3. commit push 所有變更
+2. 使用 `supabase-helper.js` 同步資料到 Supabase 資料庫：
+   - `upsert-repo`：各 repo 資訊（commit hash、時間、有效提交數）
+   - `upsert-issue`：各 repo 最近已完成 issue 紀錄
+   - `add-check`：巡檢結果摘要與各 repo 詳情
+   - 新增 repo 偵測（自動 INSERT）
+   - 已刪除 repo 清理（`deactivate-repo`）
+3. commit push 巡檢 log 到 2026biz repo
+4. **不再編輯 index.html**，前端自動從 Supabase 讀取最新資料
 
 ## 輸出檔案
 

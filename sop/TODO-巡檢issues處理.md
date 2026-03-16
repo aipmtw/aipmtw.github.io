@@ -2,7 +2,7 @@
 
 ## 高優先
 
-- [ ] **Supabase 整合**：巡檢結果寫入資料庫而非改寫 HTML，消除 commit hash 遞迴問題（見 `plan/aipmtw-dashboard-enhancement.md`）
+- [x] **Supabase 整合**：巡檢結果寫入資料庫而非改寫 HTML，消除 commit hash 遞迴問題 ✅ 已完成，使用 supabase-helper.js（upsert-repo, upsert-issue, add-check）
 - [ ] **`/approve` 自動處理**：目前管理員留言 `/approve` 後需等下次巡檢才會處理，考慮用 GitHub Actions 監聽 `/approve` 留言即時觸發處理
 - [ ] **巡檢失敗通知**：若巡檢中途出錯（API 逾時、push 失敗），目前無通知機制，考慮加入 Slack/Email 告警
 
