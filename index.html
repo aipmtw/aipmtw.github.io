@@ -47,6 +47,9 @@
     <a href="/" class="text-xl font-bold tracking-tight">
       <span class="text-indigo-400">AIPM</span> TW
     </a>
+    <button id="changenote-btn" class="text-xs bg-amber-500/20 hover:bg-amber-500/30 text-amber-300 border border-amber-500/30 px-3 py-1.5 rounded-lg cursor-pointer transition font-medium">
+      重大改版記要
+    </button>
   </nav>
 
   <!-- Notice -->
@@ -180,6 +183,17 @@
       <button onclick="closeModal()" class="absolute top-4 right-4 text-slate-400 hover:text-white text-xl">&times;</button>
       <h3 id="modal-title" class="text-lg font-bold text-white mb-4"></h3>
       <div id="modal-content" class="space-y-3"></div>
+    </div>
+  </div>
+
+  <!-- Changenote Modal -->
+  <div id="changenote-modal" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/60 backdrop-blur-sm">
+    <div class="bg-slate-800 border border-amber-500/20 rounded-2xl shadow-2xl max-w-lg w-full mx-4 p-6 relative max-h-[80vh] overflow-y-auto">
+      <button onclick="closeChangenoteModal()" class="absolute top-4 right-4 text-slate-400 hover:text-white text-xl">&times;</button>
+      <h3 class="text-lg font-bold text-amber-300 mb-4">重大改版記要</h3>
+      <div id="changenote-content" class="space-y-4 text-sm">
+        <p class="text-slate-500">載入中...</p>
+      </div>
     </div>
   </div>
 
@@ -373,6 +387,75 @@
       });
     });
 
+    // ===== Changenote Modal =====
+    function parseChangenote(raw) {
+      const lines = raw.split('\n');
+      let date = '', title = '', body = '';
+      let inFrontmatter = false, frontmatterDone = false;
+      for (const line of lines) {
+        if (line.trim() === '---' && !frontmatterDone) {
+          if (inFrontmatter) { frontmatterDone = true; continue; }
+          inFrontmatter = true; continue;
+        }
+        if (inFrontmatter && !frontmatterDone) {
+          const m = line.match(/^(\w+):\s*(.+)/);
+          if (m) { if (m[1] === 'date') date = m[2].trim(); if (m[1] === 'title') title = m[2].trim(); }
+          continue;
+        }
+        body += line + '\n';
+      }
+      return { date, title, body: body.trim() };
+    }
+
+    async function loadChangenotes() {
+      try {
+        const indexRes = await fetch('/changenote/index.json');
+        if (!indexRes.ok) return;
+        const files = await indexRes.json();
+        const notes = [];
+        for (const file of files) {
+          const res = await fetch('/changenote/' + file);
+          if (res.ok) notes.push(parseChangenote(await res.text()));
+        }
+        notes.sort((a, b) => b.date.localeCompare(a.date));
+
+        const content = document.getElementById('changenote-content');
+        if (notes.length === 0) {
+          content.innerHTML = '<p class="text-slate-500">目前沒有改版記要</p>';
+          return;
+        }
+        content.innerHTML = notes.map(n => `
+          <div class="bg-white/5 border border-white/10 rounded-xl p-4">
+            <div class="flex items-center gap-2 mb-2">
+              <span class="text-xs bg-amber-500/20 text-amber-300 px-2 py-0.5 rounded">${n.date}</span>
+              <span class="text-white font-medium">${n.title}</span>
+            </div>
+            <div class="text-slate-300 text-sm leading-relaxed">${n.body.split('\n').filter(l => l.trim()).map(l => {
+              if (l.startsWith('- ')) return '<div class="flex gap-2 mt-1"><span class="text-amber-400/60">-</span><span>' + l.slice(2) + '</span></div>';
+              return '<p class="mt-1">' + l + '</p>';
+            }).join('')}</div>
+          </div>
+        `).join('');
+      } catch (e) {
+        document.getElementById('changenote-content').innerHTML = '<p class="text-slate-500">載入失敗</p>';
+      }
+    }
+
+    window.closeChangenoteModal = function() {
+      const modal = document.getElementById('changenote-modal');
+      modal.classList.add('hidden');
+      modal.classList.remove('flex');
+    };
+    document.getElementById('changenote-modal').addEventListener('click', function(e) {
+      if (e.target === this) closeChangenoteModal();
+    });
+    document.getElementById('changenote-btn').addEventListener('click', function() {
+      const modal = document.getElementById('changenote-modal');
+      modal.classList.remove('hidden');
+      modal.classList.add('flex');
+      loadChangenotes();
+    });
+
     // ===== Load all data =====
     async function init() {
       try {
@@ -383,7 +466,6 @@
 
         if (reposResult.data) {
           renderCards(reposResult.data);
-          // Update page info
           document.getElementById('page-update-info').textContent = '資料來源：Supabase 即時資料庫';
         } else {
           document.getElementById('cards-loading').textContent = '資料載入失敗，請重新整理頁面';
