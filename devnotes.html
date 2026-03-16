@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><rect width='64' height='64' rx='12' fill='%234F46E5'/><text x='32' y='28' font-family='Arial,sans-serif' font-size='16' font-weight='bold' fill='white' text-anchor='middle'>AIPM</text><text x='32' y='48' font-family='Arial,sans-serif' font-size='16' font-weight='bold' fill='%2322D3EE' text-anchor='middle'>TW</text></svg>" />
+  <title>Dev Daily Notes - AIPM TW</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+TC:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    body { font-family: 'Noto Sans TC', 'Inter', system-ui, sans-serif; }
+    html { scroll-behavior: smooth; }
+  </style>
+</head>
+<body class="min-h-screen bg-gradient-to-br from-slate-900 via-indigo-950 to-slate-900 text-white">
+
+  <!-- Fixed Nav -->
+  <nav class="fixed top-0 left-0 right-0 z-40 bg-slate-900/90 backdrop-blur-lg border-b border-white/10">
+    <div class="max-w-3xl mx-auto px-4 flex items-center justify-between h-12">
+      <a href="/" class="text-sm font-bold text-white shrink-0"><span class="text-indigo-400">AIPM</span> TW</a>
+      <div class="flex items-center gap-2">
+        <span class="text-xs text-cyan-400 font-medium">Dev Daily Notes</span>
+        <a href="/" class="text-xs text-slate-500 hover:text-slate-300 px-2 py-1 rounded transition">&larr; 返回首頁</a>
+      </div>
+    </div>
+  </nav>
+
+  <main class="max-w-3xl mx-auto px-6 pt-20 pb-16">
+    <!-- Header -->
+    <div class="text-center mb-12">
+      <h1 class="text-4xl font-extrabold tracking-tight mb-3">
+        <span class="bg-gradient-to-r from-cyan-400 to-indigo-400 bg-clip-text text-transparent" style="-webkit-background-clip:text;-webkit-text-fill-color:transparent;">Dev Daily Notes</span>
+      </h1>
+      <p class="text-slate-400 text-sm">AIPM TW 平台每日開發進展記錄</p>
+    </div>
+
+    <!-- Loading -->
+    <div id="loading" class="text-center text-slate-500 py-8">載入中...</div>
+
+    <!-- Notes Container -->
+    <div id="notes-container" class="hidden space-y-6"></div>
+
+    <!-- Pagination -->
+    <div id="pagination" class="hidden flex items-center justify-center gap-4 mt-12">
+      <button id="prev-btn" class="text-sm bg-white/5 hover:bg-white/10 border border-white/10 text-slate-300 px-4 py-2 rounded-lg transition disabled:opacity-30 disabled:cursor-not-allowed cursor-pointer">
+        &larr; 更近期
+      </button>
+      <span id="page-info" class="text-xs text-slate-500"></span>
+      <button id="next-btn" class="text-sm bg-white/5 hover:bg-white/10 border border-white/10 text-slate-300 px-4 py-2 rounded-lg transition disabled:opacity-30 disabled:cursor-not-allowed cursor-pointer">
+        更早期 &rarr;
+      </button>
+    </div>
+
+    <!-- Empty State -->
+    <div id="empty-state" class="hidden text-center py-16">
+      <p class="text-slate-500 text-sm">目前沒有 Dev Notes</p>
+    </div>
+  </main>
+
+  <footer class="border-t border-white/10 py-8 text-center text-slate-500 text-sm">
+    &copy; 2026 aipm.com.tw. All rights reserved.
+  </footer>
+
+  <script type="module">
+    import { createClient } from 'https://esm.sh/@supabase/supabase-js@2'
+    const supabase = createClient('https://reipdepbltfbfxnjjegy.supabase.co', 'sb_publishable_osbwITQrUCmW5pNYgT__Ig_Zz0l5I9Y');
+
+    const REPO_ID = 'aipmtw.github.io';
+    const PER_PAGE = 10;
+    let currentPage = 0;
+    let allNotes = [];
+
+    function formatDate(dateStr) {
+      const d = new Date(dateStr + 'T00:00:00+08:00');
+      const weekdays = ['日', '一', '二', '三', '四', '五', '六'];
+      return dateStr + '（' + weekdays[d.getDay()] + '）';
+    }
+
+    function renderPage() {
+      const container = document.getElementById('notes-container');
+      const start = currentPage * PER_PAGE;
+      const end = start + PER_PAGE;
+      const pageNotes = allNotes.slice(start, end);
+
+      if (pageNotes.length === 0 && currentPage === 0) {
+        document.getElementById('empty-state').classList.remove('hidden');
+        container.classList.add('hidden');
+        document.getElementById('pagination').classList.add('hidden');
+        return;
+      }
+
+      container.classList.remove('hidden');
+      document.getElementById('pagination').classList.remove('hidden');
+
+      // Group by date
+      const byDate = {};
+      pageNotes.forEach(n => {
+        if (!byDate[n.date]) byDate[n.date] = [];
+        byDate[n.date].push(n);
+      });
+
+      container.innerHTML = Object.entries(byDate).map(([date, notes]) => {
+        return `
+        <div class="relative">
+          <div class="sticky top-14 z-10 bg-slate-900/95 backdrop-blur-sm py-2 mb-3 border-b border-cyan-500/20">
+            <h2 class="text-lg font-bold text-cyan-400">${formatDate(date)}</h2>
+          </div>
+          <div class="space-y-4 pl-4 border-l-2 border-cyan-500/20">
+            ${notes.map(n => {
+              const author = n.user_profiles?.display_name || n.user_profiles?.email?.split('@')[0] || '系統';
+              const lines = n.content.split('\n');
+              const title = lines[0] || '';
+              const body = lines.slice(1).join('\n').trim();
+              return `
+              <div class="relative bg-white/5 border border-white/10 rounded-xl p-5 hover:border-cyan-500/20 transition">
+                <div class="absolute -left-[1.3rem] top-6 w-2.5 h-2.5 rounded-full bg-cyan-500 border-2 border-slate-900"></div>
+                <h3 class="text-base font-bold text-white mb-2">${title}</h3>
+                ${body ? `<div class="text-sm text-slate-300 leading-relaxed whitespace-pre-wrap">${body}</div>` : ''}
+                <div class="flex items-center gap-3 mt-3 pt-3 border-t border-white/5">
+                  <span class="text-xs text-indigo-300">${author}</span>
+                  <span class="text-xs text-slate-600">${new Date(n.created_at).toLocaleString('sv-SE', { timeZone: 'Asia/Taipei' })}</span>
+                </div>
+              </div>`;
+            }).join('')}
+          </div>
+        </div>`;
+      }).join('');
+
+      // Pagination state
+      const totalPages = Math.ceil(allNotes.length / PER_PAGE);
+      document.getElementById('page-info').textContent = '第 ' + (currentPage + 1) + ' / ' + totalPages + ' 頁（共 ' + allNotes.length + ' 篇）';
+      document.getElementById('prev-btn').disabled = currentPage === 0;
+      document.getElementById('next-btn').disabled = end >= allNotes.length;
+    }
+
+    async function loadAllNotes() {
+      const { data, error } = await supabase
+        .from('daily_notes')
+        .select('*, user_profiles(display_name, email)')
+        .eq('repo_id', REPO_ID)
+        .eq('visibility', 'public')
+        .order('date', { ascending: false })
+        .order('created_at', { ascending: false })
+        .limit(200);
+
+      document.getElementById('loading').classList.add('hidden');
+
+      if (error || !data) {
+        document.getElementById('empty-state').classList.remove('hidden');
+        return;
+      }
+
+      allNotes = data;
+      renderPage();
+    }
+
+    document.getElementById('prev-btn').addEventListener('click', () => {
+      if (currentPage > 0) { currentPage--; renderPage(); window.scrollTo(0, 0); }
+    });
+    document.getElementById('next-btn').addEventListener('click', () => {
+      if ((currentPage + 1) * PER_PAGE < allNotes.length) { currentPage++; renderPage(); window.scrollTo(0, 0); }
+    });
+
+    loadAllNotes();
+  </script>
+</body>
+</html>
