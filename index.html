@@ -407,14 +407,16 @@
       return { date, title, body: body.trim() };
     }
 
+    const CHANGENOTE_BASE = 'https://raw.githubusercontent.com/aipmtw/aipmtw.github.io/main/changenote/';
+
     async function loadChangenotes() {
       try {
-        const indexRes = await fetch('/changenote/index.json');
+        const indexRes = await fetch(CHANGENOTE_BASE + 'index.json');
         if (!indexRes.ok) return;
         const files = await indexRes.json();
         const notes = [];
         for (const file of files) {
-          const res = await fetch('/changenote/' + file);
+          const res = await fetch(CHANGENOTE_BASE + file);
           if (res.ok) notes.push(parseChangenote(await res.text()));
         }
         notes.sort((a, b) => b.date.localeCompare(a.date));
