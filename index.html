@@ -30,8 +30,10 @@
     .float-animation { animation: float 6s ease-in-out infinite; }
     html { scroll-behavior: smooth; }
     section[id] { scroll-margin-top: 60px; }
-    #section-nav { transition: opacity 0.3s, transform 0.3s; }
-    #section-nav.nav-hidden { opacity: 0; transform: translateY(-100%); pointer-events: none; }
+    #section-nav { transition: transform 0.3s; }
+    #section-nav.nav-collapsed { transform: translateY(-100%); }
+    #nav-toggle { transition: transform 0.3s, opacity 0.3s; }
+    #nav-toggle.toggle-hidden { opacity: 0; pointer-events: none; }
     .scrollbar-hide::-webkit-scrollbar { display: none; }
     .scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
     .float-delay-1 { animation-delay: 1s; }
@@ -39,7 +41,7 @@
     .float-delay-3 { animation-delay: 3s; }
   </style>
 </head>
-<body class="min-h-screen bg-gradient-to-br from-slate-900 via-indigo-950 to-slate-900 text-white font-sans">
+<body class="min-h-screen bg-gradient-to-br from-slate-900 via-indigo-950 to-slate-900 text-white font-sans pt-12">
 
   <!-- Background decoration -->
   <div class="fixed inset-0 pointer-events-none overflow-hidden">
@@ -231,20 +233,28 @@
   </section>
 
   <!-- Sticky Section Nav -->
-  <div id="section-nav" class="fixed top-0 left-0 right-0 z-40 nav-hidden">
+  <!-- Sticky Section Nav (always visible, user can hide) -->
+  <div id="section-nav" class="fixed top-0 left-0 right-0 z-40">
     <div class="bg-slate-900/90 backdrop-blur-lg border-b border-white/10">
       <div class="max-w-6xl mx-auto px-4 flex items-center justify-between h-12">
         <a href="#" class="text-sm font-bold text-white shrink-0"><span class="text-indigo-400">AIPM</span> TW</a>
-        <div class="flex gap-1 overflow-x-auto scrollbar-hide">
+        <div class="flex gap-1 overflow-x-auto scrollbar-hide flex-1 mx-3">
           <a href="#members" class="nav-item text-xs text-slate-400 hover:text-white px-2.5 py-1.5 rounded-lg hover:bg-white/10 transition whitespace-nowrap">作品集</a>
           <a href="#daily-notes-showcase" class="nav-item text-xs text-slate-400 hover:text-white px-2.5 py-1.5 rounded-lg hover:bg-white/10 transition whitespace-nowrap">Daily Notes</a>
           <a href="#apply-space" class="nav-item text-xs text-slate-400 hover:text-white px-2.5 py-1.5 rounded-lg hover:bg-white/10 transition whitespace-nowrap">申請空間</a>
           <a href="#delete-space" class="nav-item text-xs text-slate-400 hover:text-white px-2.5 py-1.5 rounded-lg hover:bg-white/10 transition whitespace-nowrap">刪除空間</a>
           <a href="#daily-notes-section" class="nav-item text-xs text-slate-400 hover:text-white px-2.5 py-1.5 rounded-lg hover:bg-white/10 transition whitespace-nowrap logged-in-only hidden">申請日記</a>
         </div>
+        <button id="nav-collapse-btn" class="text-slate-500 hover:text-white transition shrink-0 p-1 cursor-pointer" title="隱藏導覽列">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7"/></svg>
+        </button>
       </div>
     </div>
   </div>
+  <!-- Floating toggle to show nav when hidden -->
+  <button id="nav-toggle" class="fixed top-3 right-3 z-50 bg-indigo-600/80 hover:bg-indigo-500 text-white w-9 h-9 rounded-full flex items-center justify-center shadow-lg backdrop-blur transition cursor-pointer toggle-hidden" title="顯示導覽列">
+    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
+  </button>
 
   <!-- Footer -->
   <footer class="relative z-10 border-t border-white/10 py-8 text-center text-slate-500 text-sm">
@@ -876,21 +886,30 @@
 
     // ===== Sticky Section Nav =====
     const sectionNav = document.getElementById('section-nav');
-    const heroEl = document.querySelector('header');
+    const navToggle = document.getElementById('nav-toggle');
+    const navCollapseBtn = document.getElementById('nav-collapse-btn');
     const navItems = document.querySelectorAll('#section-nav .nav-item');
     const sectionIds = ['members', 'daily-notes-showcase', 'apply-space', 'delete-space', 'daily-notes-section'];
 
-    // Show/hide nav on scroll
-    let lastScroll = 0;
-    window.addEventListener('scroll', () => {
-      const heroBottom = heroEl ? heroEl.getBoundingClientRect().bottom : 300;
-      if (heroBottom < 0) {
-        sectionNav.classList.remove('nav-hidden');
-      } else {
-        sectionNav.classList.add('nav-hidden');
-      }
+    // Collapse/expand nav
+    navCollapseBtn.addEventListener('click', () => {
+      sectionNav.classList.add('nav-collapsed');
+      navToggle.classList.remove('toggle-hidden');
+      localStorage.setItem('navHidden', '1');
+    });
+    navToggle.addEventListener('click', () => {
+      sectionNav.classList.remove('nav-collapsed');
+      navToggle.classList.add('toggle-hidden');
+      localStorage.setItem('navHidden', '0');
+    });
+    // Restore preference
+    if (localStorage.getItem('navHidden') === '1') {
+      sectionNav.classList.add('nav-collapsed');
+      navToggle.classList.remove('toggle-hidden');
+    }
 
-      // Highlight active section
+    // Highlight active section on scroll
+    window.addEventListener('scroll', () => {
       let activeId = '';
       for (const id of sectionIds) {
         const el = document.getElementById(id);
