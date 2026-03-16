@@ -21,13 +21,17 @@
 
 對每個 open issue 依序檢查：
 
-| 條件 | 動作 |
-|------|------|
-| 標題以 `[申請空間]` 或 `[刪除空間]` 開頭 | 跳過，等待管理員 `/approve` |
-| 提交者是該 repo 的 Collaborator | 正常處理 |
-| 提交者非 Collaborator | 留言提示需 `/approve`，不關閉 |
+| 優先序 | 條件 | 動作 |
+|--------|------|------|
+| 1 | 標題以 `[申請空間]` 或 `[刪除空間]` 開頭 | 跳過，等待管理員 `/approve` |
+| 2 | 標題以 `[申請日記功能]` 開頭 | Collaborator/Owner 提交 → 直接處理（無需 /approve） |
+| 3 | 提交者是該 repo 的 Owner | 正常處理 |
+| 4 | 提交者是該 repo 的 Collaborator | 正常處理 |
+| 5 | 提交者非授權用戶 | 留言提示需 `/approve`，不關閉 |
 
-**重要**：每次巡檢都必須即時查詢 collaborator 清單（`gh api repos/aipmtw/<repo>/collaborators`），不得使用快取或歷史記錄。
+**重要**：
+- 每次巡檢都必須即時查詢 collaborator 清單（`gh api repos/aipmtw/<repo>/collaborators`），不得使用快取或歷史記錄
+- Owner 檢查：`gh api repos/aipmtw/<repo> --jq '.owner.login'`，owner 不在 collaborator API 回傳中
 
 ### 3. 處理授權 Issue
 
