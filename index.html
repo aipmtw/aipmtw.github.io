@@ -54,8 +54,8 @@
     <p class="text-lg font-bold text-indigo-300 bg-indigo-500/10 border border-indigo-500/20 rounded-xl px-6 py-4">
       設置每小時檢查一次 issues, 有新的要求即自動運行, 限定必需是 Collaborator 人員提交的才算數。
     </p>
-    <p class="text-slate-400 text-sm mt-3">頁面最後更新：2026-03-15 21:01:10 (台北時間) | Commit: 23cc0a9</p>
-    <p class="text-center mt-1"><button id="check-time-btn" class="text-xs bg-emerald-500/20 hover:bg-emerald-500/30 text-emerald-300 border border-emerald-500/30 px-3 py-1 rounded-lg cursor-pointer transition">最後巡檢時間：2026-03-15 20:56:41 (台北時間)</button></p>
+    <p class="text-slate-400 text-sm mt-3">頁面最後更新：2026-03-16 00:56:06 (台北時間) | Commit: 48cf9af</p>
+    <p class="text-center mt-1"><button id="check-time-btn" class="text-xs bg-emerald-500/20 hover:bg-emerald-500/30 text-emerald-300 border border-emerald-500/30 px-3 py-1 rounded-lg cursor-pointer transition">最後巡檢時間：2026-03-16 08:54:40 (台北時間)</button></p>
   </div>
 
   <!-- Hero -->
@@ -451,8 +451,8 @@
           </div>
           <h3 class="text-xl font-bold text-center mb-1 group-hover:text-orange-300 transition">Robert</h3>
           <p class="text-slate-500 text-xs text-center mb-2 font-mono">aipmtw.github.io/robert</p>
-          <p class="text-slate-500 text-xs text-center mb-4">更新：2026-03-15 20:55:35 | <code class="text-slate-400">7eb6b66</code></p>
-          <p class="text-center mb-4"><button class="issue-count text-xs bg-indigo-500/20 hover:bg-indigo-500/30 text-indigo-300 border border-indigo-500/30 px-3 py-1 rounded-lg cursor-pointer transition" data-repo="robert">有效提交數：1</button></p>
+          <p class="text-slate-500 text-xs text-center mb-4">更新：2026-03-16 08:53:57 | <code class="text-slate-400">eae6b52</code></p>
+          <p class="text-center mb-4"><button class="issue-count text-xs bg-indigo-500/20 hover:bg-indigo-500/30 text-indigo-300 border border-indigo-500/30 px-3 py-1 rounded-lg cursor-pointer transition" data-repo="robert">有效提交數：2</button></p>
           <div class="flex flex-col gap-2.5">
             <a href="https://aipmtw.github.io/robert/" target="_blank" rel="noopener noreferrer" class="flex items-center justify-center gap-2 bg-gradient-to-r from-orange-500 to-amber-500 hover:opacity-90 transition px-4 py-2.5 rounded-xl text-sm font-semibold shadow-lg">
               <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" /></svg>
@@ -479,7 +479,7 @@
           </div>
           <h3 class="text-xl font-bold text-center mb-1 group-hover:text-violet-300 transition">AutoResearch</h3>
           <p class="text-slate-500 text-xs text-center mb-2 font-mono">aipmtw.github.io/autoresearch-results</p>
-          <p class="text-slate-500 text-xs text-center mb-4">更新：2026-03-15 22:12:56 | <code class="text-slate-400">897ed12</code></p>
+          <p class="text-slate-500 text-xs text-center mb-4">更新：2026-03-15 23:34:41 | <code class="text-slate-400">ce96a39</code></p>
           <p class="text-center mb-4"><button class="issue-count text-xs bg-indigo-500/20 hover:bg-indigo-500/30 text-indigo-300 border border-indigo-500/30 px-3 py-1 rounded-lg cursor-pointer transition" data-repo="autoresearch-results">有效提交數：1</button></p>
           <div class="flex flex-col gap-2.5">
             <a href="https://aipmtw.github.io/autoresearch-results/" target="_blank" rel="noopener noreferrer" class="flex items-center justify-center gap-2 bg-gradient-to-r from-violet-500 to-purple-500 hover:opacity-90 transition px-4 py-2.5 rounded-xl text-sm font-semibold shadow-lg">
@@ -658,6 +658,7 @@
         { num: 2, author: "epwind215", completed: "2026-03-15T20:12:04+08:00", summary: "2026 年運動計劃月度里程追蹤" }
       ],
       "robert": [
+        { num: 2, author: "RobCloud", completed: "2026-03-16T08:53:58+08:00", summary: "建立 AI 使用筆記區塊" },
         { num: 1, author: "aipmtw", completed: "2026-03-15T20:56:15+08:00", summary: "頁面加入需求提交按鈕" }
       ],
       "autoresearch-results": [
@@ -729,24 +730,24 @@
 
     // Check result modal
     const checkResult = {
-      time: "2026-03-15 20:56:41",
-      summary: "13 個 repo 已處理「我要下達需求」按鈕",
+      time: "2026-03-16 08:54:40",
+      summary: "robert #2 已處理（AI 使用筆記），RobCloud 已加為 collaborator",
       details: [
+        { repo: "robert", issues: 1, result: "✅ #2 已處理（AI 使用筆記）" },
         { repo: "aipmtw.github.io", issues: 0, result: "無待處理" },
-        { repo: "robert", issues: 1, result: "✅ #1 已處理" },
-        { repo: "raymondliu", issues: 1, result: "✅ #4 已處理" },
-        { repo: "swim-meet", issues: 1, result: "✅ #18 已處理" },
-        { repo: "twoutlook", issues: 1, result: "✅ #1 已處理" },
-        { repo: "water001", issues: 1, result: "✅ #4 已處理" },
-        { repo: "markluce-fun", issues: 1, result: "✅ #1 已處理" },
-        { repo: "markluce-running", issues: 1, result: "✅ #1 已處理" },
-        { repo: "markluce", issues: 1, result: "✅ #1 已處理" },
-        { repo: "ai-innovator", issues: 1, result: "✅ #5 已處理" },
-        { repo: "amy", issues: 1, result: "✅ #4 已處理" },
-        { repo: "mark", issues: 1, result: "✅ #5 已處理" },
-        { repo: "sherry", issues: 1, result: "✅ #4 已處理" },
-        { repo: "felix", issues: 1, result: "✅ #7 已處理" },
-        { repo: "autoresearch-results", issues: 1, result: "✅ #1 已處理（新增卡片）" }
+        { repo: "ai-innovator", issues: 0, result: "無待處理" },
+        { repo: "mark", issues: 0, result: "無待處理" },
+        { repo: "water001", issues: 0, result: "無待處理" },
+        { repo: "swim-meet", issues: 0, result: "無待處理" },
+        { repo: "markluce-running", issues: 0, result: "無待處理" },
+        { repo: "markluce-fun", issues: 0, result: "無待處理" },
+        { repo: "markluce", issues: 0, result: "無待處理" },
+        { repo: "twoutlook", issues: 0, result: "無待處理" },
+        { repo: "amy", issues: 0, result: "無待處理" },
+        { repo: "felix", issues: 0, result: "無待處理" },
+        { repo: "sherry", issues: 0, result: "無待處理" },
+        { repo: "raymondliu", issues: 0, result: "無待處理" },
+        { repo: "autoresearch-results", issues: 0, result: "無待處理" }
       ]
     };
 
