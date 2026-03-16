@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><rect width='64' height='64' rx='12' fill='%234F46E5'/><text x='32' y='28' font-family='Arial,sans-serif' font-size='16' font-weight='bold' fill='white' text-anchor='middle'>AIPM</text><text x='32' y='48' font-family='Arial,sans-serif' font-size='16' font-weight='bold' fill='%2322D3EE' text-anchor='middle'>TW</text></svg>" />
+  <title>Daily Notes - AIPM TW</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+TC:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    body { font-family: 'Noto Sans TC', 'Inter', system-ui, sans-serif; }
+  </style>
+</head>
+<body class="min-h-screen bg-gradient-to-br from-slate-900 via-indigo-950 to-slate-900 text-white">
+
+  <nav class="max-w-2xl mx-auto px-6 py-6 flex items-center justify-between">
+    <a href="/" class="text-sm font-semibold text-white bg-indigo-600 hover:bg-indigo-500 px-3 py-1.5 rounded-lg transition">&larr; aipm.com.tw</a>
+    <div id="user-area" class="hidden flex items-center gap-3">
+      <img id="user-avatar" class="w-7 h-7 rounded-full border border-white/20 hidden" alt="" />
+      <span id="user-name" class="text-xs text-slate-400"></span>
+      <button id="logout-btn" class="text-xs text-slate-500 hover:text-slate-300 transition cursor-pointer">登出</button>
+    </div>
+  </nav>
+
+  <main class="max-w-2xl mx-auto px-6 pb-12">
+    <div class="text-center mb-8">
+      <h1 class="text-3xl font-extrabold tracking-tight bg-gradient-to-r from-cyan-400 to-indigo-400 bg-clip-text text-transparent" style="-webkit-background-clip:text;-webkit-text-fill-color:transparent;">
+        AIPM TW
+      </h1>
+      <p class="mt-2 text-slate-400 text-sm">Daily Notes</p>
+    </div>
+
+    <div id="loading" class="text-center text-slate-500">載入中...</div>
+
+    <!-- Auth (shown when not logged in) -->
+    <div id="auth-section" class="hidden">
+      <div class="max-w-sm mx-auto bg-white/5 border border-white/10 rounded-2xl p-6">
+        <h2 id="auth-title" class="text-lg font-bold text-center mb-4">登入</h2>
+        <button id="github-login-btn" class="w-full flex items-center justify-center gap-2 bg-slate-700 hover:bg-slate-600 border border-white/10 text-white font-semibold py-3 rounded-xl text-sm transition mb-4 cursor-pointer">
+          <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+          使用 GitHub 帳號登入
+        </button>
+        <div class="flex items-center gap-3 mb-4">
+          <div class="flex-1 h-px bg-white/10"></div>
+          <span class="text-xs text-slate-500">或使用 Email</span>
+          <div class="flex-1 h-px bg-white/10"></div>
+        </div>
+        <form id="auth-form" class="space-y-3">
+          <div id="name-field" class="hidden">
+            <input id="auth-name" type="text" placeholder="顯示名稱" class="w-full bg-white/5 border border-white/20 rounded-lg px-3 py-2 text-white text-sm placeholder-slate-500 focus:outline-none focus:border-indigo-500" />
+          </div>
+          <input id="auth-email" type="email" placeholder="Email" required class="w-full bg-white/5 border border-white/20 rounded-lg px-3 py-2 text-white text-sm placeholder-slate-500 focus:outline-none focus:border-indigo-500" />
+          <input id="auth-password" type="password" placeholder="密碼（至少 6 碼）" required minLength="6" class="w-full bg-white/5 border border-white/20 rounded-lg px-3 py-2 text-white text-sm placeholder-slate-500 focus:outline-none focus:border-indigo-500" />
+          <p id="auth-error" class="text-xs text-amber-400 hidden"></p>
+          <button type="submit" id="auth-submit" class="w-full bg-indigo-600 hover:bg-indigo-500 disabled:opacity-50 text-white font-semibold py-2 rounded-lg text-sm transition cursor-pointer">登入</button>
+        </form>
+        <p id="auth-toggle" class="text-center text-xs text-slate-500 mt-3 cursor-pointer hover:text-slate-300">沒有帳號？註冊</p>
+      </div>
+      <div class="mt-8 space-y-3">
+        <h2 class="text-sm font-medium text-slate-400">公開筆記</h2>
+        <div id="public-notes"></div>
+      </div>
+    </div>
+
+    <!-- Notes (shown when logged in) -->
+    <div id="notes-section" class="hidden">
+      <div id="editor-area" class="mb-6"></div>
+      <div class="space-y-3">
+        <h2 class="text-sm font-medium text-slate-400">所有筆記</h2>
+        <div id="all-notes"></div>
+      </div>
+    </div>
+  </main>
+
+  <script type="module">
+    import { createClient } from 'https://esm.sh/@supabase/supabase-js@2'
+    const supabase = createClient('https://reipdepbltfbfxnjjegy.supabase.co', 'sb_publishable_osbwITQrUCmW5pNYgT__Ig_Zz0l5I9Y');
+    const REPO_ID = 'aipmtw.github.io';
+    const VIS_LABELS = { public: '公開', private: '私人', shared: '指定分享' };
+    const VIS_COLORS = { public: 'bg-emerald-500/20 text-emerald-300 border-emerald-500/30', private: 'bg-red-500/20 text-red-300 border-red-500/30', shared: 'bg-amber-500/20 text-amber-300 border-amber-500/30' };
+    const today = new Date().toLocaleDateString('sv-SE', { timeZone: 'Asia/Taipei' });
+    let currentUser = null, authMode = 'login';
+
+    function noteHTML(n, isOwner) {
+      const name = n.user_profiles?.display_name || n.user_profiles?.email?.split('@')[0] || '匿名';
+      const vis = VIS_COLORS[n.visibility] || '';
+      return `<div class="bg-white/5 border border-white/10 rounded-xl p-4">
+        <div class="flex items-center justify-between mb-2">
+          <div class="flex items-center gap-2">
+            <span class="text-xs font-mono text-slate-400">${n.date}</span>
+            <span class="text-xs text-indigo-300">${name}</span>
+            <span class="text-[10px] px-1.5 py-0.5 rounded border ${vis}">${VIS_LABELS[n.visibility]}</span>
+          </div>
+          ${isOwner ? `<button onclick="deleteNote('${n.id}')" class="text-xs text-red-400/60 hover:text-red-400 transition">刪除</button>` : ''}
+        </div>
+        <div class="text-sm text-slate-300 whitespace-pre-wrap">${n.content.length > 300 ? n.content.slice(0, 300) + '...' : n.content}</div>
+      </div>`;
+    }
+
+    async function loadNotes() {
+      const { data } = await supabase.from('daily_notes').select('*, user_profiles(display_name, email)').eq('repo_id', REPO_ID).order('date', { ascending: false }).order('created_at', { ascending: false }).limit(50);
+      if (!data) return;
+      const publicNotes = data.filter(n => n.visibility === 'public');
+      document.getElementById('public-notes').innerHTML = publicNotes.length === 0 ? '<p class="text-sm text-slate-600">目前沒有公開筆記</p>' : publicNotes.map(n => noteHTML(n, false)).join('');
+      if (currentUser) {
+        const myToday = data.find(n => n.user_id === currentUser.id && n.date === today);
+        const editorArea = document.getElementById('editor-area');
+        if (myToday) {
+          editorArea.innerHTML = `<div class="bg-white/5 border border-white/10 rounded-xl p-4 space-y-3">
+            <div class="flex items-center justify-between"><h3 class="text-sm font-medium text-slate-300">${today} 的筆記</h3>
+              <div class="flex gap-1">${['public','private','shared'].map(v => `<button onclick="setVis('${v}')" class="text-xs px-2 py-0.5 rounded border transition ${myToday.visibility === v ? VIS_COLORS[v] : 'border-white/10 text-slate-500'}">${VIS_LABELS[v]}</button>`).join('')}</div>
+            </div>
+            <textarea id="note-content" rows="4" class="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-white text-sm placeholder-slate-600 focus:outline-none focus:border-indigo-500 resize-none">${myToday.content}</textarea>
+            <div class="flex items-center justify-between"><span id="save-msg" class="text-xs text-slate-500"></span>
+              <button onclick="saveNote('${myToday.id}')" class="bg-indigo-600 hover:bg-indigo-500 text-white text-sm font-medium px-4 py-1.5 rounded-lg transition">更新</button>
+            </div></div>`;
+          window._noteVis = myToday.visibility;
+        } else {
+          editorArea.innerHTML = `<button onclick="showEditor()" id="new-note-btn" class="w-full bg-indigo-600/20 hover:bg-indigo-600/30 border border-indigo-500/30 text-indigo-300 py-3 rounded-xl text-sm font-medium transition cursor-pointer">+ 寫今天的筆記</button>
+          <div id="new-editor" class="hidden bg-white/5 border border-white/10 rounded-xl p-4 space-y-3 mt-2">
+            <div class="flex items-center justify-between"><h3 class="text-sm font-medium text-slate-300">${today} 的筆記</h3>
+              <div class="flex gap-1">${['public','private','shared'].map(v => `<button onclick="setVis('${v}')" class="vis-btn text-xs px-2 py-0.5 rounded border transition ${v === 'public' ? VIS_COLORS[v] : 'border-white/10 text-slate-500'}">${VIS_LABELS[v]}</button>`).join('')}</div>
+            </div>
+            <textarea id="note-content" rows="4" placeholder="今天的筆記..." class="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-white text-sm placeholder-slate-600 focus:outline-none focus:border-indigo-500 resize-none"></textarea>
+            <div class="flex items-center justify-between"><span id="save-msg" class="text-xs text-slate-500"></span>
+              <button onclick="saveNote()" class="bg-indigo-600 hover:bg-indigo-500 text-white text-sm font-medium px-4 py-1.5 rounded-lg transition">儲存</button>
+            </div></div>`;
+          window._noteVis = 'public';
+        }
+        document.getElementById('all-notes').innerHTML = data.length === 0 ? '<p class="text-sm text-slate-600">還沒有任何筆記</p>' : data.map(n => noteHTML(n, n.user_id === currentUser.id)).join('');
+      }
+    }
+
+    window.showEditor = () => { document.getElementById('new-note-btn').classList.add('hidden'); document.getElementById('new-editor').classList.remove('hidden'); };
+    window.setVis = (v) => { window._noteVis = v; };
+    window.saveNote = async (existingId) => {
+      const content = document.getElementById('note-content').value.trim();
+      if (!content) return;
+      const noteData = { user_id: currentUser.id, date: today, content, visibility: window._noteVis, repo_id: REPO_ID, updated_at: new Date().toISOString() };
+      const result = existingId ? await supabase.from('daily_notes').update(noteData).eq('id', existingId) : await supabase.from('daily_notes').insert(noteData);
+      document.getElementById('save-msg').textContent = result.error ? result.error.message : '已儲存';
+      if (!result.error) loadNotes();
+    };
+    window.deleteNote = async (id) => { await supabase.from('daily_notes').delete().eq('id', id); loadNotes(); };
+
+    function updateUI(user) {
+      currentUser = user;
+      document.getElementById('loading').classList.add('hidden');
+      if (user) {
+        document.getElementById('auth-section').classList.add('hidden');
+        document.getElementById('notes-section').classList.remove('hidden');
+        document.getElementById('user-area').classList.remove('hidden');
+        document.getElementById('user-area').classList.add('flex');
+        const avatar = document.getElementById('user-avatar');
+        if (user.user_metadata?.avatar_url) { avatar.src = user.user_metadata.avatar_url; avatar.classList.remove('hidden'); }
+        document.getElementById('user-name').textContent = user.user_metadata?.user_name || user.user_metadata?.display_name || user.email?.split('@')[0] || '';
+      } else {
+        document.getElementById('auth-section').classList.remove('hidden');
+        document.getElementById('notes-section').classList.add('hidden');
+        document.getElementById('user-area').classList.add('hidden');
+      }
+      loadNotes();
+    }
+
+    supabase.auth.getSession().then(({ data: { session } }) => updateUI(session?.user ?? null));
+    supabase.auth.onAuthStateChange((_e, session) => updateUI(session?.user ?? null));
+
+    document.getElementById('github-login-btn').addEventListener('click', () => {
+      supabase.auth.signInWithOAuth({ provider: 'github', options: { redirectTo: window.location.href } });
+    });
+    document.getElementById('logout-btn').addEventListener('click', async () => { await supabase.auth.signOut(); updateUI(null); });
+
+    document.getElementById('auth-toggle').addEventListener('click', () => {
+      authMode = authMode === 'login' ? 'register' : 'login';
+      document.getElementById('auth-title').textContent = authMode === 'login' ? '登入' : '註冊';
+      document.getElementById('auth-submit').textContent = authMode === 'login' ? '登入' : '註冊';
+      document.getElementById('auth-toggle').textContent = authMode === 'login' ? '沒有帳號？註冊' : '已有帳號？登入';
+      document.getElementById('name-field').classList.toggle('hidden', authMode === 'login');
+      document.getElementById('auth-error').classList.add('hidden');
+    });
+
+    document.getElementById('auth-form').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const email = document.getElementById('auth-email').value.trim();
+      const password = document.getElementById('auth-password').value;
+      const errorEl = document.getElementById('auth-error');
+      errorEl.classList.add('hidden');
+      if (authMode === 'login') {
+        const { error } = await supabase.auth.signInWithPassword({ email, password });
+        if (error) { errorEl.textContent = error.message; errorEl.classList.remove('hidden'); }
+      } else {
+        const displayName = document.getElementById('auth-name').value.trim();
+        const { data, error } = await supabase.auth.signUp({ email, password, options: { data: { display_name: displayName || email.split('@')[0] }, emailRedirectTo: window.location.href } });
+        if (error) { errorEl.textContent = error.message; errorEl.classList.remove('hidden'); }
+        else if (data?.user?.identities?.length === 0) { errorEl.textContent = '此 Email 已註冊，請直接登入。'; errorEl.classList.remove('hidden'); authMode = 'login'; }
+        else { errorEl.textContent = '註冊成功！請查收驗證信件。'; errorEl.classList.remove('hidden'); }
+      }
+    });
+  </script>
+</body>
+</html>
