@@ -54,8 +54,8 @@
     <p class="text-lg font-bold text-indigo-300 bg-indigo-500/10 border border-indigo-500/20 rounded-xl px-6 py-4">
       每 15 分鐘自動巡檢 issues。Collaborator 提交的需求直接處理；非 Collaborator 提交的需求將等待管理員留言 /approve 後才執行。
     </p>
-    <p class="text-slate-400 text-sm mt-3">頁面最後更新：2026-03-16 02:51:35 (台北時間) | Commit: 403e79e</p>
-    <p class="text-center mt-1"><button id="check-time-btn" class="text-xs bg-emerald-500/20 hover:bg-emerald-500/30 text-emerald-300 border border-emerald-500/30 px-3 py-1 rounded-lg cursor-pointer transition">最後巡檢時間：2026-03-16 10:50:54 (台北時間)</button></p>
+    <p id="page-update-info" class="text-slate-400 text-sm mt-3">資料載入中...</p>
+    <p class="text-center mt-1"><button id="check-time-btn" class="text-xs bg-emerald-500/20 hover:bg-emerald-500/30 text-emerald-300 border border-emerald-500/30 px-3 py-1 rounded-lg cursor-pointer transition">最後巡檢時間：載入中...</button></p>
   </div>
 
   <!-- Hero -->
@@ -77,427 +77,7 @@
   <!-- Member Sites Grid -->
   <section class="relative z-10 max-w-6xl mx-auto px-6 pb-24">
     <div id="cards-grid" class="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-8">
-
-      <!-- Sherry -->
-      <div class="card-hover float-animation group relative bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl overflow-hidden hover:border-pink-500/30" data-search="sherry aipmtw.github.io/sherry">
-        <div class="h-1.5 bg-gradient-to-r from-pink-500 to-rose-500"></div>
-        <div class="p-6">
-          <div class="flex justify-center mb-5">
-            <div class="w-16 h-16 rounded-full bg-gradient-to-br from-pink-500 to-rose-500 flex items-center justify-center text-2xl font-bold shadow-lg shadow-pink-500/20">S</div>
-          </div>
-          <h3 class="text-xl font-bold text-center mb-1 group-hover:text-pink-300 transition">Sherry</h3>
-          <p class="text-slate-500 text-xs text-center mb-2 font-mono">aipmtw.github.io/sherry</p>
-          <p class="text-slate-500 text-xs text-center mb-4">更新：2026-03-15 20:55:38 | <code class="text-slate-400">6e1a511</code></p>
-          <p class="text-center mb-4"><button class="issue-count text-xs bg-indigo-500/20 hover:bg-indigo-500/30 text-indigo-300 border border-indigo-500/30 px-3 py-1 rounded-lg cursor-pointer transition" data-repo="sherry">有效提交數：4</button></p>
-          <div class="flex flex-col gap-2.5">
-            <a href="https://aipmtw.github.io/sherry/" target="_blank" rel="noopener noreferrer" class="flex items-center justify-center gap-2 bg-gradient-to-r from-pink-500 to-rose-500 hover:opacity-90 transition px-4 py-2.5 rounded-xl text-sm font-semibold shadow-lg">
-              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" /></svg>
-              瀏覽網站
-            </a>
-            <a href="https://github.com/aipmtw/sherry" target="_blank" rel="noopener noreferrer" class="flex items-center justify-center gap-2 bg-white/5 hover:bg-white/10 border border-white/10 hover:border-white/20 transition px-4 py-2.5 rounded-xl text-sm font-medium text-slate-300">
-              <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
-              查看原始碼
-            </a>
-            <a href="https://github.com/aipmtw/sherry/issues" target="_blank" rel="noopener noreferrer" class="flex items-center justify-center gap-2 bg-white/5 hover:bg-white/10 border border-white/10 hover:border-white/20 transition px-4 py-2.5 rounded-xl text-sm font-medium text-slate-300">
-              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
-              提交需求
-            </a>
-          </div>
-        </div>
-      </div>
-
-      <!-- Mark -->
-      <div class="card-hover float-animation float-delay-1 group relative bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl overflow-hidden hover:border-indigo-500/30" data-search="mark aipmtw.github.io/mark">
-        <div class="h-1.5 bg-gradient-to-r from-indigo-500 to-blue-500"></div>
-        <div class="p-6">
-          <div class="flex justify-center mb-5">
-            <div class="w-16 h-16 rounded-full bg-gradient-to-br from-indigo-500 to-blue-500 flex items-center justify-center text-2xl font-bold shadow-lg shadow-indigo-500/20">M</div>
-          </div>
-          <h3 class="text-xl font-bold text-center mb-1 group-hover:text-indigo-300 transition">Mark</h3>
-          <p class="text-slate-500 text-xs text-center mb-2 font-mono">aipmtw.github.io/mark</p>
-          <p class="text-slate-500 text-xs text-center mb-4">更新：2026-03-15 20:55:58 | <code class="text-slate-400">3055d68</code></p>
-          <p class="text-center mb-4"><button class="issue-count text-xs bg-indigo-500/20 hover:bg-indigo-500/30 text-indigo-300 border border-indigo-500/30 px-3 py-1 rounded-lg cursor-pointer transition" data-repo="mark">有效提交數：5</button></p>
-          <div class="flex flex-col gap-2.5">
-            <a href="https://aipmtw.github.io/mark/" target="_blank" rel="noopener noreferrer" class="flex items-center justify-center gap-2 bg-gradient-to-r from-indigo-500 to-blue-500 hover:opacity-90 transition px-4 py-2.5 rounded-xl text-sm font-semibold shadow-lg">
-              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" /></svg>
-              瀏覽網站
-            </a>
-            <a href="https://github.com/aipmtw/mark" target="_blank" rel="noopener noreferrer" class="flex items-center justify-center gap-2 bg-white/5 hover:bg-white/10 border border-white/10 hover:border-white/20 transition px-4 py-2.5 rounded-xl text-sm font-medium text-slate-300">
-              <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
-              查看原始碼
-            </a>
-            <a href="https://github.com/aipmtw/mark/issues" target="_blank" rel="noopener noreferrer" class="flex items-center justify-center gap-2 bg-white/5 hover:bg-white/10 border border-white/10 hover:border-white/20 transition px-4 py-2.5 rounded-xl text-sm font-medium text-slate-300">
-              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
-              提交需求
-            </a>
-          </div>
-        </div>
-      </div>
-
-      <!-- Felix -->
-      <div class="card-hover float-animation float-delay-2 group relative bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl overflow-hidden hover:border-emerald-500/30" data-search="felix aipmtw.github.io/felix">
-        <div class="h-1.5 bg-gradient-to-r from-emerald-500 to-teal-500"></div>
-        <div class="p-6">
-          <div class="flex justify-center mb-5">
-            <div class="w-16 h-16 rounded-full bg-gradient-to-br from-emerald-500 to-teal-500 flex items-center justify-center text-2xl font-bold shadow-lg shadow-emerald-500/20">F</div>
-          </div>
-          <h3 class="text-xl font-bold text-center mb-1 group-hover:text-emerald-300 transition">Felix</h3>
-          <p class="text-slate-500 text-xs text-center mb-2 font-mono">aipmtw.github.io/felix</p>
-          <p class="text-slate-500 text-xs text-center mb-4">更新：2026-03-15 20:55:39 | <code class="text-slate-400">652dff4</code></p>
-          <p class="text-center mb-4"><button class="issue-count text-xs bg-indigo-500/20 hover:bg-indigo-500/30 text-indigo-300 border border-indigo-500/30 px-3 py-1 rounded-lg cursor-pointer transition" data-repo="felix">有效提交數：7</button></p>
-          <div class="flex flex-col gap-2.5">
-            <a href="https://aipmtw.github.io/felix/" target="_blank" rel="noopener noreferrer" class="flex items-center justify-center gap-2 bg-gradient-to-r from-emerald-500 to-teal-500 hover:opacity-90 transition px-4 py-2.5 rounded-xl text-sm font-semibold shadow-lg">
-              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" /></svg>
-              瀏覽網站
-            </a>
-            <a href="https://github.com/aipmtw/felix" target="_blank" rel="noopener noreferrer" class="flex items-center justify-center gap-2 bg-white/5 hover:bg-white/10 border border-white/10 hover:border-white/20 transition px-4 py-2.5 rounded-xl text-sm font-medium text-slate-300">
-              <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
-              查看原始碼
-            </a>
-            <a href="https://github.com/aipmtw/felix/issues" target="_blank" rel="noopener noreferrer" class="flex items-center justify-center gap-2 bg-white/5 hover:bg-white/10 border border-white/10 hover:border-white/20 transition px-4 py-2.5 rounded-xl text-sm font-medium text-slate-300">
-              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
-              提交需求
-            </a>
-          </div>
-        </div>
-      </div>
-
-      <!-- Amy -->
-      <div class="card-hover float-animation float-delay-3 group relative bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl overflow-hidden hover:border-purple-500/30" data-search="amy aipmtw.github.io/amy">
-        <div class="h-1.5 bg-gradient-to-r from-purple-500 to-pink-500"></div>
-        <div class="p-6">
-          <div class="flex justify-center mb-5">
-            <div class="w-16 h-16 rounded-full bg-gradient-to-br from-purple-500 to-pink-500 flex items-center justify-center text-2xl font-bold shadow-lg shadow-purple-500/20">A</div>
-          </div>
-          <h3 class="text-xl font-bold text-center mb-1 group-hover:text-purple-300 transition">Amy</h3>
-          <p class="text-slate-500 text-xs text-center mb-2 font-mono">aipmtw.github.io/amy</p>
-          <p class="text-slate-500 text-xs text-center mb-4">更新：2026-03-15 20:55:41 | <code class="text-slate-400">a965a52</code></p>
-          <p class="text-center mb-4"><button class="issue-count text-xs bg-indigo-500/20 hover:bg-indigo-500/30 text-indigo-300 border border-indigo-500/30 px-3 py-1 rounded-lg cursor-pointer transition" data-repo="amy">有效提交數：4</button></p>
-          <div class="flex flex-col gap-2.5">
-            <a href="https://aipmtw.github.io/amy/" target="_blank" rel="noopener noreferrer" class="flex items-center justify-center gap-2 bg-gradient-to-r from-purple-500 to-pink-500 hover:opacity-90 transition px-4 py-2.5 rounded-xl text-sm font-semibold shadow-lg">
-              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" /></svg>
-              瀏覽網站
-            </a>
-            <a href="https://github.com/aipmtw/amy" target="_blank" rel="noopener noreferrer" class="flex items-center justify-center gap-2 bg-white/5 hover:bg-white/10 border border-white/10 hover:border-white/20 transition px-4 py-2.5 rounded-xl text-sm font-medium text-slate-300">
-              <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
-              查看原始碼
-            </a>
-            <a href="https://github.com/aipmtw/amy/issues" target="_blank" rel="noopener noreferrer" class="flex items-center justify-center gap-2 bg-white/5 hover:bg-white/10 border border-white/10 hover:border-white/20 transition px-4 py-2.5 rounded-xl text-sm font-medium text-slate-300">
-              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
-              提交需求
-            </a>
-          </div>
-        </div>
-      </div>
-
-      <!-- Robert -->
-      <div class="card-hover float-animation float-delay-2 group relative bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl overflow-hidden hover:border-cyan-500/30" data-search="robert swim-meet aipmtw.github.io/swim-meet">
-        <div class="h-1.5 bg-gradient-to-r from-cyan-500 to-blue-500"></div>
-        <div class="p-6">
-          <div class="flex justify-center mb-5">
-            <div class="w-16 h-16 rounded-full bg-gradient-to-br from-cyan-500 to-blue-500 flex items-center justify-center text-2xl font-bold shadow-lg shadow-cyan-500/20">R</div>
-          </div>
-          <h3 class="text-xl font-bold text-center mb-1 group-hover:text-cyan-300 transition">Robert</h3>
-          <p class="text-slate-500 text-xs text-center mb-2 font-mono">aipmtw.github.io/swim-meet</p>
-          <p class="text-slate-500 text-xs text-center mb-4">更新：2026-03-15 20:55:55 | <code class="text-slate-400">2ebaa56</code></p>
-          <p class="text-center mb-4"><button class="issue-count text-xs bg-indigo-500/20 hover:bg-indigo-500/30 text-indigo-300 border border-indigo-500/30 px-3 py-1 rounded-lg cursor-pointer transition" data-repo="swim-meet">有效提交數：17</button></p>
-          <div class="flex flex-col gap-2.5">
-            <a href="https://aipmtw.github.io/swim-meet/" target="_blank" rel="noopener noreferrer" class="flex items-center justify-center gap-2 bg-gradient-to-r from-cyan-500 to-blue-500 hover:opacity-90 transition px-4 py-2.5 rounded-xl text-sm font-semibold shadow-lg">
-              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" /></svg>
-              瀏覽網站
-            </a>
-            <a href="https://github.com/aipmtw/swim-meet" target="_blank" rel="noopener noreferrer" class="flex items-center justify-center gap-2 bg-white/5 hover:bg-white/10 border border-white/10 hover:border-white/20 transition px-4 py-2.5 rounded-xl text-sm font-medium text-slate-300">
-              <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
-              查看原始碼
-            </a>
-            <a href="https://github.com/aipmtw/swim-meet/issues" target="_blank" rel="noopener noreferrer" class="flex items-center justify-center gap-2 bg-white/5 hover:bg-white/10 border border-white/10 hover:border-white/20 transition px-4 py-2.5 rounded-xl text-sm font-medium text-slate-300">
-              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
-              提交需求
-            </a>
-          </div>
-        </div>
-      </div>
-
-      <!-- aipm.com.tw (aipmtw.github.io) -->
-      <div class="card-hover float-animation float-delay-1 group relative bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl overflow-hidden hover:border-sky-500/30" data-search="aipm.com.tw aipmtw.github.io">
-        <div class="h-1.5 bg-gradient-to-r from-sky-500 to-indigo-500"></div>
-        <div class="p-6">
-          <div class="flex justify-center mb-5">
-            <div class="w-16 h-16 rounded-full bg-gradient-to-br from-sky-500 to-indigo-500 flex items-center justify-center text-2xl font-bold shadow-lg shadow-sky-500/20">🏠</div>
-          </div>
-          <h3 class="text-xl font-bold text-center mb-1 group-hover:text-sky-300 transition">aipm.com.tw</h3>
-          <p class="text-slate-500 text-xs text-center mb-2 font-mono">aipmtw.github.io</p>
-          <p class="text-slate-500 text-xs text-center mb-4">更新：2026-03-16 10:36:35 | <code class="text-slate-400">5d81fc4</code></p>
-          <p class="text-center mb-4"><button class="issue-count text-xs bg-indigo-500/20 hover:bg-indigo-500/30 text-indigo-300 border border-indigo-500/30 px-3 py-1 rounded-lg cursor-pointer transition" data-repo="aipmtw.github.io">有效提交數：29</button></p>
-          <div class="flex flex-col gap-2.5">
-            <a href="https://aipm.com.tw/" target="_blank" rel="noopener noreferrer" class="flex items-center justify-center gap-2 bg-gradient-to-r from-sky-500 to-indigo-500 hover:opacity-90 transition px-4 py-2.5 rounded-xl text-sm font-semibold shadow-lg">
-              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" /></svg>
-              瀏覽網站
-            </a>
-            <a href="https://github.com/aipmtw/aipmtw.github.io" target="_blank" rel="noopener noreferrer" class="flex items-center justify-center gap-2 bg-white/5 hover:bg-white/10 border border-white/10 hover:border-white/20 transition px-4 py-2.5 rounded-xl text-sm font-medium text-slate-300">
-              <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
-              查看原始碼
-            </a>
-            <a href="https://github.com/aipmtw/aipmtw.github.io/issues" target="_blank" rel="noopener noreferrer" class="flex items-center justify-center gap-2 bg-white/5 hover:bg-white/10 border border-white/10 hover:border-white/20 transition px-4 py-2.5 rounded-xl text-sm font-medium text-slate-300">
-              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
-              提交需求
-            </a>
-          </div>
-        </div>
-      </div>
-
-      <!-- AI Innovator -->
-      <div class="card-hover float-animation float-delay-3 group relative bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl overflow-hidden hover:border-amber-500/30" data-search="ai innovator ai-innovator aipmtw.github.io/ai-innovator">
-        <div class="h-1.5 bg-gradient-to-r from-amber-500 to-orange-500"></div>
-        <div class="p-6">
-          <div class="flex justify-center mb-5">
-            <div class="w-16 h-16 rounded-full bg-gradient-to-br from-amber-500 to-orange-500 flex items-center justify-center text-2xl font-bold shadow-lg shadow-amber-500/20">A</div>
-          </div>
-          <h3 class="text-xl font-bold text-center mb-1 group-hover:text-amber-300 transition">AI Innovator</h3>
-          <p class="text-slate-500 text-xs text-center mb-2 font-mono">aipmtw.github.io/ai-innovator</p>
-          <p class="text-slate-500 text-xs text-center mb-4">更新：2026-03-15 20:55:59 | <code class="text-slate-400">25bf41a</code></p>
-          <p class="text-center mb-4"><button class="issue-count text-xs bg-indigo-500/20 hover:bg-indigo-500/30 text-indigo-300 border border-indigo-500/30 px-3 py-1 rounded-lg cursor-pointer transition" data-repo="ai-innovator">有效提交數：5</button></p>
-          <div class="flex flex-col gap-2.5">
-            <a href="https://aipmtw.github.io/ai-innovator/" target="_blank" rel="noopener noreferrer" class="flex items-center justify-center gap-2 bg-gradient-to-r from-amber-500 to-orange-500 hover:opacity-90 transition px-4 py-2.5 rounded-xl text-sm font-semibold shadow-lg">
-              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" /></svg>
-              瀏覽網站
-            </a>
-            <a href="https://github.com/aipmtw/ai-innovator" target="_blank" rel="noopener noreferrer" class="flex items-center justify-center gap-2 bg-white/5 hover:bg-white/10 border border-white/10 hover:border-white/20 transition px-4 py-2.5 rounded-xl text-sm font-medium text-slate-300">
-              <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
-              查看原始碼
-            </a>
-            <a href="https://github.com/aipmtw/ai-innovator/issues" target="_blank" rel="noopener noreferrer" class="flex items-center justify-center gap-2 bg-white/5 hover:bg-white/10 border border-white/10 hover:border-white/20 transition px-4 py-2.5 rounded-xl text-sm font-medium text-slate-300">
-              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
-              提交需求
-            </a>
-          </div>
-        </div>
-      </div>
-
-      <!-- twoutlook -->
-      <div class="card-hover float-animation float-delay-2 group relative bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl overflow-hidden hover:border-teal-500/30" data-search="twoutlook aipmtw.github.io/twoutlook">
-        <div class="h-1.5 bg-gradient-to-r from-teal-500 to-cyan-500"></div>
-        <div class="p-6">
-          <div class="flex justify-center mb-5">
-            <div class="w-16 h-16 rounded-full bg-gradient-to-br from-teal-500 to-cyan-500 flex items-center justify-center text-2xl font-bold shadow-lg shadow-teal-500/20">T</div>
-          </div>
-          <h3 class="text-xl font-bold text-center mb-1 group-hover:text-teal-300 transition">twoutlook</h3>
-          <p class="text-slate-500 text-xs text-center mb-2 font-mono">aipmtw.github.io/twoutlook</p>
-          <p class="text-slate-500 text-xs text-center mb-4">更新：2026-03-15 20:55:42 | <code class="text-slate-400">75f2cb6</code></p>
-          <p class="text-center mb-4"><button class="issue-count text-xs bg-indigo-500/20 hover:bg-indigo-500/30 text-indigo-300 border border-indigo-500/30 px-3 py-1 rounded-lg cursor-pointer transition" data-repo="twoutlook">有效提交數：1</button></p>
-          <div class="flex flex-col gap-2.5">
-            <a href="https://aipmtw.github.io/twoutlook/" target="_blank" rel="noopener noreferrer" class="flex items-center justify-center gap-2 bg-gradient-to-r from-teal-500 to-cyan-500 hover:opacity-90 transition px-4 py-2.5 rounded-xl text-sm font-semibold shadow-lg">
-              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" /></svg>
-              瀏覽網站
-            </a>
-            <a href="https://github.com/aipmtw/twoutlook" target="_blank" rel="noopener noreferrer" class="flex items-center justify-center gap-2 bg-white/5 hover:bg-white/10 border border-white/10 hover:border-white/20 transition px-4 py-2.5 rounded-xl text-sm font-medium text-slate-300">
-              <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
-              查看原始碼
-            </a>
-            <a href="https://github.com/aipmtw/twoutlook/issues" target="_blank" rel="noopener noreferrer" class="flex items-center justify-center gap-2 bg-white/5 hover:bg-white/10 border border-white/10 hover:border-white/20 transition px-4 py-2.5 rounded-xl text-sm font-medium text-slate-300">
-              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
-              提交需求
-            </a>
-          </div>
-        </div>
-      </div>
-
-      <!-- markluce -->
-      <div class="card-hover float-animation float-delay-1 group relative bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl overflow-hidden hover:border-violet-500/30" data-search="markluce aipmtw.github.io/markluce">
-        <div class="h-1.5 bg-gradient-to-r from-violet-500 to-fuchsia-500"></div>
-        <div class="p-6">
-          <div class="flex justify-center mb-5">
-            <div class="w-16 h-16 rounded-full bg-gradient-to-br from-violet-500 to-fuchsia-500 flex items-center justify-center text-2xl font-bold shadow-lg shadow-violet-500/20">M</div>
-          </div>
-          <h3 class="text-xl font-bold text-center mb-1 group-hover:text-violet-300 transition">markluce</h3>
-          <p class="text-slate-500 text-xs text-center mb-2 font-mono">aipmtw.github.io/markluce</p>
-          <p class="text-slate-500 text-xs text-center mb-4">更新：2026-03-15 20:55:43 | <code class="text-slate-400">7397586</code></p>
-          <p class="text-center mb-4"><button class="issue-count text-xs bg-indigo-500/20 hover:bg-indigo-500/30 text-indigo-300 border border-indigo-500/30 px-3 py-1 rounded-lg cursor-pointer transition" data-repo="markluce">有效提交數：1</button></p>
-          <div class="flex flex-col gap-2.5">
-            <a href="https://aipmtw.github.io/markluce/" target="_blank" rel="noopener noreferrer" class="flex items-center justify-center gap-2 bg-gradient-to-r from-lime-500 to-emerald-500 hover:opacity-90 transition px-4 py-2.5 rounded-xl text-sm font-semibold shadow-lg">
-              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" /></svg>
-              瀏覽網站
-            </a>
-            <a href="https://github.com/aipmtw/markluce" target="_blank" rel="noopener noreferrer" class="flex items-center justify-center gap-2 bg-white/5 hover:bg-white/10 border border-white/10 hover:border-white/20 transition px-4 py-2.5 rounded-xl text-sm font-medium text-slate-300">
-              <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
-              查看原始碼
-            </a>
-            <a href="https://github.com/aipmtw/markluce/issues" target="_blank" rel="noopener noreferrer" class="flex items-center justify-center gap-2 bg-white/5 hover:bg-white/10 border border-white/10 hover:border-white/20 transition px-4 py-2.5 rounded-xl text-sm font-medium text-slate-300">
-              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
-              提交需求
-            </a>
-          </div>
-        </div>
-      </div>
-
-      <!-- markluce-fun -->
-      <div class="card-hover float-animation float-delay-3 group relative bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl overflow-hidden hover:border-rose-500/30" data-search="markluce-fun aipmtw.github.io/markluce-fun">
-        <div class="h-1.5 bg-gradient-to-r from-rose-500 to-pink-500"></div>
-        <div class="p-6">
-          <div class="flex justify-center mb-5">
-            <div class="w-16 h-16 rounded-full bg-gradient-to-br from-rose-500 to-pink-500 flex items-center justify-center text-2xl font-bold shadow-lg shadow-rose-500/20">M</div>
-          </div>
-          <h3 class="text-xl font-bold text-center mb-1 group-hover:text-rose-300 transition">markluce-fun</h3>
-          <p class="text-slate-500 text-xs text-center mb-2 font-mono">aipmtw.github.io/markluce-fun</p>
-          <p class="text-slate-500 text-xs text-center mb-4">更新：2026-03-15 20:55:45 | <code class="text-slate-400">6d5ef30</code></p>
-          <p class="text-center mb-4"><button class="issue-count text-xs bg-indigo-500/20 hover:bg-indigo-500/30 text-indigo-300 border border-indigo-500/30 px-3 py-1 rounded-lg cursor-pointer transition" data-repo="markluce-fun">有效提交數：1</button></p>
-          <div class="flex flex-col gap-2.5">
-            <a href="https://aipmtw.github.io/markluce-fun/" target="_blank" rel="noopener noreferrer" class="flex items-center justify-center gap-2 bg-gradient-to-r from-rose-500 to-pink-500 hover:opacity-90 transition px-4 py-2.5 rounded-xl text-sm font-semibold shadow-lg">
-              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" /></svg>
-              瀏覽網站
-            </a>
-            <a href="https://github.com/aipmtw/markluce-fun" target="_blank" rel="noopener noreferrer" class="flex items-center justify-center gap-2 bg-white/5 hover:bg-white/10 border border-white/10 hover:border-white/20 transition px-4 py-2.5 rounded-xl text-sm font-medium text-slate-300">
-              <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
-              查看原始碼
-            </a>
-            <a href="https://github.com/aipmtw/markluce-fun/issues" target="_blank" rel="noopener noreferrer" class="flex items-center justify-center gap-2 bg-white/5 hover:bg-white/10 border border-white/10 hover:border-white/20 transition px-4 py-2.5 rounded-xl text-sm font-medium text-slate-300">
-              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
-              提交需求
-            </a>
-          </div>
-        </div>
-      </div>
-
-      <!-- markluce-running -->
-      <div class="card-hover float-animation float-delay-2 group relative bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl overflow-hidden hover:border-orange-500/30" data-search="markluce-running aipmtw.github.io/markluce-running">
-        <div class="h-1.5 bg-gradient-to-r from-orange-500 to-yellow-500"></div>
-        <div class="p-6">
-          <div class="flex justify-center mb-5">
-            <div class="w-16 h-16 rounded-full bg-gradient-to-br from-orange-500 to-yellow-500 flex items-center justify-center text-2xl font-bold shadow-lg shadow-orange-500/20">M</div>
-          </div>
-          <h3 class="text-xl font-bold text-center mb-1 group-hover:text-orange-300 transition">markluce-running</h3>
-          <p class="text-slate-500 text-xs text-center mb-2 font-mono">aipmtw.github.io/markluce-running</p>
-          <p class="text-slate-500 text-xs text-center mb-4">更新：2026-03-15 20:55:46 | <code class="text-slate-400">d9a7e45</code></p>
-          <p class="text-center mb-4"><button class="issue-count text-xs bg-indigo-500/20 hover:bg-indigo-500/30 text-indigo-300 border border-indigo-500/30 px-3 py-1 rounded-lg cursor-pointer transition" data-repo="markluce-running">有效提交數：1</button></p>
-          <div class="flex flex-col gap-2.5">
-            <a href="https://aipmtw.github.io/markluce-running/" target="_blank" rel="noopener noreferrer" class="flex items-center justify-center gap-2 bg-gradient-to-r from-orange-500 to-yellow-500 hover:opacity-90 transition px-4 py-2.5 rounded-xl text-sm font-semibold shadow-lg">
-              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" /></svg>
-              瀏覽網站
-            </a>
-            <a href="https://github.com/aipmtw/markluce-running" target="_blank" rel="noopener noreferrer" class="flex items-center justify-center gap-2 bg-white/5 hover:bg-white/10 border border-white/10 hover:border-white/20 transition px-4 py-2.5 rounded-xl text-sm font-medium text-slate-300">
-              <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
-              查看原始碼
-            </a>
-            <a href="https://github.com/aipmtw/markluce-running/issues" target="_blank" rel="noopener noreferrer" class="flex items-center justify-center gap-2 bg-white/5 hover:bg-white/10 border border-white/10 hover:border-white/20 transition px-4 py-2.5 rounded-xl text-sm font-medium text-slate-300">
-              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
-              提交需求
-            </a>
-          </div>
-        </div>
-      </div>
-
-      <!-- Raymond Liu -->
-      <div class="card-hover float-animation float-delay-1 group relative bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl overflow-hidden hover:border-blue-500/30" data-search="raymondliu raymond liu aipmtw.github.io/raymondliu">
-        <div class="h-1.5 bg-gradient-to-r from-blue-500 to-cyan-500"></div>
-        <div class="p-6">
-          <div class="flex justify-center mb-5">
-            <div class="w-16 h-16 rounded-full bg-gradient-to-br from-blue-500 to-cyan-500 flex items-center justify-center text-2xl font-bold shadow-lg shadow-blue-500/20">R</div>
-          </div>
-          <h3 class="text-xl font-bold text-center mb-1 group-hover:text-blue-300 transition">Raymond Liu</h3>
-          <p class="text-slate-500 text-xs text-center mb-2 font-mono">aipmtw.github.io/raymondliu</p>
-          <p class="text-slate-500 text-xs text-center mb-4">更新：2026-03-15 20:55:37 | <code class="text-slate-400">f5183f6</code></p>
-          <p class="text-center mb-4"><button class="issue-count text-xs bg-indigo-500/20 hover:bg-indigo-500/30 text-indigo-300 border border-indigo-500/30 px-3 py-1 rounded-lg cursor-pointer transition" data-repo="raymondliu">有效提交數：4</button></p>
-          <div class="flex flex-col gap-2.5">
-            <a href="https://aipmtw.github.io/raymondliu/" target="_blank" rel="noopener noreferrer" class="flex items-center justify-center gap-2 bg-gradient-to-r from-blue-500 to-cyan-500 hover:opacity-90 transition px-4 py-2.5 rounded-xl text-sm font-semibold shadow-lg">
-              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" /></svg>
-              瀏覽網站
-            </a>
-            <a href="https://github.com/aipmtw/raymondliu" target="_blank" rel="noopener noreferrer" class="flex items-center justify-center gap-2 bg-white/5 hover:bg-white/10 border border-white/10 hover:border-white/20 transition px-4 py-2.5 rounded-xl text-sm font-medium text-slate-300">
-              <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
-              查看原始碼
-            </a>
-            <a href="https://github.com/aipmtw/raymondliu/issues" target="_blank" rel="noopener noreferrer" class="flex items-center justify-center gap-2 bg-white/5 hover:bg-white/10 border border-white/10 hover:border-white/20 transition px-4 py-2.5 rounded-xl text-sm font-medium text-slate-300">
-              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
-              提交需求
-            </a>
-          </div>
-        </div>
-      </div>
-
-      <!-- water001 -->
-      <div class="card-hover float-animation float-delay-2 group relative bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl overflow-hidden hover:border-emerald-500/30" data-search="water001 markluce poker hrc aipmtw.github.io/water001">
-        <div class="h-1.5 bg-gradient-to-r from-emerald-500 to-teal-500"></div>
-        <div class="p-6">
-          <div class="flex justify-center mb-5">
-            <div class="w-16 h-16 rounded-full bg-gradient-to-br from-emerald-500 to-teal-500 flex items-center justify-center text-2xl font-bold shadow-lg shadow-emerald-500/20">W</div>
-          </div>
-          <h3 class="text-xl font-bold text-center mb-1 group-hover:text-emerald-300 transition">water001</h3>
-          <p class="text-slate-500 text-xs text-center mb-2 font-mono">aipmtw.github.io/water001</p>
-          <p class="text-slate-500 text-xs text-center mb-4">更新：2026-03-15 20:55:56 | <code class="text-slate-400">7c8ab67</code></p>
-          <p class="text-center mb-4"><button class="issue-count text-xs bg-indigo-500/20 hover:bg-indigo-500/30 text-indigo-300 border border-indigo-500/30 px-3 py-1 rounded-lg cursor-pointer transition" data-repo="water001">有效提交數：3</button></p>
-          <div class="flex flex-col gap-2.5">
-            <a href="https://aipmtw.github.io/water001/" target="_blank" rel="noopener noreferrer" class="flex items-center justify-center gap-2 bg-gradient-to-r from-emerald-500 to-teal-500 hover:opacity-90 transition px-4 py-2.5 rounded-xl text-sm font-semibold shadow-lg">
-              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" /></svg>
-              瀏覽網站
-            </a>
-            <a href="https://github.com/aipmtw/water001" target="_blank" rel="noopener noreferrer" class="flex items-center justify-center gap-2 bg-white/5 hover:bg-white/10 border border-white/10 hover:border-white/20 transition px-4 py-2.5 rounded-xl text-sm font-medium text-slate-300">
-              <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
-              查看原始碼
-            </a>
-            <a href="https://github.com/aipmtw/water001/issues" target="_blank" rel="noopener noreferrer" class="flex items-center justify-center gap-2 bg-white/5 hover:bg-white/10 border border-white/10 hover:border-white/20 transition px-4 py-2.5 rounded-xl text-sm font-medium text-slate-300">
-              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
-              提交需求
-            </a>
-          </div>
-        </div>
-      </div>
-
-      <!-- Robert -->
-      <div class="card-hover float-animation float-delay-1 group relative bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl overflow-hidden hover:border-orange-500/30" data-search="robert robcloud aipmtw.github.io/robert">
-        <div class="h-1.5 bg-gradient-to-r from-orange-500 to-amber-500"></div>
-        <div class="p-6">
-          <div class="flex justify-center mb-5">
-            <div class="w-16 h-16 rounded-full bg-gradient-to-br from-orange-500 to-amber-500 flex items-center justify-center text-2xl font-bold shadow-lg shadow-orange-500/20">R</div>
-          </div>
-          <h3 class="text-xl font-bold text-center mb-1 group-hover:text-orange-300 transition">Robert</h3>
-          <p class="text-slate-500 text-xs text-center mb-2 font-mono">aipmtw.github.io/robert</p>
-          <p class="text-slate-500 text-xs text-center mb-4">更新：2026-03-16 08:53:57 | <code class="text-slate-400">eae6b52</code></p>
-          <p class="text-center mb-4"><button class="issue-count text-xs bg-indigo-500/20 hover:bg-indigo-500/30 text-indigo-300 border border-indigo-500/30 px-3 py-1 rounded-lg cursor-pointer transition" data-repo="robert">有效提交數：2</button></p>
-          <div class="flex flex-col gap-2.5">
-            <a href="https://aipmtw.github.io/robert/" target="_blank" rel="noopener noreferrer" class="flex items-center justify-center gap-2 bg-gradient-to-r from-orange-500 to-amber-500 hover:opacity-90 transition px-4 py-2.5 rounded-xl text-sm font-semibold shadow-lg">
-              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" /></svg>
-              瀏覽網站
-            </a>
-            <a href="https://github.com/aipmtw/robert" target="_blank" rel="noopener noreferrer" class="flex items-center justify-center gap-2 bg-white/5 hover:bg-white/10 border border-white/10 hover:border-white/20 transition px-4 py-2.5 rounded-xl text-sm font-medium text-slate-300">
-              <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
-              查看原始碼
-            </a>
-            <a href="https://github.com/aipmtw/robert/issues" target="_blank" rel="noopener noreferrer" class="flex items-center justify-center gap-2 bg-white/5 hover:bg-white/10 border border-white/10 hover:border-white/20 transition px-4 py-2.5 rounded-xl text-sm font-medium text-slate-300">
-              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
-              提交需求
-            </a>
-          </div>
-        </div>
-      </div>
-
-      <!-- AutoResearch Results -->
-      <div class="card-hover float-animation group relative bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl overflow-hidden hover:border-violet-500/30" data-search="autoresearch-results autoresearch ai research aipmtw.github.io/autoresearch-results">
-        <div class="h-1.5 bg-gradient-to-r from-violet-500 to-purple-500"></div>
-        <div class="p-6">
-          <div class="flex justify-center mb-5">
-            <div class="w-16 h-16 rounded-full bg-gradient-to-br from-violet-500 to-purple-500 flex items-center justify-center text-2xl font-bold shadow-lg shadow-violet-500/20">A</div>
-          </div>
-          <h3 class="text-xl font-bold text-center mb-1 group-hover:text-violet-300 transition">AutoResearch</h3>
-          <p class="text-slate-500 text-xs text-center mb-2 font-mono">aipmtw.github.io/autoresearch-results</p>
-          <p class="text-slate-500 text-xs text-center mb-4">更新：2026-03-15 23:34:41 | <code class="text-slate-400">ce96a39</code></p>
-          <p class="text-center mb-4"><button class="issue-count text-xs bg-indigo-500/20 hover:bg-indigo-500/30 text-indigo-300 border border-indigo-500/30 px-3 py-1 rounded-lg cursor-pointer transition" data-repo="autoresearch-results">有效提交數：1</button></p>
-          <div class="flex flex-col gap-2.5">
-            <a href="https://aipmtw.github.io/autoresearch-results/" target="_blank" rel="noopener noreferrer" class="flex items-center justify-center gap-2 bg-gradient-to-r from-violet-500 to-purple-500 hover:opacity-90 transition px-4 py-2.5 rounded-xl text-sm font-semibold shadow-lg">
-              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" /></svg>
-              瀏覽網站
-            </a>
-            <a href="https://github.com/aipmtw/autoresearch-results" target="_blank" rel="noopener noreferrer" class="flex items-center justify-center gap-2 bg-white/5 hover:bg-white/10 border border-white/10 hover:border-white/20 transition px-4 py-2.5 rounded-xl text-sm font-medium text-slate-300">
-              <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
-              查看原始碼
-            </a>
-            <a href="https://github.com/aipmtw/autoresearch-results/issues" target="_blank" rel="noopener noreferrer" class="flex items-center justify-center gap-2 bg-white/5 hover:bg-white/10 border border-white/10 hover:border-white/20 transition px-4 py-2.5 rounded-xl text-sm font-medium text-slate-300">
-              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
-              提交需求
-            </a>
-          </div>
-        </div>
-      </div>
-
+      <p id="cards-loading" class="col-span-full text-center text-slate-500">載入中...</p>
     </div>
   </section>
 
@@ -588,7 +168,7 @@
   <!-- Check Result Modal -->
   <div id="check-modal" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/60 backdrop-blur-sm">
     <div class="bg-slate-800 border border-white/20 rounded-2xl shadow-2xl max-w-lg w-full mx-4 p-6 relative">
-      <button onclick="closeCheckModal()" class="absolute top-4 right-4 text-slate-400 hover:text-white text-xl">✕</button>
+      <button onclick="closeCheckModal()" class="absolute top-4 right-4 text-slate-400 hover:text-white text-xl">&times;</button>
       <h3 class="text-lg font-bold text-white mb-4">巡檢結果摘要</h3>
       <div id="check-modal-content" class="space-y-2 text-sm"></div>
     </div>
@@ -597,193 +177,228 @@
   <!-- Issue Records Modal -->
   <div id="issue-modal" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/60 backdrop-blur-sm">
     <div class="bg-slate-800 border border-white/20 rounded-2xl shadow-2xl max-w-md w-full mx-4 p-6 relative">
-      <button onclick="closeModal()" class="absolute top-4 right-4 text-slate-400 hover:text-white text-xl">✕</button>
+      <button onclick="closeModal()" class="absolute top-4 right-4 text-slate-400 hover:text-white text-xl">&times;</button>
       <h3 id="modal-title" class="text-lg font-bold text-white mb-4"></h3>
       <div id="modal-content" class="space-y-3"></div>
     </div>
   </div>
 
-  <script>
-    const issueData = {
-      "sherry": [
-        { num: 4, author: "aipmtw", completed: "2026-03-15T20:56:17+08:00", summary: "頁面加入需求提交按鈕" },
-        { num: 3, author: "aipmtw", completed: "2026-03-14T12:12:49+08:00", summary: "新增返回首頁的快捷連結" },
-        { num: 2, author: "aipmtw", completed: "2026-03-14T12:10:25+08:00", summary: "更換網站圖示與標題" }
-      ],
-      "mark": [
-        { num: 5, author: "aipmtw", completed: "2026-03-15T20:56:22+08:00", summary: "頁面加入需求提交按鈕" },
-        { num: 4, author: "aipmtw", completed: "2026-03-14T12:12:53+08:00", summary: "新增返回首頁的快捷連結" },
-        { num: 3, author: "aipmtw", completed: "2026-03-14T12:07:21+08:00", summary: "更換瀏覽器標題與圖示" }
-      ],
-      "felix": [
-        { num: 7, author: "aipmtw", completed: "2026-03-15T20:56:11+08:00", summary: "頁面加入需求提交按鈕" },
-        { num: 6, author: "aipmtw", completed: "2026-03-14T12:12:48+08:00", summary: "新增返回首頁的快捷連結" },
-        { num: 5, author: "aipmtw", completed: "2026-03-14T12:10:23+08:00", summary: "更換網站圖示與標題" }
-      ],
-      "amy": [
-        { num: 4, author: "aipmtw", completed: "2026-03-15T20:56:24+08:00", summary: "頁面加入需求提交按鈕" },
-        { num: 3, author: "aipmtw", completed: "2026-03-14T12:12:51+08:00", summary: "新增返回首頁的快捷連結" },
-        { num: 2, author: "aipmtw", completed: "2026-03-14T12:10:26+08:00", summary: "更換網站圖示" }
-      ],
-      "swim-meet": [
-        { num: 18, author: "aipmtw", completed: "2026-03-15T20:56:28+08:00", summary: "頁面加入需求提交按鈕" },
-        { num: 17, author: "RobCloud", completed: "2026-03-15T16:32:33+08:00", summary: "Admin Portal 資料持久化與編輯功能" },
-        { num: 16, author: "RobCloud", completed: "2026-03-15T16:26:55+08:00", summary: "學校名稱改為縮寫加全名顯示" }
-      ],
-      "aipmtw.github.io": [
-        { num: 39, author: "aipmtw", completed: "2026-03-16T10:21:40+08:00", summary: "建立遠端觸發緊急任務計畫" },
-        { num: 38, author: "aipmtw", completed: "2026-03-16T10:21:40+08:00", summary: "建立首頁 AI 助手建立 Issue 計畫" },
-        { num: 37, author: "aipmtw", completed: "2026-03-16T09:52:22+08:00", summary: "建立 GitHub Pages 遷移至 Azure 計畫" }
-      ],
-      "ai-innovator": [
-        { num: 5, author: "aipmtw", completed: "2026-03-15T20:56:37+08:00", summary: "頁面加入需求提交按鈕" },
-        { num: 4, author: "aipmtw", completed: "2026-03-14T13:13:02+08:00", summary: "確認頁面已正確部署" },
-        { num: 3, author: "aipmtw", completed: "2026-03-14T13:09:07+08:00", summary: "移除所有內容，只顯示指定圖片" }
-      ],
-      "twoutlook": [
-        { num: 1, author: "aipmtw", completed: "2026-03-15T20:56:26+08:00", summary: "頁面加入需求提交按鈕" }
-      ],
-      "markluce": [
-        { num: 1, author: "aipmtw", completed: "2026-03-15T20:56:13+08:00", summary: "頁面加入需求提交按鈕" }
-      ],
-      "markluce-fun": [
-        { num: 1, author: "aipmtw", completed: "2026-03-15T20:56:32+08:00", summary: "頁面加入需求提交按鈕" }
-      ],
-      "markluce-running": [
-        { num: 1, author: "aipmtw", completed: "2026-03-15T20:56:19+08:00", summary: "頁面加入需求提交按鈕" }
-      ],
-      "raymondliu": [
-        { num: 4, author: "aipmtw", completed: "2026-03-15T20:56:30+08:00", summary: "頁面加入需求提交按鈕" },
-        { num: 3, author: "epwind215", completed: "2026-03-15T20:21:18+08:00", summary: "新增自我介紹區塊" },
-        { num: 2, author: "epwind215", completed: "2026-03-15T20:12:04+08:00", summary: "2026 年運動計劃月度里程追蹤" }
-      ],
-      "robert": [
-        { num: 2, author: "RobCloud", completed: "2026-03-16T08:53:58+08:00", summary: "建立 AI 使用筆記區塊" },
-        { num: 1, author: "aipmtw", completed: "2026-03-15T20:56:15+08:00", summary: "頁面加入需求提交按鈕" }
-      ],
-      "autoresearch-results": [
-        { num: 1, author: "aipmtw", completed: "2026-03-15T21:10:00+08:00", summary: "建立實驗結果展示頁面" }
-      ],
-      "water001": [
-        { num: 4, author: "aipmtw", completed: "2026-03-15T20:56:35+08:00", summary: "頁面加入需求提交按鈕" },
-        { num: 3, author: "markluce", completed: "2026-03-15T20:32:26+08:00", summary: "驗證 HRCZ 檔案結構說明並產出分析報告" },
-        { num: 1, author: "markluce", completed: "2026-03-15T09:43:05+08:00", summary: "詳細解析 HRC 撲克求解器檔案內容" }
-      ]
-    };
+  <script type="module">
+    // ===== Supabase Config =====
+    import { createClient } from 'https://esm.sh/@supabase/supabase-js@2'
+    const SUPABASE_URL = 'https://reipdepbltfbfxnjjegy.supabase.co';
+    const SUPABASE_ANON_KEY = 'sb_publishable_osbwITQrUCmW5pNYgT__Ig_Zz0l5I9Y';
+    const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-    const repoNames = {
-      "sherry": "Sherry",
-      "mark": "Mark",
-      "felix": "Felix",
-      "amy": "Amy",
-      "swim-meet": "Robert (Swim Meet)",
-      "aipmtw.github.io": "aipm.com.tw",
-      "ai-innovator": "AI Innovator",
-      "twoutlook": "twoutlook",
-      "markluce": "markluce",
-      "markluce-fun": "markluce-fun",
-      "markluce-running": "markluce-running",
-      "raymondliu": "Raymond Liu",
-      "water001": "water001",
-      "robert": "Robert",
-      "autoresearch-results": "AutoResearch"
-    };
+    // ===== SVG Icons =====
+    const ICON_LINK = '<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" /></svg>';
+    const ICON_GITHUB = '<svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>';
+    const ICON_ISSUE = '<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>';
 
-    function showModal(repo) {
+    const FLOAT_CLASSES = ['', 'float-delay-1', 'float-delay-2', 'float-delay-3'];
+
+    // ===== Format date to Taipei time =====
+    function formatDate(dateStr) {
+      if (!dateStr) return '';
+      const d = new Date(dateStr);
+      return d.toLocaleString('sv-SE', { timeZone: 'Asia/Taipei' }).replace('T', ' ');
+    }
+
+    // ===== Render Cards =====
+    function renderCards(repos) {
+      const grid = document.getElementById('cards-grid');
+      document.getElementById('cards-loading')?.remove();
+
+      // Shuffle
+      for (let i = repos.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [repos[i], repos[j]] = [repos[j], repos[i]];
+      }
+
+      grid.innerHTML = repos.map((r, i) => {
+        const colorFrom = r.card_color_from || 'indigo-500';
+        const colorTo = r.card_color_to || 'blue-500';
+        const hoverColor = colorFrom.split('-')[0];
+        const floatClass = FLOAT_CLASSES[i % 4];
+        const commitTime = formatDate(r.last_commit_time);
+        const repoSlug = r.id === 'aipmtw.github.io' ? '' : r.id + '/';
+        const searchText = r.id + ' ' + r.display_name.toLowerCase() + ' aipmtw.github.io/' + r.id;
+
+        return `
+        <div class="card-hover float-animation ${floatClass} group relative bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl overflow-hidden hover:border-${hoverColor}-500/30" data-search="${searchText}">
+          <div class="h-1.5 bg-gradient-to-r from-${colorFrom} to-${colorTo}"></div>
+          <div class="p-6">
+            <div class="flex justify-center mb-5">
+              <div class="w-16 h-16 rounded-full bg-gradient-to-br from-${colorFrom} to-${colorTo} flex items-center justify-center text-2xl font-bold shadow-lg shadow-${hoverColor}-500/20">${r.avatar_letter || r.display_name[0]}</div>
+            </div>
+            <h3 class="text-xl font-bold text-center mb-1 group-hover:text-${hoverColor}-300 transition">${r.display_name}</h3>
+            <p class="text-slate-500 text-xs text-center mb-2 font-mono">aipmtw.github.io/${r.id}</p>
+            <p class="text-slate-500 text-xs text-center mb-4">${commitTime ? '更新：' + commitTime + ' | <code class="text-slate-400">' + (r.last_commit_hash || '') + '</code>' : ''}</p>
+            <p class="text-center mb-4"><button class="issue-count text-xs bg-indigo-500/20 hover:bg-indigo-500/30 text-indigo-300 border border-indigo-500/30 px-3 py-1 rounded-lg cursor-pointer transition" data-repo="${r.id}" data-name="${r.display_name}">有效提交數：${r.valid_issue_count}</button></p>
+            <div class="flex flex-col gap-2.5">
+              <a href="${r.url}" target="_blank" rel="noopener noreferrer" class="flex items-center justify-center gap-2 bg-gradient-to-r from-${colorFrom} to-${colorTo} hover:opacity-90 transition px-4 py-2.5 rounded-xl text-sm font-semibold shadow-lg">
+                ${ICON_LINK} 瀏覽網站
+              </a>
+              <a href="${r.github_url}" target="_blank" rel="noopener noreferrer" class="flex items-center justify-center gap-2 bg-white/5 hover:bg-white/10 border border-white/10 hover:border-white/20 transition px-4 py-2.5 rounded-xl text-sm font-medium text-slate-300">
+                ${ICON_GITHUB} 查看原始碼
+              </a>
+              <a href="${r.github_url}/issues" target="_blank" rel="noopener noreferrer" class="flex items-center justify-center gap-2 bg-white/5 hover:bg-white/10 border border-white/10 hover:border-white/20 transition px-4 py-2.5 rounded-xl text-sm font-medium text-slate-300">
+                ${ICON_ISSUE} 提交需求
+              </a>
+            </div>
+          </div>
+        </div>`;
+      }).join('');
+
+      // Bind issue count buttons
+      grid.querySelectorAll('.issue-count').forEach(el => {
+        el.addEventListener('click', () => showModal(el.dataset.repo, el.dataset.name));
+      });
+    }
+
+    // ===== Issue Modal =====
+    async function showModal(repoId, repoName) {
       const modal = document.getElementById('issue-modal');
       const title = document.getElementById('modal-title');
       const content = document.getElementById('modal-content');
-      const data = issueData[repo] || [];
-      const name = repoNames[repo] || repo;
 
-      title.textContent = name + ' — 最近需求紀錄';
-      content.innerHTML = data.map((item) => `
+      title.textContent = (repoName || repoId) + ' — 最近需求紀錄';
+      content.innerHTML = '<p class="text-slate-500 text-sm">載入中...</p>';
+      modal.classList.remove('hidden');
+      modal.classList.add('flex');
+
+      const { data: issues } = await supabase
+        .from('issues')
+        .select('*')
+        .eq('repo_id', repoId)
+        .order('completed_at', { ascending: false })
+        .limit(3);
+
+      if (!issues || issues.length === 0) {
+        content.innerHTML = '<p class="text-slate-500 text-sm">暫無紀錄</p>';
+        return;
+      }
+
+      content.innerHTML = issues.map(item => `
         <div class="flex items-start gap-3 bg-white/5 rounded-xl p-3 border border-white/10">
-          <span class="flex-shrink-0 w-7 h-7 rounded-full bg-indigo-500/20 text-indigo-300 flex items-center justify-center text-xs font-bold">#${item.num}</span>
+          <span class="flex-shrink-0 w-7 h-7 rounded-full bg-indigo-500/20 text-indigo-300 flex items-center justify-center text-xs font-bold">#${item.issue_number}</span>
           <div class="flex-1">
             <p class="text-white text-sm font-medium">${item.summary}</p>
             <div class="flex items-center gap-3 mt-1.5">
               <span class="text-xs text-indigo-300 bg-indigo-500/10 px-2 py-0.5 rounded">提交者：${item.author}</span>
-              <span class="text-xs text-slate-400">${item.completed}</span>
+              <span class="text-xs text-slate-400">${formatDate(item.completed_at)}</span>
             </div>
           </div>
         </div>
       `).join('');
-
-      modal.classList.remove('hidden');
-      modal.classList.add('flex');
     }
 
-    function closeModal() {
+    window.closeModal = function() {
       const modal = document.getElementById('issue-modal');
       modal.classList.add('hidden');
       modal.classList.remove('flex');
-    }
-
+    };
     document.getElementById('issue-modal').addEventListener('click', function(e) {
       if (e.target === this) closeModal();
     });
 
-    document.querySelectorAll('.issue-count').forEach(el => {
-      el.addEventListener('click', () => showModal(el.dataset.repo));
-    });
+    // ===== Check Result Modal =====
+    let cachedCheckResult = null;
 
-    // Check result modal
-    const checkResult = {
-      time: "2026-03-16 10:50:54",
-      summary: "全部正常，無待處理 issues",
-      details: [
-        { repo: "aipmtw.github.io", issues: 0, result: "無待處理" },
-        { repo: "robert", issues: 0, result: "無待處理" },
-        { repo: "ai-innovator", issues: 0, result: "無待處理" },
-        { repo: "mark", issues: 0, result: "無待處理" },
-        { repo: "water001", issues: 0, result: "無待處理" },
-        { repo: "swim-meet", issues: 0, result: "無待處理" },
-        { repo: "markluce-running", issues: 0, result: "無待處理" },
-        { repo: "markluce-fun", issues: 0, result: "無待處理" },
-        { repo: "markluce", issues: 0, result: "無待處理" },
-        { repo: "twoutlook", issues: 0, result: "無待處理" },
-        { repo: "amy", issues: 0, result: "無待處理" },
-        { repo: "felix", issues: 0, result: "無待處理" },
-        { repo: "sherry", issues: 0, result: "無待處理" },
-        { repo: "raymondliu", issues: 0, result: "無待處理" },
-        { repo: "autoresearch-results", issues: 0, result: "無待處理" }
-      ]
-    };
+    async function loadCheckResult() {
+      const { data } = await supabase
+        .from('check_results')
+        .select('*, check_details(*)')
+        .order('check_time', { ascending: false })
+        .limit(1)
+        .single();
 
-    function showCheckModal() {
-      const modal = document.getElementById('check-modal');
-      const content = document.getElementById('check-modal-content');
-      content.innerHTML = `
-        <div class="bg-emerald-500/10 border border-emerald-500/20 rounded-xl p-3 mb-3">
-          <p class="text-emerald-300 font-medium">巡檢時間：${checkResult.time} (台北時間)</p>
-          <p class="text-slate-300 mt-1">${checkResult.summary}</p>
-        </div>
-        <div class="space-y-1.5">
-          ${checkResult.details.map(d => `
-            <div class="flex items-center justify-between bg-white/5 rounded-lg px-3 py-2 border border-white/10">
-              <span class="text-slate-300 font-mono text-xs">${d.repo}</span>
-              <span class="text-xs ${d.issues > 0 ? 'text-emerald-300' : 'text-slate-500'}">${d.result}</span>
-            </div>
-          `).join('')}
-        </div>
-      `;
-      modal.classList.remove('hidden');
-      modal.classList.add('flex');
+      cachedCheckResult = data;
+
+      if (data) {
+        const timeStr = formatDate(data.check_time);
+        document.getElementById('check-time-btn').textContent = '最後巡檢時間：' + timeStr + ' (台北時間)';
+      }
     }
 
-    function closeCheckModal() {
+    window.showCheckModal = function() {
+      const modal = document.getElementById('check-modal');
+      const content = document.getElementById('check-modal-content');
+
+      if (!cachedCheckResult) {
+        content.innerHTML = '<p class="text-slate-500 text-sm">暫無巡檢紀錄</p>';
+      } else {
+        const d = cachedCheckResult;
+        content.innerHTML = `
+          <div class="bg-emerald-500/10 border border-emerald-500/20 rounded-xl p-3 mb-3">
+            <p class="text-emerald-300 font-medium">巡檢時間：${formatDate(d.check_time)} (台北時間)</p>
+            <p class="text-slate-300 mt-1">${d.summary}</p>
+          </div>
+          <div class="space-y-1.5">
+            ${(d.check_details || []).map(det => `
+              <div class="flex items-center justify-between bg-white/5 rounded-lg px-3 py-2 border border-white/10">
+                <span class="text-slate-300 font-mono text-xs">${det.repo_id}</span>
+                <span class="text-xs ${det.open_issues > 0 ? 'text-emerald-300' : 'text-slate-500'}">${det.result}</span>
+              </div>
+            `).join('')}
+          </div>
+        `;
+      }
+
+      modal.classList.remove('hidden');
+      modal.classList.add('flex');
+    };
+
+    window.closeCheckModal = function() {
       const modal = document.getElementById('check-modal');
       modal.classList.add('hidden');
       modal.classList.remove('flex');
-    }
-
+    };
     document.getElementById('check-modal').addEventListener('click', function(e) {
       if (e.target === this) closeCheckModal();
     });
-
     document.getElementById('check-time-btn').addEventListener('click', showCheckModal);
 
+    // ===== Search Filter =====
+    document.getElementById('card-filter').addEventListener('input', function(e) {
+      const query = e.target.value.toLowerCase().trim();
+      const grid = document.getElementById('cards-grid');
+      const cards = grid.querySelectorAll('[data-search]');
+      cards.forEach(card => {
+        if (!query || card.dataset.search.toLowerCase().includes(query) || card.textContent.toLowerCase().includes(query)) {
+          card.style.display = '';
+        } else {
+          card.style.display = 'none';
+        }
+      });
+    });
+
+    // ===== Load all data =====
+    async function init() {
+      try {
+        const [reposResult, _] = await Promise.all([
+          supabase.from('repos').select('*').eq('is_active', true).order('display_name'),
+          loadCheckResult()
+        ]);
+
+        if (reposResult.data) {
+          renderCards(reposResult.data);
+          // Update page info
+          document.getElementById('page-update-info').textContent = '資料來源：Supabase 即時資料庫';
+        } else {
+          document.getElementById('cards-loading').textContent = '資料載入失敗，請重新整理頁面';
+        }
+      } catch (err) {
+        console.error('Init error:', err);
+        document.getElementById('cards-loading').textContent = '資料載入失敗，請重新整理頁面';
+      }
+    }
+
+    init();
+  </script>
+
+  <!-- Apply / Delete Space (non-module script for global scope) -->
+  <script>
     // ===== Apply for Space =====
     const spaceInput = document.getElementById('space-name');
     const spaceStatus = document.getElementById('space-status');
@@ -796,7 +411,7 @@
     const applyStatusEl = document.getElementById('apply-status');
 
     let spaceValid = false, ghValid = false, spaceTimer, ghTimer;
-    let pendingApps = []; // { name, account, url }
+    let pendingApps = [];
 
     function updateBtn() {
       if (spaceValid && ghValid) {
@@ -808,7 +423,6 @@
       }
     }
 
-    // Load pending applications on page load
     async function loadPending() {
       try {
         const r = await fetch('https://api.github.com/repos/aipmtw/aipmtw.github.io/issues?state=open&labels=申請空間&per_page=20');
@@ -883,14 +497,6 @@
     });
 
     const MAX_SPACES = 2;
-    // Cards on the page that belong to each user (data-search contains the repo names)
-    function countExistingSpaces(username) {
-      // Count pending applications by this user
-      const pendingCount = pendingApps.filter(app => app.account.toLowerCase() === username.toLowerCase()).length;
-      // Count existing cards (check collaborator via repo descriptions - approximate by checking card links)
-      // For accuracy, we check repos where this user is a collaborator
-      return pendingCount; // existing repos checked via API below
-    }
 
     ghInput.addEventListener('input', function() {
       clearTimeout(ghTimer);
@@ -913,9 +519,7 @@
           ghAvatar.src = data.avatar_url;
           ghAvatar.classList.remove('hidden');
 
-          // Check how many spaces this user already has
           const pendingCount = pendingApps.filter(app => app.account.toLowerCase() === username.toLowerCase()).length;
-          // Check existing repos where user is collaborator
           let existingCount = 0;
           try {
             const reposR = await fetch('https://api.github.com/orgs/aipmtw/repos?per_page=50');
@@ -970,10 +574,10 @@
       const body = encodeURIComponent(
         '空間名稱：' + name + '\n' +
         'GitHub：' + account + '\n' +
-        '驗證狀態：✅ 名稱可用 ✅ 帳號存在\n' +
+        '驗證狀態：\u2705 名稱可用 \u2705 帳號存在\n' +
         'Sign：' + sign + '\n\n' +
         '---\n' +
-        '⚠️ 請勿修改以上內容，修改後簽章將失效，申請會被拒絕。\n' +
+        '\u26a0\ufe0f 請勿修改以上內容，修改後簽章將失效，申請會被拒絕。\n' +
         '管理員請留言 `/approve` 核准建立。'
       );
       window.open('https://github.com/aipmtw/aipmtw.github.io/issues/new?title=' + title + '&body=' + body + '&labels=申請空間', '_blank');
@@ -1080,39 +684,13 @@
         'GitHub：' + account + '\n' +
         'Sign：' + sign + '\n\n' +
         '---\n' +
-        '⚠️ 請勿修改以上內容，修改後簽章將失效，申請會被拒絕。\n' +
+        '\u26a0\ufe0f 請勿修改以上內容，修改後簽章將失效，申請會被拒絕。\n' +
         '管理員請留言 `/approve` 核准刪除。'
       );
       window.open('https://github.com/aipmtw/aipmtw.github.io/issues/new?title=' + title + '&body=' + body + '&labels=刪除空間', '_blank');
       delStatusEl.textContent = '已開啟 GitHub Issue 頁面，請用你的 GitHub 帳號登入並確認送出';
       delStatusEl.className = 'text-xs text-center mt-2 h-4 text-red-300';
     });
-
-    // Fuzzy search filter
-    document.getElementById('card-filter').addEventListener('input', function(e) {
-      const query = e.target.value.toLowerCase().trim();
-      const grid = document.getElementById('cards-grid');
-      const cards = grid.querySelectorAll('[data-search]');
-      cards.forEach(card => {
-        if (!query || card.dataset.search.toLowerCase().includes(query) || card.textContent.toLowerCase().includes(query)) {
-          card.style.display = '';
-        } else {
-          card.style.display = 'none';
-        }
-      });
-    });
-
-
-    // Shuffle cards on page load
-    (function() {
-      const grid = document.getElementById('cards-grid');
-      const cards = Array.from(grid.children).filter(el => el.nodeType === 1);
-      for (let i = cards.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        grid.appendChild(cards[j]);
-        cards.splice(j, 1, cards[i]);
-      }
-    })();
   </script>
 
 </body>
