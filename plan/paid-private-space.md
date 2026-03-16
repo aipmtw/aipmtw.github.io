@@ -208,5 +208,5 @@ export async function middleware(request) {
 ## 與現有系統的相容性
 
 - **公開空間不受影響**：免費用戶的公開空間繼續使用 GitHub Pages
-- **巡檢系統調整**：`/check-issues` 需識別 private repo（目前只掃 public），付費用戶的 private repo 也要巡檢
+- **巡檢系統調整**：`/do-issues` 需識別 private repo（目前只掃 public），付費用戶的 private repo 也要巡檢
 - **首頁卡片**：private repo 仍顯示卡片，但標示 🔒 並導向 Vercel URL 而非 GitHub Pages

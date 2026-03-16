@@ -351,7 +351,7 @@ ALTER TABLE repos ADD COLUMN owner_user_id UUID REFERENCES auth.users(id);
 ### 階段四：清理
 
 1. 各成員 repo 的 GitHub Pages 設定可保留（作為備援）
-2. 更新巡檢 SOP：`/check-issues` 和 `/check-actions` 適配新架構
+2. 更新巡檢 SOP：`/do-issues` 和 `/check-actions` 適配新架構
 3. 更新首頁 index.html 的部署方式
 
 ## 遷移前後對比

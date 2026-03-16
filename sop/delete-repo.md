@@ -30,7 +30,7 @@ gh repo delete aipmtw/{name} --yes
 # 2. 刪除本地目錄（如有）
 rm -rf C:/2026aipm-projects/{name}
 
-# 3. 下次 /check-issues 會自動從首頁移除卡片
+# 3. 下次 /do-issues 會自動從首頁移除卡片
 ```
 
 ## 自動偵測與清理
@@ -40,7 +40,7 @@ rm -rf C:/2026aipm-projects/{name}
 每次巡檢時比對首頁卡片與實際 repo：
 - `gh api repos/aipmtw/{name}` 回傳 404 → 報告中標記 `🗑️ repo 已刪除`
 
-### /check-issues 自動清理
+### /do-issues 自動清理
 
 每次巡檢卡片同步時：
 - 若 repo 已不存在（API 回傳 404）→ 自動移除卡片、issueData、repoNames 等

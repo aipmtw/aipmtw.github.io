@@ -75,9 +75,9 @@ gh api repos/aipmtw/{name}/pages -X POST -f build_type=workflow
 
 ## 建立後自動處理
 
-下次 `/check-issues` 巡檢時會自動：
+下次 `/do-issues` 巡檢時會自動：
 - 在 aipm.com.tw 首頁新增該成員的卡片
-- 將 repo 納入 check-issues / check-actions 巡檢範圍
+- 將 repo 納入 do-issues / check-actions 巡檢範圍
 - 同步卡片資訊（commit 時間、有效提交數）
 
 ## 簽章驗證（防竄改）

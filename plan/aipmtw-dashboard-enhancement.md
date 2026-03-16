@@ -21,7 +21,7 @@
 ```
 ┌─────────────┐     ┌──────────────┐     ┌─────────────────┐
 │   Browser   │────▶│  Supabase    │◀────│  AI 巡檢腳本    │
-│ index.html  │     │  (PostgreSQL │     │  /check-issues   │
+│ index.html  │     │  (PostgreSQL │     │  /do-issues   │
 │ 前端 JS     │     │   + REST API)│     │  /check-actions  │
 └─────────────┘     └──────────────┘     └─────────────────┘
       │                    │
@@ -164,7 +164,7 @@ async function loadCheckResult() {
 
 **卡片動態產生**：不再硬編碼 15 張卡片 HTML，改為用 JS 根據 `repos` 表的資料動態建立 DOM。新增/刪除 repo 只需操作資料庫，前端自動反映。
 
-### 第三階段：改造 AI 巡檢腳本（/check-issues）
+### 第三階段：改造 AI 巡檢腳本（/do-issues）
 
 巡檢腳本改為寫入 Supabase，不再修改 index.html：
 

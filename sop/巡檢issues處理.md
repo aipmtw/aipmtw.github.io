@@ -7,8 +7,8 @@
 ## 觸發方式
 
 - **自動排程**：每 15 分鐘執行一次（:05, :20, :35, :50）
-- **手動執行**：在 Claude Code 中執行 `/check-issues`
-- **CLI 模式**：`claude -p "/check-issues" --dangerously-skip-permissions`
+- **手動執行**：在 Claude Code 中執行 `/do-issues`
+- **CLI 模式**：`claude -p "/do-issues" --dangerously-skip-permissions`
 
 ## 流程
 
@@ -43,7 +43,7 @@
 
 留言內容（僅留言一次，避免重複）：
 
-> 🤖 /check-issues 巡檢提示：此 issue 的提交者 @{author} 目前不是本 repo 的 Collaborator。管理員請留言 /approve 以核准處理此需求。
+> 🤖 /do-issues 巡檢提示：此 issue 的提交者 @{author} 目前不是本 repo 的 Collaborator。管理員請留言 /approve 以核准處理此需求。
 
 管理員看到後可選擇：
 - 留言 `/approve` → 下次巡檢會處理
@@ -66,7 +66,7 @@
 | 檔案 | 路徑 | 內容 |
 |------|------|------|
 | 完整巡檢 log | `2026biz/logs/<YYYYMMDD>/<HHMM>-summary.md` | 各 repo 詳細處理記錄 |
-| 巡檢摘要 | `2026biz/aitech/<MMDD>-<HHMM>-check-issues.md` | 簡短結果摘要 |
+| 巡檢摘要 | `2026biz/aitech/<MMDD>-<HHMM>-do-issues.md` | 簡短結果摘要 |
 
 ## 管理員操作指南
 
