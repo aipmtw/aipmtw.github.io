@@ -47,9 +47,14 @@
     <a href="/" class="text-xl font-bold tracking-tight">
       <span class="text-indigo-400">AIPM</span> TW
     </a>
-    <button id="changenote-btn" class="text-xs bg-amber-500/20 hover:bg-amber-500/30 text-amber-300 border border-amber-500/30 px-3 py-1.5 rounded-lg cursor-pointer transition font-medium">
-      重大改版記要
-    </button>
+    <div class="flex gap-2">
+      <button id="changenote-btn" class="text-xs bg-amber-500/20 hover:bg-amber-500/30 text-amber-300 border border-amber-500/30 px-3 py-1.5 rounded-lg cursor-pointer transition font-medium">
+        重大改版記要
+      </button>
+      <button id="insplog-btn" class="text-xs bg-emerald-500/20 hover:bg-emerald-500/30 text-emerald-300 border border-emerald-500/30 px-3 py-1.5 rounded-lg cursor-pointer transition font-medium">
+        巡檢記錄
+      </button>
+    </div>
   </nav>
 
   <!-- Notice -->
@@ -183,6 +188,17 @@
       <button onclick="closeModal()" class="absolute top-4 right-4 text-slate-400 hover:text-white text-xl">&times;</button>
       <h3 id="modal-title" class="text-lg font-bold text-white mb-4"></h3>
       <div id="modal-content" class="space-y-3"></div>
+    </div>
+  </div>
+
+  <!-- Inspection Log Modal -->
+  <div id="insplog-modal" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/60 backdrop-blur-sm">
+    <div class="bg-slate-800 border border-emerald-500/20 rounded-2xl shadow-2xl max-w-2xl w-full mx-4 p-6 relative max-h-[80vh] overflow-y-auto">
+      <button onclick="closeInsplogModal()" class="absolute top-4 right-4 text-slate-400 hover:text-white text-xl">&times;</button>
+      <h3 class="text-lg font-bold text-emerald-300 mb-4">巡檢記錄（最近 7 次）</h3>
+      <div id="insplog-content" class="space-y-3 text-sm">
+        <p class="text-slate-500">載入中...</p>
+      </div>
     </div>
   </div>
 
@@ -430,6 +446,63 @@
       modal.classList.remove('hidden');
       modal.classList.add('flex');
       loadChangenotes();
+    });
+
+    // ===== Inspection Log Modal =====
+    async function loadInspectionLogs() {
+      try {
+        const { data: logs } = await supabase
+          .from('check_results')
+          .select('id, check_time, summary, check_details(repo_id, open_issues, result)')
+          .order('check_time', { ascending: false })
+          .limit(7);
+
+        const content = document.getElementById('insplog-content');
+        if (!logs || logs.length === 0) {
+          content.innerHTML = '<p class="text-slate-500">目前沒有巡檢記錄</p>';
+          return;
+        }
+        content.innerHTML = logs.map(log => {
+          const time = formatDate(log.check_time);
+          const hasIssues = (log.check_details || []).some(d => d.open_issues > 0);
+          const activeDetails = (log.check_details || []).filter(d => d.open_issues > 0);
+          return `
+          <div class="bg-white/5 border border-white/10 rounded-xl p-4">
+            <div class="flex items-center justify-between mb-2">
+              <span class="text-xs bg-emerald-500/20 text-emerald-300 px-2 py-0.5 rounded">${time}</span>
+              <span class="text-xs ${hasIssues ? 'text-amber-300' : 'text-slate-500'}">${hasIssues ? '有處理項目' : '全部正常'}</span>
+            </div>
+            <p class="text-white text-sm mb-2">${log.summary}</p>
+            ${activeDetails.length > 0 ? `
+              <div class="space-y-1 mt-2">
+                ${activeDetails.map(d => `
+                  <div class="flex items-center justify-between text-xs bg-white/5 rounded-lg px-2 py-1">
+                    <span class="text-slate-300 font-mono">${d.repo_id}</span>
+                    <span class="text-emerald-300">${d.result}</span>
+                  </div>
+                `).join('')}
+              </div>
+            ` : ''}
+          </div>`;
+        }).join('');
+      } catch (e) {
+        document.getElementById('insplog-content').innerHTML = '<p class="text-slate-500">載入失敗</p>';
+      }
+    }
+
+    window.closeInsplogModal = function() {
+      const modal = document.getElementById('insplog-modal');
+      modal.classList.add('hidden');
+      modal.classList.remove('flex');
+    };
+    document.getElementById('insplog-modal').addEventListener('click', function(e) {
+      if (e.target === this) closeInsplogModal();
+    });
+    document.getElementById('insplog-btn').addEventListener('click', function() {
+      const modal = document.getElementById('insplog-modal');
+      modal.classList.remove('hidden');
+      modal.classList.add('flex');
+      loadInspectionLogs();
     });
 
     // ===== Load all data =====
