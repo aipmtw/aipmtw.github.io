@@ -179,6 +179,40 @@
     </div>
   </section>
 
+  <!-- Apply Daily Notes (logged-in only) -->
+  <section id="daily-notes-section" class="relative z-10 max-w-lg mx-auto px-6 pb-24 hidden">
+    <div class="bg-white/5 backdrop-blur border border-cyan-500/20 rounded-2xl p-8">
+      <h2 class="text-2xl font-bold mb-2 text-center bg-gradient-to-r from-cyan-400 to-indigo-400 bg-clip-text text-transparent" style="-webkit-background-clip:text;-webkit-text-fill-color:transparent;">申請日記功能</h2>
+      <p class="text-slate-400 text-sm text-center mb-2">為你的個人空間開通 Daily Notes 功能</p>
+      <p class="text-cyan-400/80 text-xs text-center mb-8">提交後由自動巡檢系統直接處理，無需等待審批</p>
+
+      <div class="space-y-5">
+        <div>
+          <label class="block text-sm font-medium text-slate-300 mb-1.5">空間名稱 <span class="text-slate-500 text-xs">（你的空間）</span></label>
+          <div class="flex items-center gap-2">
+            <input id="dn-space-name" type="text" placeholder="my-space" class="flex-1 bg-white/5 border border-white/20 rounded-lg px-3 py-2.5 text-white placeholder-slate-600 text-sm focus:outline-none focus:border-cyan-500 transition" />
+            <span id="dn-space-status" class="text-lg w-8 text-center"></span>
+          </div>
+          <p id="dn-space-msg" class="text-xs mt-1 h-4"></p>
+        </div>
+
+        <div>
+          <label class="block text-sm font-medium text-slate-300 mb-1.5">GitHub Account</label>
+          <div class="flex items-center gap-2">
+            <input id="dn-github-account" type="text" readonly class="flex-1 bg-white/5 border border-white/20 rounded-lg px-3 py-2.5 text-slate-400 text-sm focus:outline-none cursor-not-allowed" />
+            <span class="text-lg w-8 text-center">✅</span>
+          </div>
+          <p class="text-xs mt-1 h-4 text-slate-500">自動從登入帳號帶入</p>
+        </div>
+
+        <button id="dn-apply-btn" disabled class="w-full bg-cyan-600/50 text-white/50 font-semibold py-3 rounded-xl text-sm cursor-not-allowed transition">
+          提交申請
+        </button>
+        <p id="dn-apply-status" class="text-xs text-center mt-2 h-4"></p>
+      </div>
+    </div>
+  </section>
+
   <!-- Footer -->
   <footer class="relative z-10 border-t border-white/10 py-8 text-center text-slate-500 text-sm">
     &copy; 2026 aipm.com.tw. All rights reserved.
@@ -398,6 +432,28 @@
       await supabase.auth.signOut();
       updateAuthUI(null);
     });
+
+    // Daily Notes section: show when logged in, auto-fill GitHub username
+    function updateDailyNotesSection(user) {
+      const section = document.getElementById('daily-notes-section');
+      const ghInput = document.getElementById('dn-github-account');
+      if (user) {
+        section.classList.remove('hidden');
+        const ghUsername = user.user_metadata?.user_name || user.user_metadata?.preferred_username || '';
+        ghInput.value = ghUsername;
+        window._dnGithubAccount = ghUsername;
+      } else {
+        section.classList.add('hidden');
+        ghInput.value = '';
+        window._dnGithubAccount = '';
+      }
+    }
+    // Hook into auth state
+    const _origUpdateAuthUI = updateAuthUI;
+    updateAuthUI = function(user) {
+      _origUpdateAuthUI(user);
+      updateDailyNotesSection(user);
+    };
 
     // ===== SVG Icons =====
     const ICON_LINK = '<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" /></svg>';
@@ -1004,6 +1060,97 @@
       window.open('https://github.com/aipmtw/aipmtw.github.io/issues/new?title=' + title + '&body=' + body + '&labels=刪除空間', '_blank');
       delStatusEl.textContent = '已開啟 GitHub Issue 頁面，請用你的 GitHub 帳號登入並確認送出';
       delStatusEl.className = 'text-xs text-center mt-2 h-4 text-red-300';
+    });
+
+    // ===== Apply Daily Notes =====
+    const dnSpaceInput = document.getElementById('dn-space-name');
+    const dnSpaceStatus = document.getElementById('dn-space-status');
+    const dnSpaceMsg = document.getElementById('dn-space-msg');
+    const dnApplyBtn = document.getElementById('dn-apply-btn');
+    const dnApplyStatus = document.getElementById('dn-apply-status');
+
+    let dnSpaceValid = false, dnSpaceTimer;
+
+    function updateDnBtn() {
+      if (dnSpaceValid && window._dnGithubAccount) {
+        dnApplyBtn.disabled = false;
+        dnApplyBtn.className = 'w-full bg-cyan-600 hover:bg-cyan-500 text-white font-semibold py-3 rounded-xl text-sm cursor-pointer transition';
+      } else {
+        dnApplyBtn.disabled = true;
+        dnApplyBtn.className = 'w-full bg-cyan-600/50 text-white/50 font-semibold py-3 rounded-xl text-sm cursor-not-allowed transition';
+      }
+    }
+
+    dnSpaceInput.addEventListener('input', function() {
+      clearTimeout(dnSpaceTimer);
+      dnSpaceValid = false; updateDnBtn();
+      const name = this.value.trim().toLowerCase();
+      if (!name) { dnSpaceStatus.textContent = ''; dnSpaceMsg.textContent = ''; return; }
+      dnSpaceStatus.textContent = '...';
+      dnSpaceMsg.textContent = '';
+      dnSpaceTimer = setTimeout(async () => {
+        try {
+          const r = await fetch('https://api.github.com/repos/aipmtw/' + name);
+          if (r.ok) {
+            // Check if user is collaborator
+            const account = window._dnGithubAccount;
+            if (account) {
+              const cr = await fetch('https://api.github.com/repos/aipmtw/' + name + '/collaborators/' + account);
+              if (cr.status === 204) {
+                dnSpaceValid = true; updateDnBtn();
+                dnSpaceStatus.textContent = '\u2705';
+                dnSpaceMsg.textContent = '空間存在，你是 Collaborator';
+                dnSpaceMsg.className = 'text-xs mt-1 h-4 text-emerald-400';
+              } else {
+                dnSpaceStatus.textContent = '\u274c';
+                dnSpaceMsg.textContent = '你不是此空間的 Collaborator';
+                dnSpaceMsg.className = 'text-xs mt-1 h-4 text-red-400';
+              }
+            } else {
+              dnSpaceStatus.textContent = '\u274c';
+              dnSpaceMsg.textContent = '請先登入 GitHub 帳號';
+              dnSpaceMsg.className = 'text-xs mt-1 h-4 text-amber-400';
+            }
+          } else {
+            dnSpaceStatus.textContent = '\u274c';
+            dnSpaceMsg.textContent = '空間不存在';
+            dnSpaceMsg.className = 'text-xs mt-1 h-4 text-red-400';
+          }
+        } catch(e) {
+          dnSpaceStatus.textContent = '\u26a0\ufe0f';
+          dnSpaceMsg.textContent = '網路錯誤';
+          dnSpaceMsg.className = 'text-xs mt-1 h-4 text-yellow-400';
+        }
+      }, 500);
+    });
+
+    const DN_SIGN_SALT = 'aipmtw-2026-dailynotes';
+
+    async function generateDnSign(spaceName, account) {
+      const msg = DN_SIGN_SALT + '|' + spaceName + '|' + account;
+      const data = new TextEncoder().encode(msg);
+      const hash = await crypto.subtle.digest('SHA-256', data);
+      return Array.from(new Uint8Array(hash)).map(b => b.toString(16).padStart(2, '0')).join('').slice(0, 16);
+    }
+
+    dnApplyBtn.addEventListener('click', async function() {
+      if (!dnSpaceValid || !window._dnGithubAccount) return;
+      const spaceName = dnSpaceInput.value.trim().toLowerCase();
+      const account = window._dnGithubAccount;
+      const sign = await generateDnSign(spaceName, account);
+      const title = encodeURIComponent('[申請日記功能] ' + spaceName + ' - ' + account);
+      const body = encodeURIComponent(
+        '空間名稱：' + spaceName + '\n' +
+        'GitHub：' + account + '\n' +
+        '驗證狀態：\u2705 空間存在 \u2705 Collaborator 確認\n' +
+        'Sign：' + sign + '\n\n' +
+        '---\n' +
+        '\u26a0\ufe0f 請勿修改以上內容，修改後簽章將失效，申請會被拒絕。'
+      );
+      window.open('https://github.com/aipmtw/aipmtw.github.io/issues/new?title=' + title + '&body=' + body + '&labels=申請日記功能', '_blank');
+      dnApplyStatus.textContent = '已開啟 GitHub Issue 頁面，請確認送出。自動巡檢系統將直接處理，無需等待審批。';
+      dnApplyStatus.className = 'text-xs text-center mt-2 h-4 text-cyan-300';
+      dnSpaceValid = false; updateDnBtn();
     });
   </script>
 
