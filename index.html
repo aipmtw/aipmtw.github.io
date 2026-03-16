@@ -464,15 +464,19 @@
         }
         content.innerHTML = logs.map(log => {
           const time = formatDate(log.check_time);
-          const hasIssues = (log.check_details || []).some(d => d.open_issues > 0);
-          const activeDetails = (log.check_details || []).filter(d => d.open_issues > 0);
+          const details = log.check_details || [];
+          const repoCount = details.length;
+          const hasIssues = details.some(d => d.open_issues > 0);
+          const activeDetails = details.filter(d => d.open_issues > 0);
+          const repoNames = details.map(d => d.repo_id.replace('aipmtw.github.io','aipm').replace('-results','').replace('autoresearch','autoR')).join(', ');
           return `
           <div class="bg-white/5 border border-white/10 rounded-xl p-4">
             <div class="flex items-center justify-between mb-2">
               <span class="text-xs bg-emerald-500/20 text-emerald-300 px-2 py-0.5 rounded">${time}</span>
               <span class="text-xs ${hasIssues ? 'text-amber-300' : 'text-slate-500'}">${hasIssues ? '有處理項目' : '全部正常'}</span>
             </div>
-            <p class="text-white text-sm mb-2">${log.summary}</p>
+            <p class="text-white text-sm">${log.summary}</p>
+            <p class="text-slate-500 text-xs mt-1">掃描 ${repoCount} 個 repo：${repoNames}</p>
             ${activeDetails.length > 0 ? `
               <div class="space-y-1 mt-2">
                 ${activeDetails.map(d => `
