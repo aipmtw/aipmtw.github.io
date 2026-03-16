@@ -100,6 +100,17 @@
     </div>
   </section>
 
+  <!-- Daily Notes Showcase -->
+  <section id="daily-notes-showcase" class="relative z-10 max-w-6xl mx-auto px-6 pb-24 hidden">
+    <div class="text-center mb-10">
+      <h2 class="text-3xl md:text-4xl font-extrabold mb-3">
+        <span class="bg-gradient-to-r from-cyan-400 to-indigo-400 bg-clip-text text-transparent" style="-webkit-background-clip:text;-webkit-text-fill-color:transparent;">Daily Notes</span>
+      </h2>
+      <p class="text-slate-400 text-sm">會員每日筆記動態</p>
+    </div>
+    <div id="dn-showcase-grid" class="grid md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+  </section>
+
   <!-- Apply for Space -->
   <section class="relative z-10 max-w-lg mx-auto px-6 pb-24">
     <div class="bg-white/5 backdrop-blur border border-white/10 rounded-2xl p-8">
@@ -744,6 +755,78 @@
       loadInspectionLogs();
     });
 
+    // ===== Daily Notes Showcase =====
+    async function loadDailyNotesShowcase() {
+      try {
+        const { data: notes } = await supabase
+          .from('daily_notes')
+          .select('*, user_profiles(display_name, email)')
+          .eq('visibility', 'public')
+          .order('date', { ascending: false })
+          .order('created_at', { ascending: false })
+          .limit(30);
+
+        if (!notes || notes.length === 0) return;
+
+        const section = document.getElementById('daily-notes-showcase');
+        const grid = document.getElementById('dn-showcase-grid');
+        section.classList.remove('hidden');
+
+        // Group by repo_id
+        const byRepo = {};
+        notes.forEach(n => {
+          if (!byRepo[n.repo_id]) byRepo[n.repo_id] = [];
+          byRepo[n.repo_id].push(n);
+        });
+
+        const repoColors = {
+          'markluce-fun': { from: '#FF6B6B', to: '#FFE66D', icon: 'M' },
+          'mark': { from: '#f093fb', to: '#f5576c', icon: 'M' },
+          'robert': { from: '#A8E6CF', to: '#88D8A8', icon: 'R' },
+          'swim-meet': { from: '#43e97b', to: '#38f9d7', icon: 'S' },
+          'felix': { from: '#d4fc79', to: '#96e6a1', icon: 'F' },
+          'amy': { from: '#a1c4fd', to: '#c2e9fb', icon: 'A' },
+          'sherry': { from: '#fddb92', to: '#d1fdff', icon: 'S' },
+        };
+        const defaultColor = { from: '#667eea', to: '#764ba2', icon: '?' };
+
+        grid.innerHTML = Object.entries(byRepo).map(([repoId, repoNotes]) => {
+          const c = repoColors[repoId] || defaultColor;
+          const latestNote = repoNotes[0];
+          const authorName = latestNote.user_profiles?.display_name || latestNote.user_profiles?.email?.split('@')[0] || '匿名';
+          const noteCount = repoNotes.length;
+          const preview = latestNote.content.length > 120 ? latestNote.content.slice(0, 120) + '...' : latestNote.content;
+          const repoUrl = repoId === 'aipmtw.github.io' ? 'https://aipmtw.github.io' : 'https://aipmtw.github.io/' + repoId;
+
+          return `
+          <a href="${repoUrl}/#dailynotes" target="_blank" rel="noopener noreferrer"
+             class="group bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl overflow-hidden hover:border-cyan-500/30 transition hover:bg-white/[0.07]">
+            <div class="h-1" style="background: linear-gradient(to right, ${c.from}, ${c.to})"></div>
+            <div class="p-5">
+              <div class="flex items-center gap-3 mb-3">
+                <div class="w-10 h-10 rounded-full flex items-center justify-center text-sm font-bold shadow-lg"
+                     style="background: linear-gradient(135deg, ${c.from}, ${c.to})">${c.icon}</div>
+                <div>
+                  <h3 class="text-sm font-bold text-white group-hover:text-cyan-300 transition">${repoId}</h3>
+                  <p class="text-xs text-slate-500">${noteCount} 篇公開筆記</p>
+                </div>
+              </div>
+              <div class="bg-white/5 rounded-xl p-3 mb-3">
+                <div class="flex items-center gap-2 mb-1.5">
+                  <span class="text-[10px] font-mono text-cyan-400/80">${latestNote.date}</span>
+                  <span class="text-[10px] text-indigo-300">${authorName}</span>
+                </div>
+                <p class="text-xs text-slate-300 leading-relaxed whitespace-pre-wrap line-clamp-3">${preview}</p>
+              </div>
+              <p class="text-xs text-cyan-400/60 group-hover:text-cyan-400 transition text-right">查看全部 →</p>
+            </div>
+          </a>`;
+        }).join('');
+      } catch (e) {
+        console.error('Daily notes showcase error:', e);
+      }
+    }
+
     // ===== Load all data =====
     async function init() {
       try {
@@ -758,6 +841,9 @@
         } else {
           document.getElementById('cards-loading').textContent = '資料載入失敗，請重新整理頁面';
         }
+
+        // Load daily notes showcase (non-blocking)
+        loadDailyNotesShowcase();
       } catch (err) {
         console.error('Init error:', err);
         document.getElementById('cards-loading').textContent = '資料載入失敗，請重新整理頁面';
