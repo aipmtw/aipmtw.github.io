@@ -339,7 +339,7 @@
       const { data } = await supabase
         .from('check_results')
         .select('*, check_details(*)')
-        .order('check_time', { ascending: false })
+        .order('id', { ascending: false })
         .limit(1)
         .single();
 
@@ -454,7 +454,7 @@
         const { data: logs } = await supabase
           .from('check_results')
           .select('id, check_time, summary, check_details(repo_id, open_issues, result)')
-          .order('check_time', { ascending: false })
+          .order('id', { ascending: false })
           .limit(7);
 
         const content = document.getElementById('insplog-content');
@@ -472,7 +472,7 @@
           return `
           <div class="bg-white/5 border border-white/10 rounded-xl p-4">
             <div class="flex items-center justify-between mb-2">
-              <span class="text-xs bg-emerald-500/20 text-emerald-300 px-2 py-0.5 rounded">${time}</span>
+              <span class="text-xs bg-emerald-500/20 text-emerald-300 px-2 py-0.5 rounded">#${log.id}　${time}</span>
               <span class="text-xs ${hasIssues ? 'text-amber-300' : 'text-slate-500'}">${hasIssues ? '有處理項目' : '全部正常'}</span>
             </div>
             <p class="text-white text-sm">${log.summary}</p>
