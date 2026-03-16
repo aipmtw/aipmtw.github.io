@@ -28,6 +28,12 @@
     .glow { box-shadow: 0 0 60px rgba(99, 102, 241, 0.12); }
     @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
     .float-animation { animation: float 6s ease-in-out infinite; }
+    html { scroll-behavior: smooth; }
+    section[id] { scroll-margin-top: 60px; }
+    #section-nav { transition: opacity 0.3s, transform 0.3s; }
+    #section-nav.nav-hidden { opacity: 0; transform: translateY(-100%); pointer-events: none; }
+    .scrollbar-hide::-webkit-scrollbar { display: none; }
+    .scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
     .float-delay-1 { animation-delay: 1s; }
     .float-delay-2 { animation-delay: 2s; }
     .float-delay-3 { animation-delay: 3s; }
@@ -94,7 +100,7 @@
   </div>
 
   <!-- Member Sites Grid -->
-  <section class="relative z-10 max-w-6xl mx-auto px-6 pb-24">
+  <section id="members" class="relative z-10 max-w-6xl mx-auto px-6 pb-24">
     <div id="cards-grid" class="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-8">
       <p id="cards-loading" class="col-span-full text-center text-slate-500">載入中...</p>
     </div>
@@ -112,7 +118,7 @@
   </section>
 
   <!-- Apply for Space -->
-  <section class="relative z-10 max-w-lg mx-auto px-6 pb-24">
+  <section id="apply-space" class="relative z-10 max-w-lg mx-auto px-6 pb-24">
     <div class="bg-white/5 backdrop-blur border border-white/10 rounded-2xl p-8">
       <h2 class="text-2xl font-bold mb-2 text-center gradient-text">申請你的個人空間</h2>
       <p class="text-slate-400 text-sm text-center mb-2">填寫以下資料，經審批後自動建立你的網站</p>
@@ -158,7 +164,7 @@
   </section>
 
   <!-- Delete Space -->
-  <section class="relative z-10 max-w-lg mx-auto px-6 pb-24">
+  <section id="delete-space" class="relative z-10 max-w-lg mx-auto px-6 pb-24">
     <div class="bg-white/5 backdrop-blur border border-red-500/20 rounded-2xl p-8">
       <h2 class="text-xl font-bold mb-2 text-center text-red-400">刪除個人空間</h2>
       <p class="text-slate-400 text-sm text-center mb-8">填寫要刪除的空間資料，經管理員審批後執行</p>
@@ -223,6 +229,22 @@
       </div>
     </div>
   </section>
+
+  <!-- Sticky Section Nav -->
+  <div id="section-nav" class="fixed top-0 left-0 right-0 z-40 nav-hidden">
+    <div class="bg-slate-900/90 backdrop-blur-lg border-b border-white/10">
+      <div class="max-w-6xl mx-auto px-4 flex items-center justify-between h-12">
+        <a href="#" class="text-sm font-bold text-white shrink-0"><span class="text-indigo-400">AIPM</span> TW</a>
+        <div class="flex gap-1 overflow-x-auto scrollbar-hide">
+          <a href="#members" class="nav-item text-xs text-slate-400 hover:text-white px-2.5 py-1.5 rounded-lg hover:bg-white/10 transition whitespace-nowrap">作品集</a>
+          <a href="#daily-notes-showcase" class="nav-item text-xs text-slate-400 hover:text-white px-2.5 py-1.5 rounded-lg hover:bg-white/10 transition whitespace-nowrap">Daily Notes</a>
+          <a href="#apply-space" class="nav-item text-xs text-slate-400 hover:text-white px-2.5 py-1.5 rounded-lg hover:bg-white/10 transition whitespace-nowrap">申請空間</a>
+          <a href="#delete-space" class="nav-item text-xs text-slate-400 hover:text-white px-2.5 py-1.5 rounded-lg hover:bg-white/10 transition whitespace-nowrap">刪除空間</a>
+          <a href="#daily-notes-section" class="nav-item text-xs text-slate-400 hover:text-white px-2.5 py-1.5 rounded-lg hover:bg-white/10 transition whitespace-nowrap logged-in-only hidden">申請日記</a>
+        </div>
+      </div>
+    </div>
+  </div>
 
   <!-- Footer -->
   <footer class="relative z-10 border-t border-white/10 py-8 text-center text-slate-500 text-sm">
@@ -851,6 +873,49 @@
     }
 
     init();
+
+    // ===== Sticky Section Nav =====
+    const sectionNav = document.getElementById('section-nav');
+    const heroEl = document.querySelector('header');
+    const navItems = document.querySelectorAll('#section-nav .nav-item');
+    const sectionIds = ['members', 'daily-notes-showcase', 'apply-space', 'delete-space', 'daily-notes-section'];
+
+    // Show/hide nav on scroll
+    let lastScroll = 0;
+    window.addEventListener('scroll', () => {
+      const heroBottom = heroEl ? heroEl.getBoundingClientRect().bottom : 300;
+      if (heroBottom < 0) {
+        sectionNav.classList.remove('nav-hidden');
+      } else {
+        sectionNav.classList.add('nav-hidden');
+      }
+
+      // Highlight active section
+      let activeId = '';
+      for (const id of sectionIds) {
+        const el = document.getElementById(id);
+        if (el && el.getBoundingClientRect().top < 120) activeId = id;
+      }
+      navItems.forEach(item => {
+        if (item.getAttribute('href') === '#' + activeId) {
+          item.classList.add('text-white', 'bg-white/10');
+          item.classList.remove('text-slate-400');
+        } else {
+          item.classList.remove('text-white', 'bg-white/10');
+          item.classList.add('text-slate-400');
+        }
+      });
+    });
+
+    // Show "申請日記" nav item when logged in
+    const _origUpdateAuthUI2 = updateAuthUI;
+    updateAuthUI = function(user) {
+      _origUpdateAuthUI2(user);
+      document.querySelectorAll('.logged-in-only').forEach(el => {
+        if (user) el.classList.remove('hidden');
+        else el.classList.add('hidden');
+      });
+    };
   </script>
 
   <!-- Apply / Delete Space (non-module script for global scope) -->
