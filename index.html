@@ -47,13 +47,24 @@
     <a href="/" class="text-xl font-bold tracking-tight">
       <span class="text-indigo-400">AIPM</span> TW
     </a>
-    <div class="flex gap-2">
+    <div class="flex gap-2 items-center">
       <button id="changenote-btn" class="text-xs bg-amber-500/20 hover:bg-amber-500/30 text-amber-300 border border-amber-500/30 px-3 py-1.5 rounded-lg cursor-pointer transition font-medium">
         重大改版記要
       </button>
       <button id="insplog-btn" class="text-xs bg-emerald-500/20 hover:bg-emerald-500/30 text-emerald-300 border border-emerald-500/30 px-3 py-1.5 rounded-lg cursor-pointer transition font-medium">
         巡檢記錄
       </button>
+      <!-- Auth area -->
+      <div id="auth-area">
+        <button id="login-btn" class="text-xs bg-indigo-500/20 hover:bg-indigo-500/30 text-indigo-300 border border-indigo-500/30 px-3 py-1.5 rounded-lg cursor-pointer transition font-medium">
+          登入
+        </button>
+      </div>
+      <div id="user-area" class="hidden flex items-center gap-2">
+        <img id="user-avatar" class="w-7 h-7 rounded-full border border-white/20 hidden" alt="" />
+        <span id="user-name" class="text-xs text-slate-300 max-w-[100px] truncate"></span>
+        <button id="logout-btn" class="text-xs text-slate-500 hover:text-slate-300 transition cursor-pointer">登出</button>
+      </div>
     </div>
   </nav>
 
@@ -173,6 +184,46 @@
     &copy; 2026 aipm.com.tw. All rights reserved.
   </footer>
 
+  <!-- Login Modal -->
+  <div id="login-modal" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/60 backdrop-blur-sm">
+    <div class="bg-slate-800 border border-indigo-500/20 rounded-2xl shadow-2xl max-w-sm w-full mx-4 p-6 relative">
+      <button onclick="closeLoginModal()" class="absolute top-4 right-4 text-slate-400 hover:text-white text-xl">&times;</button>
+      <h3 class="text-lg font-bold text-white mb-6 text-center">登入 AIPM TW</h3>
+
+      <!-- GitHub OAuth -->
+      <button id="github-login-btn" class="w-full flex items-center justify-center gap-2 bg-slate-700 hover:bg-slate-600 border border-white/10 text-white font-semibold py-3 rounded-xl text-sm cursor-pointer transition mb-4">
+        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+        使用 GitHub 帳號登入
+      </button>
+
+      <div class="flex items-center gap-3 mb-4">
+        <div class="flex-1 h-px bg-white/10"></div>
+        <span class="text-xs text-slate-500">或使用 Email</span>
+        <div class="flex-1 h-px bg-white/10"></div>
+      </div>
+
+      <!-- Email/Password -->
+      <form id="email-auth-form" class="space-y-3">
+        <div id="display-name-field" class="hidden">
+          <input id="auth-display-name" type="text" placeholder="顯示名稱"
+            class="w-full bg-white/5 border border-white/20 rounded-lg px-3 py-2.5 text-white text-sm placeholder-slate-500 focus:outline-none focus:border-indigo-500 transition" />
+        </div>
+        <input id="auth-email" type="email" placeholder="Email" required
+          class="w-full bg-white/5 border border-white/20 rounded-lg px-3 py-2.5 text-white text-sm placeholder-slate-500 focus:outline-none focus:border-indigo-500 transition" />
+        <input id="auth-password" type="password" placeholder="密碼（至少 6 碼）" required minLength="6"
+          class="w-full bg-white/5 border border-white/20 rounded-lg px-3 py-2.5 text-white text-sm placeholder-slate-500 focus:outline-none focus:border-indigo-500 transition" />
+        <p id="auth-error" class="text-xs text-amber-400 hidden"></p>
+        <button type="submit" id="auth-submit-btn"
+          class="w-full bg-indigo-600 hover:bg-indigo-500 disabled:opacity-50 text-white font-semibold py-2.5 rounded-xl text-sm cursor-pointer transition">
+          登入
+        </button>
+      </form>
+      <p id="auth-toggle" class="text-center text-xs text-slate-500 mt-3 cursor-pointer hover:text-slate-300 transition">
+        沒有帳號？註冊
+      </p>
+    </div>
+  </div>
+
   <!-- Check Result Modal -->
   <div id="check-modal" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/60 backdrop-blur-sm">
     <div class="bg-slate-800 border border-white/20 rounded-2xl shadow-2xl max-w-lg w-full mx-4 p-6 relative">
@@ -219,6 +270,134 @@
     const SUPABASE_URL = 'https://reipdepbltfbfxnjjegy.supabase.co';
     const SUPABASE_ANON_KEY = 'sb_publishable_osbwITQrUCmW5pNYgT__Ig_Zz0l5I9Y';
     const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+    // ===== Auth =====
+    let currentUser = null;
+    let authMode = 'login'; // 'login' or 'register'
+
+    function updateAuthUI(user) {
+      currentUser = user;
+      const authArea = document.getElementById('auth-area');
+      const userArea = document.getElementById('user-area');
+      if (user) {
+        authArea.classList.add('hidden');
+        userArea.classList.remove('hidden');
+        userArea.classList.add('flex');
+        const avatar = document.getElementById('user-avatar');
+        const name = document.getElementById('user-name');
+        const avatarUrl = user.user_metadata?.avatar_url;
+        if (avatarUrl) {
+          avatar.src = avatarUrl;
+          avatar.classList.remove('hidden');
+        } else {
+          avatar.classList.add('hidden');
+        }
+        name.textContent = user.user_metadata?.user_name || user.user_metadata?.display_name || user.email?.split('@')[0] || '';
+      } else {
+        authArea.classList.remove('hidden');
+        userArea.classList.add('hidden');
+        userArea.classList.remove('flex');
+      }
+    }
+
+    // Check session on load
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      updateAuthUI(session?.user ?? null);
+    });
+    supabase.auth.onAuthStateChange((_event, session) => {
+      updateAuthUI(session?.user ?? null);
+      if (session?.user) closeLoginModal();
+    });
+
+    // Login modal
+    document.getElementById('login-btn').addEventListener('click', () => {
+      const modal = document.getElementById('login-modal');
+      modal.classList.remove('hidden');
+      modal.classList.add('flex');
+    });
+    window.closeLoginModal = function() {
+      const modal = document.getElementById('login-modal');
+      modal.classList.add('hidden');
+      modal.classList.remove('flex');
+    };
+    document.getElementById('login-modal').addEventListener('click', function(e) {
+      if (e.target === this) closeLoginModal();
+    });
+
+    // GitHub OAuth
+    document.getElementById('github-login-btn').addEventListener('click', async () => {
+      await supabase.auth.signInWithOAuth({
+        provider: 'github',
+        options: { redirectTo: window.location.origin + window.location.pathname }
+      });
+    });
+
+    // Email auth toggle
+    function setAuthMode(mode) {
+      authMode = mode;
+      const toggle = document.getElementById('auth-toggle');
+      const submitBtn = document.getElementById('auth-submit-btn');
+      const nameField = document.getElementById('display-name-field');
+      if (mode === 'register') {
+        toggle.textContent = '已有帳號？登入';
+        submitBtn.textContent = '註冊';
+        nameField.classList.remove('hidden');
+      } else {
+        toggle.textContent = '沒有帳號？註冊';
+        submitBtn.textContent = '登入';
+        nameField.classList.add('hidden');
+      }
+      document.getElementById('auth-error').classList.add('hidden');
+    }
+    document.getElementById('auth-toggle').addEventListener('click', () => {
+      setAuthMode(authMode === 'login' ? 'register' : 'login');
+    });
+
+    // Email auth submit
+    document.getElementById('email-auth-form').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const email = document.getElementById('auth-email').value.trim();
+      const password = document.getElementById('auth-password').value;
+      const errorEl = document.getElementById('auth-error');
+      const submitBtn = document.getElementById('auth-submit-btn');
+      submitBtn.disabled = true;
+      errorEl.classList.add('hidden');
+
+      if (authMode === 'login') {
+        const { error } = await supabase.auth.signInWithPassword({ email, password });
+        if (error) {
+          errorEl.textContent = error.message;
+          errorEl.classList.remove('hidden');
+        }
+      } else {
+        const displayName = document.getElementById('auth-display-name').value.trim();
+        const { data, error } = await supabase.auth.signUp({
+          email, password,
+          options: {
+            data: { display_name: displayName || email.split('@')[0] },
+            emailRedirectTo: window.location.origin + window.location.pathname
+          }
+        });
+        if (error) {
+          errorEl.textContent = error.message;
+          errorEl.classList.remove('hidden');
+        } else if (data?.user?.identities?.length === 0) {
+          errorEl.textContent = '此 Email 已註冊，請直接登入。';
+          errorEl.classList.remove('hidden');
+          setAuthMode('login');
+        } else {
+          errorEl.textContent = '註冊成功！請查收驗證信件。';
+          errorEl.classList.remove('hidden');
+        }
+      }
+      submitBtn.disabled = false;
+    });
+
+    // Logout
+    document.getElementById('logout-btn').addEventListener('click', async () => {
+      await supabase.auth.signOut();
+      updateAuthUI(null);
+    });
 
     // ===== SVG Icons =====
     const ICON_LINK = '<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" /></svg>';
