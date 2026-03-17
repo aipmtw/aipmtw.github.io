@@ -180,13 +180,19 @@
   </section>
 
   <!-- Apply Daily Notes (logged-in only) -->
-  <section id="daily-notes-section" class="relative z-10 max-w-lg mx-auto px-6 pb-24 hidden">
+  <section id="daily-notes-section" class="relative z-10 max-w-lg mx-auto px-6 pb-24">
     <div class="bg-white/5 backdrop-blur border border-cyan-500/20 rounded-2xl p-8">
       <h2 class="text-2xl font-bold mb-2 text-center bg-gradient-to-r from-cyan-400 to-indigo-400 bg-clip-text text-transparent" style="-webkit-background-clip:text;-webkit-text-fill-color:transparent;">申請日記功能</h2>
       <p class="text-slate-400 text-sm text-center mb-2">為你的個人空間開通 Daily Notes 功能</p>
       <p class="text-cyan-400/80 text-xs text-center mb-8">提交後由自動巡檢系統直接處理，無需等待審批</p>
 
-      <div class="space-y-5">
+      <!-- Login prompt for non-logged-in users -->
+      <div id="dn-login-prompt" class="text-center py-4">
+        <p class="text-slate-400 text-sm mb-3">請先登入才能申請日記功能</p>
+        <button onclick="document.getElementById('login-btn').click()" class="bg-indigo-600 hover:bg-indigo-500 text-white text-sm font-medium px-6 py-2 rounded-lg transition cursor-pointer">登入</button>
+      </div>
+
+      <div id="dn-form" class="space-y-5 hidden">
         <div>
           <label class="block text-sm font-medium text-slate-300 mb-1.5">空間名稱 <span class="text-slate-500 text-xs">（你的空間）</span></label>
           <div class="flex items-center gap-2">
@@ -219,13 +225,14 @@
     <div class="bg-slate-900/90 backdrop-blur-lg border-b border-white/10">
       <div class="max-w-6xl mx-auto px-4 flex items-center justify-between h-12">
         <a href="#" class="text-sm font-bold text-white shrink-0"><span class="text-indigo-400">AIPM</span> TW</a>
-        <div class="flex gap-1 overflow-x-auto scrollbar-hide flex-1 mx-3">
+        <!-- Desktop nav -->
+        <div class="hidden md:flex gap-1 overflow-x-auto scrollbar-hide flex-1 mx-3">
           <a href="#members" class="nav-item text-xs text-slate-400 hover:text-white px-2.5 py-1.5 rounded-lg hover:bg-white/10 transition whitespace-nowrap">作品集</a>
           <a href="/devnotes.html" class="text-xs text-cyan-400/80 hover:text-cyan-300 px-2.5 py-1.5 rounded-lg hover:bg-cyan-500/10 transition whitespace-nowrap border border-cyan-500/20">Dev Notes</a>
           <a href="#daily-notes-showcase" class="nav-item text-xs text-slate-400 hover:text-white px-2.5 py-1.5 rounded-lg hover:bg-white/10 transition whitespace-nowrap">Daily Notes</a>
           <a href="#apply-space" class="nav-item text-xs text-slate-400 hover:text-white px-2.5 py-1.5 rounded-lg hover:bg-white/10 transition whitespace-nowrap">申請空間</a>
           <a href="#delete-space" class="nav-item text-xs text-slate-400 hover:text-white px-2.5 py-1.5 rounded-lg hover:bg-white/10 transition whitespace-nowrap">刪除空間</a>
-          <a href="#daily-notes-section" class="nav-item text-xs text-slate-400 hover:text-white px-2.5 py-1.5 rounded-lg hover:bg-white/10 transition whitespace-nowrap logged-in-only hidden">申請日記</a>
+          <a href="#daily-notes-section" class="nav-item text-xs text-slate-400 hover:text-white px-2.5 py-1.5 rounded-lg hover:bg-white/10 transition whitespace-nowrap">申請日記</a>
           <span class="w-px h-5 bg-white/10 mx-1 shrink-0 self-center"></span>
           <button id="changenote-btn" class="text-xs text-amber-300 hover:text-amber-200 px-2.5 py-1.5 rounded-lg hover:bg-amber-500/10 transition whitespace-nowrap cursor-pointer">改版記要</button>
           <button id="insplog-btn" class="text-xs text-emerald-300 hover:text-emerald-200 px-2.5 py-1.5 rounded-lg hover:bg-emerald-500/10 transition whitespace-nowrap cursor-pointer">巡檢記錄</button>
@@ -240,9 +247,26 @@
             <span id="user-name" class="text-xs text-slate-300 max-w-[80px] truncate"></span>
             <button id="logout-btn" class="text-xs text-slate-500 hover:text-slate-300 transition cursor-pointer">登出</button>
           </div>
-          <button id="nav-collapse-btn" class="text-slate-500 hover:text-white transition p-1 cursor-pointer ml-1" title="隱藏導覽列">
+          <!-- Mobile menu button -->
+          <button id="mobile-menu-btn" class="md:hidden text-slate-400 hover:text-white transition p-1.5 cursor-pointer ml-1">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
+          </button>
+          <button id="nav-collapse-btn" class="hidden md:block text-slate-500 hover:text-white transition p-1 cursor-pointer ml-1" title="隱藏導覽列">
             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7"/></svg>
           </button>
+        </div>
+      </div>
+      <!-- Mobile dropdown menu -->
+      <div id="mobile-menu" class="hidden md:hidden bg-slate-900/95 border-t border-white/5 px-4 py-3">
+        <div class="grid grid-cols-3 gap-2">
+          <a href="#members" class="mobile-nav text-xs text-slate-300 text-center py-2 rounded-lg bg-white/5 hover:bg-white/10 transition">作品集</a>
+          <a href="/devnotes.html" class="text-xs text-cyan-400 text-center py-2 rounded-lg bg-cyan-500/10 hover:bg-cyan-500/20 transition border border-cyan-500/20">Dev Notes</a>
+          <a href="#daily-notes-showcase" class="mobile-nav text-xs text-slate-300 text-center py-2 rounded-lg bg-white/5 hover:bg-white/10 transition">Daily Notes</a>
+          <a href="#apply-space" class="mobile-nav text-xs text-slate-300 text-center py-2 rounded-lg bg-white/5 hover:bg-white/10 transition">申請空間</a>
+          <a href="#delete-space" class="mobile-nav text-xs text-slate-300 text-center py-2 rounded-lg bg-white/5 hover:bg-white/10 transition">刪除空間</a>
+          <a href="#daily-notes-section" class="mobile-nav text-xs text-slate-300 text-center py-2 rounded-lg bg-white/5 hover:bg-white/10 transition">申請日記</a>
+          <button id="changenote-btn-m" class="text-xs text-amber-300 text-center py-2 rounded-lg bg-amber-500/10 hover:bg-amber-500/20 transition cursor-pointer">改版記要</button>
+          <button id="insplog-btn-m" class="text-xs text-emerald-300 text-center py-2 rounded-lg bg-emerald-500/10 hover:bg-emerald-500/20 transition cursor-pointer">巡檢記錄</button>
         </div>
       </div>
     </div>
@@ -474,15 +498,18 @@
 
     // Daily Notes section: show when logged in, auto-fill GitHub username
     function updateDailyNotesSection(user) {
-      const section = document.getElementById('daily-notes-section');
+      const form = document.getElementById('dn-form');
+      const prompt = document.getElementById('dn-login-prompt');
       const ghInput = document.getElementById('dn-github-account');
       if (user) {
-        section.classList.remove('hidden');
+        form.classList.remove('hidden');
+        prompt.classList.add('hidden');
         const ghUsername = user.user_metadata?.user_name || user.user_metadata?.preferred_username || '';
         ghInput.value = ghUsername;
         window._dnGithubAccount = ghUsername;
       } else {
-        section.classList.add('hidden');
+        form.classList.add('hidden');
+        prompt.classList.remove('hidden');
         ghInput.value = '';
         window._dnGithubAccount = '';
       }
@@ -922,15 +949,25 @@
       });
     });
 
-    // Show "申請日記" nav item when logged in
-    const _origUpdateAuthUI2 = updateAuthUI;
-    updateAuthUI = function(user) {
-      _origUpdateAuthUI2(user);
-      document.querySelectorAll('.logged-in-only').forEach(el => {
-        if (user) el.classList.remove('hidden');
-        else el.classList.add('hidden');
-      });
-    };
+    // Mobile menu toggle
+    const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+    const mobileMenu = document.getElementById('mobile-menu');
+    mobileMenuBtn.addEventListener('click', () => {
+      mobileMenu.classList.toggle('hidden');
+    });
+    // Close mobile menu when clicking a link
+    mobileMenu.querySelectorAll('a').forEach(a => {
+      a.addEventListener('click', () => mobileMenu.classList.add('hidden'));
+    });
+    // Wire mobile buttons to same modals
+    document.getElementById('changenote-btn-m').addEventListener('click', () => {
+      document.getElementById('changenote-btn').click();
+      mobileMenu.classList.add('hidden');
+    });
+    document.getElementById('insplog-btn-m').addEventListener('click', () => {
+      document.getElementById('insplog-btn').click();
+      mobileMenu.classList.add('hidden');
+    });
   </script>
 
   <!-- Apply / Delete Space (non-module script for global scope) -->
