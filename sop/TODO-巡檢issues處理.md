@@ -10,7 +10,7 @@
 
 - [ ] **Issue 分類處理**：目前所有 issue 都當作程式碼修改需求處理，可加入分類邏輯（bug fix、feature request、question）給予不同回應
 - [ ] **處理品質回饋**：issue 關閉後讓提交者可評分或回報問題，改善 AI 處理品質
-- [ ] **平行處理**：目前逐一處理 repo，多個 repo 同時有 issue 時可用 subagent 平行處理
+- [x] **平行處理**：目前逐一處理 repo，多個 repo 同時有 issue 時可用 subagent 平行處理 ✅ 已實現，使用 4 個 subagent 分組平行處理 16 個 repo
 - [ ] **commit message 改善**：目前 commit message 較籠統，可根據 issue 內容生成更精確的 message
 
 ## 低優先
