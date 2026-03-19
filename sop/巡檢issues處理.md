@@ -15,7 +15,10 @@
 ### 1. 掃描階段
 
 1. 列出所有 public repo（排除 private repo 如 2026biz、biz-core）
-2. 對每個 repo 查詢 open issues
+2. 額外加入指定的 private repo（如 `ovb3web`）到巡檢清單
+3. 對每個 repo 查詢 open issues
+
+**注意**：private repo 僅巡檢 issues，不寫入 Supabase repos 表（避免顯示在首頁）
 
 ### 2. 授權檢查
 
